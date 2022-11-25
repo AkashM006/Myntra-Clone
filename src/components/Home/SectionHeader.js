@@ -21,7 +21,7 @@ const SectionHeader = ({ sections }) => {
         let data = Array(10).fill(1)
         return <FlatList
             horizontal
-            style={{ backgroundColor: 'white', paddingBottom: 5, height: 85 }}
+            style={styles.list}
             contentContainerStyle={styles.container}
             data={data}
             renderItem={renderSkeleton}
@@ -33,7 +33,7 @@ const SectionHeader = ({ sections }) => {
     return (
         <FlatList
             horizontal
-            style={{ backgroundColor: 'white', paddingBottom: 5, height: 85 }}
+            style={styles.list}
             contentContainerStyle={styles.container}
             data={data}
             renderItem={renderCard}
@@ -45,8 +45,8 @@ const SectionHeader = ({ sections }) => {
 
 const styles = StyleSheet.create({
     image: {
-        height: 60,
-        width: 60,
+        height: 65,
+        width: 65,
         borderRadius: 100,
         resizeMode: 'cover',
         alignSelf: 'center',
@@ -60,8 +60,14 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 10,
         textAlign: 'center',
+        marginTop: 2
     },
-    card: { marginRight: 10, height: 70 },
+    card: { marginRight: 15, height: 80 },
+    list: {
+        backgroundColor: 'white',
+        paddingBottom: 5,
+        height: 90,
+    }
 })
 
 export default SectionHeader
