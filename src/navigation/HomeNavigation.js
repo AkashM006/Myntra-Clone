@@ -11,9 +11,7 @@ const HomeNavigation = () => {
             <Stack.Screen
                 name='Home'
                 component={HomeScreen}
-                options={{
-                    header: Header
-                }}
+                options={{ header: Header }}
             />
         </Stack.Navigator>
     )

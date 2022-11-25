@@ -36,11 +36,12 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     container: {
-        // paddingVertical: '2.5%',
         paddingHorizontal: '3.5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        height: 50,
+        height: 60,
+        backgroundColor: 'white',
+        elevation: 3
     },
     menu: {
         height: 15,
@@ -68,14 +69,13 @@ const styles = StyleSheet.create({
     icon: {
         height: 25,
         width: 25,
-        marginRight: 5
+        marginRight: 10
     },
     rightContainer: {
         flexDirection: 'row',
         alignItems: 'center',
     },
     menuContainer: { marginRight: 15, },
-
 })
 
 export default Header
