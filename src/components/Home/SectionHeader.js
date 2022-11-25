@@ -1,6 +1,6 @@
 import { Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
-import Skeleton from '../Skeleton/Skeleton'
+import Skeleton from '../Reusable/Skeleton'
 
 const SectionHeader = ({ sections }) => {
 

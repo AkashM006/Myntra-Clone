@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import CustomText from '../Reusable/CustomText'
 
 const Header = () => {
     return (
@@ -11,8 +12,8 @@ const Header = () => {
                 <TouchableOpacity style={styles.premium}>
                     <Image source={require('../../icons/myntra.webp')} style={styles.logo} />
                     <View style={{ justifyContent: 'flex-start' }}>
-                        <Text style={styles.premiumText}>Become</Text>
-                        <Text style={[styles.premiumText, styles.golden]}>Insider</Text>
+                        <CustomText style={styles.premiumText}>Become</CustomText>
+                        <CustomText style={[styles.premiumText, styles.golden]}>Insider</CustomText>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -60,11 +61,13 @@ const styles = StyleSheet.create({
     },
     premiumText: {
         fontSize: 8,
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Roboto-Medium',
     },
     golden: {
         fontSize: 12,
-        color: '#FFD700'
+        color: '#FFD700',
+        fontFamily: 'Roboto-Medium',
     },
     icon: {
         height: 25,

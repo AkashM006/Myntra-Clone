@@ -1,4 +1,4 @@
-import { View, Text, Animated } from 'react-native'
+import { Animated } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 
 const Skeleton = ({ height, width, borderRadius }) => {
@@ -29,7 +29,7 @@ const Skeleton = ({ height, width, borderRadius }) => {
             borderRadius,
             backgroundColor: 'lightgray',
             opacity: opacity.current,
-            marginRight: 10,
+            marginRight: 6,
         }} />
     )
 }
