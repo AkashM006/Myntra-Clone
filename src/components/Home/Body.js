@@ -29,16 +29,11 @@ const Body = () => {
     }
 
     const renderSectionHeader = () => {
-        // let x = sections[0].data[0]
-        // let data = Array(10).fill(x[0])
-        // console.log("Data: ", data)
         return <SectionHeader sections={sections} />
     }
 
     return (
         <View style={[commonStyles.fullScreen]}>
-            {/* { */}
-            {/* isLoading === false ? */}
             <SectionList
                 sections={sections}
                 renderItem={renderItem}
@@ -47,9 +42,6 @@ const Body = () => {
                 stickyHeaderHiddenOnScroll={true}
                 stickySectionHeadersEnabled={true}
             />
-            {/* : */}
-            {/* <ActivityIndicator /> */}
-            {/* } */}
         </View>
     )
 }
