@@ -60,7 +60,7 @@ const Body = () => {
                 bounces={false}
                 showsVerticalScrollIndicator={false}
                 style={styles.list}
-                ListFooterComponent={Quote}
+                ListFooterComponent={() => <Quote loading={isLoading} />}
             />
             {/* <Quote /> */}
             <Footer />
