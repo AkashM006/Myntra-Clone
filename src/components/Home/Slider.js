@@ -1,11 +1,14 @@
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import { useNavigation } from '@react-navigation/native'
 
 const Slider = ({ card }) => {
 
+    const navigation = useNavigation()
+
     const renderItem = ({ item }) =>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('List', { title: 'Exclusives' })}>
             <Image source={{ uri: item }} style={[{ height: +card.height, width: +card.width, }, styles.image]} />
         </TouchableOpacity>
 

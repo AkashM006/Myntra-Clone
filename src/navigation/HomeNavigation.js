@@ -1,7 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
-import Header from '../components/Home/Header'
+import HomeHeader from '../components/Home/HomeHeader'
+import ListHeader from '../components/List/ListHeader'
 import HomeScreen from '../screens/HomeScreen'
+import ListScreen from '../screens/ListScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -11,7 +13,12 @@ const HomeNavigation = () => {
             <Stack.Screen
                 name='Home'
                 component={HomeScreen}
-                options={{ header: Header }}
+                options={{ header: HomeHeader, }}
+            />
+            <Stack.Screen
+                name='List'
+                component={ListScreen}
+                options={{ header: () => <ListHeader /> }}
             />
         </Stack.Navigator>
     )

@@ -39,7 +39,7 @@ const Body = () => {
 
         else if (index === 0) return
 
-        else if (item.type === 'photo') return <Photo link={item.url} height={item.height} index={index} />
+        else if (item.type === 'photo') return <Photo link={item.url} title={item.title} height={item.height} index={index} />
 
         else if (item.type === 'slider') return <Slider card={item} />
 
@@ -49,7 +49,7 @@ const Body = () => {
 
 
     return (
-        <View style={[commonStyles.fullScreen, styles.container]}>
+        <View style={commonStyles.fullScreen}>
             <SectionList
                 sections={sections}
                 renderItem={renderItem}

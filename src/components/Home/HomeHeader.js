@@ -2,7 +2,7 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 
-const Header = () => {
+const HomeHeader = () => {
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
     menuContainer: { marginRight: 15, },
 })
 
-export default Header
+export default HomeHeader

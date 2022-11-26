@@ -1,10 +1,17 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
-const Photo = ({ link, height, index }) =>
-    <TouchableOpacity>
+const Photo = ({ link, height, index, title }) => {
+
+    const navigation = useNavigation()
+
+    return (<TouchableOpacity onPress={() => navigation.navigate('List', {
+        title
+    })}>
         <Image source={{ uri: link }} style={[styles.image, { height, marginTop: index === 1 ? 5 : 0 }]} />
-    </TouchableOpacity>
+    </TouchableOpacity>)
+}
 
 
 const styles = StyleSheet.create({

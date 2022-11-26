@@ -1,21 +1,24 @@
 import { Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 import Skeleton from '../Reusable/Skeleton'
+import { useNavigation } from '@react-navigation/native'
 
 const SectionHeader = ({ sections }) => {
 
+    const navigation = useNavigation()
+
     const renderCard = ({ item, index }) => {
         return (
-            <TouchableOpacity style={styles.card} key={index}>
+            <TouchableOpacity style={styles.card} key={index} onPress={() => navigation.navigate('List', {
+                title: item.name
+            })} >
                 <Image style={styles.image} source={{ uri: item.photoURL }} />
                 <Text style={styles.text}>{item.name.toUpperCase()}</Text>
             </TouchableOpacity>
         )
     }
 
-    const renderSkeleton = () => {
-        return <Skeleton height={70} width={60} borderRadius={8} />
-    }
+    const renderSkeleton = () => <Skeleton height={70} width={60} borderRadius={8} />
 
     if (sections[0].data.length === 0) {
         let data = Array(10).fill(1)
