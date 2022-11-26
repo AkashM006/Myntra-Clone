@@ -1,7 +1,9 @@
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore'
+import Skeleton from '../Reusable/Skeleton'
 
 const ListHeader = () => {
 
@@ -11,6 +13,18 @@ const ListHeader = () => {
     const navigation = useNavigation()
     let title = useRoute().params.title?.toUpperCase()
     title = title.length > 20 ? title.substring(0, 18) + '...' : title
+
+    const [count, setCount] = useState(null)
+
+    const getData = async () => {
+        const result = await firestore().collection('clothes').count().get()
+        // setCount(result._data.count) use this when there are more item
+        setCount(result._data.count * 10)
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     const pressHandler = () => navigation.goBack()
 
@@ -24,9 +38,9 @@ const ListHeader = () => {
                     <CustomText style={styles.text}>
                         {title}
                     </CustomText>
-                    <CustomText style={styles.count}>
-                        20 Items
-                    </CustomText>
+                    {count === null ? <Skeleton height={15} width={70} borderRadius={4} /> : <CustomText style={styles.count}>
+                        {count} Items
+                    </CustomText>}
                 </View>
             </View>
             <View style={styles.rightContainer}>

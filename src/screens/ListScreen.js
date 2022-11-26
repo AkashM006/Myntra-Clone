@@ -1,14 +1,6 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import ListHeader from '../components/List/ListHeader'
+import List from '../components/List/List'
 
-const ListScreen = () => {
-    return (
-        <View>
-            {/* <Text>ListScreen</Text> */}
-            {/* <ListHeader /> */}
-        </View>
-    )
-}
+const ListScreen = () => <List />
 
 export default ListScreen

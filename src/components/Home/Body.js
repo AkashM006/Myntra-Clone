@@ -62,7 +62,6 @@ const Body = () => {
                 style={styles.list}
                 ListFooterComponent={() => <Quote loading={isLoading} />}
             />
-            {/* <Quote /> */}
             <Footer />
             {isLoading === true && <View style={styles.loader}><ActivityIndicator size={'small'} color={'#FF69B4'} /></View>}
         </View>
