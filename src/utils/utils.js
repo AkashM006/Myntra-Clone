@@ -4,4 +4,8 @@ const calculateDiscount = (price, percentage) => (((100 - percentage) * +price) 
 
 const formatCurrency = price => price.toLocaleString('en-GB', { style: 'currency', currency: 'INR' })
 
-export { substring, calculateDiscount, formatCurrency }
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+const kFormatter = num => Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+
+export { substring, calculateDiscount, formatCurrency, months, kFormatter }
