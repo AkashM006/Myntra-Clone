@@ -13,7 +13,6 @@ const List = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const getData = async () => {
-        console.log("List count: ", clothes.length)
         if (count !== null && clothes.length >= count) return
 
         if (count === null) {
