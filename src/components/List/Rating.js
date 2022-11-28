@@ -3,10 +3,17 @@ import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { kFormatter } from '../../utils/utils'
 
-const Rating = ({ count, total }) => {
+const Rating = ({ count, total, align }) => {
+
+    const alignment = {
+        left: { left: 10 },
+        right: { right: 10 },
+    }
+
+    let currentAlignment = align ?? 'left'
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, alignment[currentAlignment]]}>
             <CustomText style={styles.rating}>
                 {(total / count).toFixed(1)}
             </CustomText>
@@ -27,7 +34,6 @@ const styles = StyleSheet.create({
         padding: '5%',
         paddingVertical: '2%',
         bottom: 10,
-        left: 10,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',

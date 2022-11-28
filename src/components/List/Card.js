@@ -3,18 +3,12 @@ import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { calculateDiscount, formatCurrency, months, substring } from '../../utils/utils'
 import Rating from './Rating'
+import { useNavigation } from '@react-navigation/native'
 
 const Card = ({ cloth, index }) => {
 
-    // todo: 
-    // Need to add delivery date by adding dates : finished
-    // do the rating component and connect to next page
-    // in rating display thousands in k and so on : finished
-    // need to do the foot component : finished
-    // need to detect scroll and show the number of items
-    // footer component : finished
-
     const { height } = useWindowDimensions()
+    const navigation = useNavigation()
     const [isFavourite, setIsFavourite] = useState(false)
 
     const activeHeart = require('../../icons/heart-active.png')
@@ -43,8 +37,14 @@ const Card = ({ cloth, index }) => {
 
     const hasRating = (cloth.ratedCount > 0) ? true : false
 
+    const pressHandler = () => {
+        navigation.navigate('Detail', {
+            name: cloth.name
+        })
+    }
+
     return (
-        <TouchableOpacity style={[styles.container, { height: (height - 65) / 2, borderRightWidth: 1 }]}>
+        <TouchableOpacity onPress={pressHandler} style={[styles.container, { height: (height - 65) / 2, borderRightWidth: 1 }]}>
             <View style={styles.imageContainer}>
                 <Image source={{ uri: cloth.photo }} style={styles.image} />
                 {hasRating && <Rating count={cloth.ratedCount} total={cloth.totalRating} />}

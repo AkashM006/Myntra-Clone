@@ -13,16 +13,18 @@ const List = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const getData = async () => {
+        let result;
         if (count !== null && clothes.length >= count) return
 
         if (count === null) {
-            const result = await firestore().collection('clothes').count().get()
+            result = await firestore().collection('clothes').count().get()
             setCount(result._data.count * 10)
         }
 
-        let result = (await firestore().collection('clothes').get()).docs
-        result = result.map(cloth => cloth.data())
-        setClothes(prev => [...prev, ...result])
+        result = await firestore().collection('clothes').get()
+        result = await result.docs
+        let temp = result.map(cloth => cloth.data())
+        setClothes(prev => [...prev, ...temp])
         if (isLoading === true) setIsLoading(false)
     }
 
@@ -44,6 +46,7 @@ const List = () => {
                 ListFooterComponent={() => <ListFooter maxCount={count} count={clothes.length} />}
                 onEndReached={endReachedHandler}
                 onEndReachedThreshold={1}
+                showsVerticalScrollIndicator={false}
             />}
             {isLoading && <Loader />}
             {isLoading === false && <Footer />}
