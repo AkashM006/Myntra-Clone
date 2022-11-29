@@ -1,16 +1,19 @@
-import { View, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, useWindowDimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import Loader from './Loader'
 import Card from './Card'
 import Footer from './Footer'
 import ListFooter from './ListFooter'
+import Progressor from './Progressor'
+import Animated, { runOnJS, useAnimatedReaction, useAnimatedScrollHandler, useDerivedValue, useSharedValue } from 'react-native-reanimated'
 
 const List = () => {
 
     const [count, setCount] = useState(null)
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const height = useWindowDimensions().height
 
     const getData = async () => {
         let result;
@@ -34,10 +37,22 @@ const List = () => {
 
     const endReachedHandler = () => getData()
 
+    const scrollY = useSharedValue(0)
+    const itemsCount = useSharedValue(0)
+
+    const scrollHandler = useAnimatedScrollHandler((e, ctx) => { scrollY.value = e.contentOffset.y })
+    const cardHeight = (height - 65) / 2
+
+    useAnimatedReaction(
+        () => scrollY.value,
+        (result, prev) => {
+            itemsCount.value = (Math.trunc((result + cardHeight) / cardHeight) + 1) * 2
+        }, [scrollY]
+    )
 
     return (
         <View style={styles.container}>
-            {isLoading === false && <FlatList
+            {isLoading === false && <Animated.FlatList
                 data={clothes}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index}
@@ -47,8 +62,10 @@ const List = () => {
                 onEndReached={endReachedHandler}
                 onEndReachedThreshold={1}
                 showsVerticalScrollIndicator={false}
+                onScroll={scrollHandler}
             />}
             {isLoading && <Loader />}
+            {isLoading === false && <Progressor count={count} items={itemsCount} />}
             {isLoading === false && <Footer />}
         </View>
     )

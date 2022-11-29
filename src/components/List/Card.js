@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, useWindowDimensions, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { calculateDiscount, formatCurrency, months, substring } from '../../utils/utils'
 import Rating from './Rating'
@@ -136,4 +136,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Card
+const arePropsEqual = (prev, next) => {
+    for (let key in prev) {
+        if (!(key in next) || prev[key] !== next[key]) return false
+    }
+    return true
+}
+
+export default memo(Card, arePropsEqual)
