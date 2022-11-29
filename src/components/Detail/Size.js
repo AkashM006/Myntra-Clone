@@ -2,7 +2,7 @@ import { View, StyleSheet, TouchableOpacity, TouchableOpacityBase, Image } from 
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 
-const Size = ({ sizes, itemSizes }) => {
+const Size = ({ sizes, itemSizes, setStickyFooter }) => {
 
     return (
         <View style={styles.container}>
@@ -30,7 +30,9 @@ const Size = ({ sizes, itemSizes }) => {
                     </TouchableOpacity>
                 ))}
             </View>
-            <View style={styles.buttonContainer}>
+            <View
+                onLayout={event => { setStickyFooter(event.nativeEvent.layout) }}
+                style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <Image source={require('../../icons/heart.png')} style={styles.icon} />
                     <CustomText style={[styles.text, { color: 'black' }]}>
@@ -100,7 +102,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 10,
-        borderRadius: 3
+        borderRadius: 3,
+        height: 50
     },
     icon: {
         height: 30,
@@ -108,7 +111,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        padding: 10
     },
     text: {
         fontSize: 12,

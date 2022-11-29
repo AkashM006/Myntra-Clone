@@ -5,7 +5,7 @@ import Size from './Size'
 import firestore from '@react-native-firebase/firestore'
 import Details from './Details'
 
-const Body = ({ item }) => {
+const Body = ({ item, setStickyFooter }) => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [sizes, setSizes] = useState([])
@@ -33,6 +33,7 @@ const Body = ({ item }) => {
                     <Size
                         sizes={sizes}
                         itemSizes={item.sizes}
+                        setStickyFooter={setStickyFooter}
                     />
                     <Details />
                 </>

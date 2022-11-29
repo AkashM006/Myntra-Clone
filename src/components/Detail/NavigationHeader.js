@@ -1,7 +1,9 @@
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 const NavigationHeader = () => {
+    const navigation = useNavigation()
     return (
         <View style={styles.header}>
             <View>
