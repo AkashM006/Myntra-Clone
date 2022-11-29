@@ -52,9 +52,7 @@ const List = () => {
 
     const scrollRef = useRef()
 
-    const scrollToTop = () => {
-        scrollRef?.current.scrollToOffset({ offset: 0, animated: true })
-    }
+    const scrollToTop = () => { scrollRef?.current.scrollToOffset({ offset: 0, animated: true }) }
 
     return (
         <View style={styles.container}>

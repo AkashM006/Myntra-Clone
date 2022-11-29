@@ -2,10 +2,13 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import Animated, { interpolate, runOnJS, useAnimatedReaction, useAnimatedStyle } from 'react-native-reanimated'
+import { useRoute } from '@react-navigation/native'
+import { substring } from '../../utils/utils'
 
 const Progressor = ({ count, items, goTop }) => {
 
     const [itemsCount, setItemsCount] = useState(0)
+    const { title } = useRoute().params
 
     const alter = value => setItemsCount(value)
 
@@ -33,7 +36,7 @@ const Progressor = ({ count, items, goTop }) => {
                 <View style={styles.leftContainer}>
                     <Image source={require('../../icons/back.png')} style={styles.icon} />
                     <CustomText style={styles.text}>
-                        MYNTRA
+                        {substring(title.toUpperCase(), 10)}
                     </CustomText>
                 </View>
                 <CustomText style={styles.text}>
