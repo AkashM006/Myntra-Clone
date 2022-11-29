@@ -1,12 +1,11 @@
-import { View, StyleSheet, useWindowDimensions } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import { View, StyleSheet, useWindowDimensions, FlatList } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import Loader from './Loader'
 import Card from './Card'
 import Footer from './Footer'
 import ListFooter from './ListFooter'
 import Progressor from './Progressor'
-import Animated, { scrollTo, useAnimatedReaction, useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 
 const List = () => {
 
@@ -37,26 +36,27 @@ const List = () => {
 
     const endReachedHandler = () => getData()
 
-    const scrollY = useSharedValue(0)
-    const itemsCount = useSharedValue(0)
-
-    const scrollHandler = useAnimatedScrollHandler((e, ctx) => { scrollY.value = e.contentOffset.y })
     const cardHeight = (height - 65) / 2
-
-    useAnimatedReaction(
-        () => scrollY.value,
-        (result, prev) => {
-            itemsCount.value = (Math.trunc((result + (cardHeight / 2)) / cardHeight) + 1) * 2
-        }, [scrollY]
-    )
 
     const scrollRef = useRef()
 
     const scrollToTop = () => { scrollRef?.current.scrollToOffset({ offset: 0, animated: true }) }
 
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 50,
+        waitForInteraction: false
+    })
+
+    const [currentItem, setCurrentItem] = useState(0)
+
+    const viewableItemsChangedHandler = useCallback(({ viewableItems, changed }) => {
+        let len = viewableItems.length
+        setCurrentItem((viewableItems[len - 1].index + 1))
+    }, [])
+
     return (
         <View style={styles.container}>
-            {isLoading === false && <Animated.FlatList
+            {isLoading === false && <FlatList
                 data={clothes}
                 renderItem={renderItem}
                 ref={scrollRef}
@@ -67,10 +67,16 @@ const List = () => {
                 onEndReached={endReachedHandler}
                 onEndReachedThreshold={1}
                 showsVerticalScrollIndicator={false}
-                onScroll={scrollHandler}
+                getItemLayout={(data, index) => ({
+                    length: cardHeight,
+                    offset: (index) * cardHeight,
+                    index,
+                })}
+                viewabilityConfig={viewabilityConfig.current}
+                onViewableItemsChanged={viewableItemsChangedHandler}
             />}
             {isLoading && <Loader />}
-            {isLoading === false && <Progressor goTop={scrollToTop} count={count} items={itemsCount} />}
+            {isLoading === false && <Progressor goTop={scrollToTop} count={count} items={currentItem} />}
             {isLoading === false && <Footer />}
         </View>
     )

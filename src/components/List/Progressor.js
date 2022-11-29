@@ -1,49 +1,29 @@
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import CustomText from '../Reusable/CustomText'
-import Animated, { interpolate, runOnJS, useAnimatedReaction, useAnimatedStyle } from 'react-native-reanimated'
 import { useRoute } from '@react-navigation/native'
 import { substring } from '../../utils/utils'
 
 const Progressor = ({ count, items, goTop }) => {
 
-    const [itemsCount, setItemsCount] = useState(0)
     const { title } = useRoute().params
 
-    const alter = value => setItemsCount(value)
-
-    useAnimatedReaction(
-        () => items.value,
-        (result, prev) => {
-            if (items.value !== itemsCount)
-                runOnJS(alter)(items.value)
-        }, [items]
-    )
-
-    const rStyle = useAnimatedStyle(() => {
-        return {
-            opacity: interpolate(
-                items.value,
-                [0, 8, 10, 11],
-                [0, 0, 1, 1]
-            )
-        }
-    }, [])
-
     return (
-        <Animated.View style={[styles.animatedContainer, rStyle]}>
-            <TouchableOpacity style={styles.container} onPress={goTop}>
-                <View style={styles.leftContainer}>
-                    <Image source={require('../../icons/back.png')} style={styles.icon} />
+        <>
+            {items >= 10 && <View style={styles.animatedContainer}>
+                <TouchableOpacity style={styles.container} onPress={goTop}>
+                    <View style={styles.leftContainer}>
+                        <Image source={require('../../icons/back.png')} style={styles.icon} />
+                        <CustomText style={styles.text}>
+                            {substring(title.toUpperCase(), 10)}
+                        </CustomText>
+                    </View>
                     <CustomText style={styles.text}>
-                        {substring(title.toUpperCase(), 10)}
+                        {items}/{count}
                     </CustomText>
-                </View>
-                <CustomText style={styles.text}>
-                    {itemsCount}/{count}
-                </CustomText>
-            </TouchableOpacity>
-        </Animated.View>
+                </TouchableOpacity>
+            </View>}
+        </>
     )
 }
 
