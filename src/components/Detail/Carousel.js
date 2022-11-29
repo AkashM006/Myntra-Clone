@@ -1,6 +1,5 @@
-import { View, Text, FlatList, StyleSheet, useWindowDimensions, Image, TouchableOpacity, Animated } from 'react-native'
-import React, { useEffect, useRef } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { View, StyleSheet, useWindowDimensions, Image, Animated } from 'react-native'
+import React, { useRef } from 'react'
 import Rating from '../List/Rating'
 
 const INDICATOR_SIZE = 8
@@ -9,7 +8,6 @@ const INDICATOR_SPACING = 10
 const Carousel = ({ images, ratedCount, totalRating }) => {
 
     const { height, width } = useWindowDimensions()
-    const navigation = useNavigation()
 
     const renderItem = ({ item, index }) => <Image source={{ uri: item }} style={[styles.image, { width }]} />
 

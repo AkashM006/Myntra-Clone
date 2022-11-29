@@ -38,7 +38,7 @@ const DetailScreen = () => {
         <>
             {isLoading === false ?
                 <View>
-                    <NavigationHeader />
+                    <NavigationHeader name={cloth.brand} scroll={scrollY} />
                     <Animated.ScrollView onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
                         <Carousel images={cloth.preview} ratedCount={cloth.ratedCount ?? null} totalRating={cloth.totalRating ?? null} />
                         <Body setStickyFooter={setStickyFooter} item={cloth} />
