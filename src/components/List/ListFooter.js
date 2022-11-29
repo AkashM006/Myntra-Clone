@@ -17,7 +17,8 @@ const ListFooter = ({ count, maxCount }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 10
+        paddingVertical: 10,
+        height: 115
     },
     loader: {
         padding: '2%',

@@ -1,12 +1,12 @@
 import { View, StyleSheet, useWindowDimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import Loader from './Loader'
 import Card from './Card'
 import Footer from './Footer'
 import ListFooter from './ListFooter'
 import Progressor from './Progressor'
-import Animated, { runOnJS, useAnimatedReaction, useAnimatedScrollHandler, useDerivedValue, useSharedValue } from 'react-native-reanimated'
+import Animated, { scrollTo, useAnimatedReaction, useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 
 const List = () => {
 
@@ -46,15 +46,22 @@ const List = () => {
     useAnimatedReaction(
         () => scrollY.value,
         (result, prev) => {
-            itemsCount.value = (Math.trunc((result + cardHeight) / cardHeight) + 1) * 2
+            itemsCount.value = (Math.trunc((result + (cardHeight / 2)) / cardHeight) + 1) * 2
         }, [scrollY]
     )
+
+    const scrollRef = useRef()
+
+    const scrollToTop = () => {
+        scrollRef?.current.scrollToOffset({ offset: 0, animated: true })
+    }
 
     return (
         <View style={styles.container}>
             {isLoading === false && <Animated.FlatList
                 data={clothes}
                 renderItem={renderItem}
+                ref={scrollRef}
                 keyExtractor={(item, index) => index}
                 numColumns={2}
                 style={styles.list}
@@ -65,7 +72,7 @@ const List = () => {
                 onScroll={scrollHandler}
             />}
             {isLoading && <Loader />}
-            {isLoading === false && <Progressor count={count} items={itemsCount} />}
+            {isLoading === false && <Progressor goTop={scrollToTop} count={count} items={itemsCount} />}
             {isLoading === false && <Footer />}
         </View>
     )
