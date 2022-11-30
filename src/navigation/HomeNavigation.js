@@ -3,6 +3,7 @@ import React from 'react'
 import HomeHeader from '../components/Home/HomeHeader'
 import ListHeader from '../components/List/ListHeader'
 import DetailScreen from '../screens/DetailScreen'
+import FilterScreen from '../screens/FilterScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
 
@@ -24,7 +25,17 @@ const HomeNavigation = () => {
             <Stack.Screen
                 name='Detail'
                 component={DetailScreen}
-                options={{ header: () => { } }}
+                options={{
+                    header: () => { },
+                    animation: 'slide_from_bottom'
+                }}
+            />
+            <Stack.Screen
+                name='Filter'
+                component={FilterScreen}
+                options={() => ({
+                    header: () => { },
+                })}
             />
         </Stack.Navigator>
     )
