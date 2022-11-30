@@ -8,6 +8,7 @@ import Slider from './Slider'
 import Footer from './Footer'
 import Quote from './Quote'
 import Grid from './Grid'
+import Carousel from './Carousel'
 
 const Body = () => {
 
@@ -45,6 +46,8 @@ const Body = () => {
         else if (item.type === 'slider') return <Slider card={item} />
 
         else if (item.type === 'grid') return <Grid item={item} />
+
+        else if (item.type === 'carousel') return <Carousel item={item} />
 
     }
 

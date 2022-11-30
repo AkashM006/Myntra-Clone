@@ -34,24 +34,6 @@ const Carousel = ({ images, ratedCount, totalRating }) => {
                     )}
                     bounces={false}
                 />
-                {/* <View style={styles.header}>
-                    <View>
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
-                            <Image source={require('../../icons/back.png')} style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.leftContainer}>
-                        <TouchableOpacity style={styles.iconContainer}>
-                            <Image source={require('../../icons/share.png')} style={styles.icon} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconContainer}>
-                            <Image source={require('../../icons/heart.png')} style={styles.icon} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconContainer}>
-                            <Image source={require('../../icons/bag.png')} style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
-                </View> */}
                 {
                     ratedCount && ratedCount > 0 && <Rating count={ratedCount} total={totalRating} align='right' />
                 }

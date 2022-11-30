@@ -51,7 +51,8 @@ const List = () => {
 
     const viewableItemsChangedHandler = useCallback(({ viewableItems, changed }) => {
         let len = viewableItems.length
-        setCurrentItem((viewableItems[len - 1].index + 1))
+        if (len > 0)
+            setCurrentItem((viewableItems[len - 1].index + 1))
     }, [])
 
     return (

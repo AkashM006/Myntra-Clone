@@ -17,8 +17,8 @@ const Grid = ({ item }) => {
             <View style={styles.imageContainer}>
                 {item.url.map((img, index) =>
                 (
-                    <TouchableOpacity onPress={pressHandler} style={[styles.touchable, { height: +item.height }]}>
-                        <Image key={index} style={styles.image} source={{ uri: img }} />
+                    <TouchableOpacity key={index} onPress={pressHandler} style={[styles.touchable, { height: +item.height }]}>
+                        <Image style={styles.image} source={{ uri: img }} />
                     </TouchableOpacity>
                 )
                 )}
