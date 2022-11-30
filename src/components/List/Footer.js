@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
+import Filter from './Filter'
 
 const Footer = () => {
+
+    const [isVisible, setIsVisible] = useState(false)
+
     return (
         <>
             <View style={styles.top} />
@@ -14,13 +18,14 @@ const Footer = () => {
                     </CustomText>
                 </TouchableOpacity>
                 <View style={styles.separator} />
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity onPress={() => setIsVisible(true)} style={styles.option}>
                     <Image source={require('../../icons/filter.png')} style={styles.icon} />
                     <CustomText style={styles.text}>
                         FILTER
                     </CustomText>
                 </TouchableOpacity>
             </View>
+            <Filter visible={isVisible} setVisibility={setIsVisible} />
         </>
     )
 }
