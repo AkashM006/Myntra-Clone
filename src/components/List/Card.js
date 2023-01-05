@@ -55,7 +55,10 @@ const Card = ({ cloth, index }) => {
                         {substring(cloth.brand, 20)}
                     </CustomText>
                     <TouchableOpacity onPress={() => setIsFavourite(prev => !prev)}>
-                        <Image source={isFavourite === false ? heart : activeHeart} style={styles.icon} />
+                        {isFavourite === true ?
+                            <Image source={activeHeart} style={styles.icon} /> :
+                            <Image source={heart} style={styles.icon} />
+                        }
                     </TouchableOpacity>
                 </View>
                 <CustomText style={styles.name}>

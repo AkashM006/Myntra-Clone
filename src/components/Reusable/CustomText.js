@@ -4,8 +4,8 @@ import Animated from 'react-native-reanimated'
 
 const CustomText = ({ children, fontFamily, style, isAnimated }) => {
     if (isAnimated && isAnimated === true)
-        return (<Animated.Text style={[style, { fontFamily: fontFamily ?? 'Roboto-Medium' }]}>{children}</Animated.Text>)
-    return (<Text style={[style, { fontFamily: fontFamily ?? 'Roboto-Medium' }]}>{children}</Text>)
+        return (<Animated.Text style={[style, { fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV' }]}>{children}</Animated.Text>)
+    return (<Text style={[style, { fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV' }]}>{children}</Text>)
 }
 
 export default CustomText
