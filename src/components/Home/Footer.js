@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
+import { useNavigation, useNavigationState } from '@react-navigation/native'
 
 const icons = [
     {
@@ -8,6 +9,7 @@ const icons = [
         name: 'Home',
         active: require('../../icons/logo.png'),
         inactive: require('../../icons/logo-inactive.png'),
+        redirectTo: 'Home'
     },
     {
         id: 2,
@@ -32,12 +34,20 @@ const icons = [
         name: 'Profile',
         active: require('../../icons/profile.png'),
         inactive: require('../../icons/profile-inactive.png'),
+        redirectTo: 'Profile'
     }
 ]
 
 const Footer = () => {
 
-    const [activeRoute, setActiveRoute] = useState('Home')
+    const navigation = useNavigation()
+    const activeRoute = useNavigationState(state => state.routes[state.index].name)
+
+    const changeRoute = (name, link) => {
+        if (link !== null) navigation.navigate(link, {
+            title: name
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -45,7 +55,7 @@ const Footer = () => {
                 const style = [styles.image]
                 if (icon.name !== 'Home') style.push({ tintColor: activeRoute === icon.name ? '#FF69B4' : 'black' })
                 return (
-                    <TouchableOpacity onPress={() => setActiveRoute(icon.name)} key={icon.id}>
+                    <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Image
                             source={activeRoute === icon.name ? icon.active : icon.inactive}
                             style={style}

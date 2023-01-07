@@ -2,10 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import HomeHeader from '../components/Home/HomeHeader'
 import ListHeader from '../components/List/ListHeader'
+import Header from '../components/Reusable/Header'
 import DetailScreen from '../screens/DetailScreen'
 import FilterScreen from '../screens/FilterScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
+import ProfileScreen from '../screens/ProfileScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -35,6 +37,13 @@ const HomeNavigation = () => {
                 component={FilterScreen}
                 options={() => ({
                     header: () => { },
+                })}
+            />
+            <Stack.Screen
+                name='Profile'
+                component={ProfileScreen}
+                options={() => ({
+                    header: () => <Header />,
                 })}
             />
         </Stack.Navigator>
