@@ -8,45 +8,48 @@ import FilterScreen from '../screens/FilterScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-const Stack = createNativeStackNavigator()
+// const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator()
 
 const HomeNavigation = () => {
     return (
-        <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen
+        <Drawer.Navigator initialRouteName='Home'>
+            <Drawer.Screen
                 name='Home'
                 component={HomeScreen}
                 options={{ header: HomeHeader, }}
             />
-            <Stack.Screen
+            <Drawer.Screen
                 name='List'
                 component={ListScreen}
                 options={{ header: () => <ListHeader /> }}
             />
-            <Stack.Screen
+            <Drawer.Screen
                 name='Detail'
                 component={DetailScreen}
                 options={{
                     header: () => { },
-                    animation: 'slide_from_bottom'
+                    // animation: 'slide_from_bottom'
+
                 }}
             />
-            <Stack.Screen
+            <Drawer.Screen
                 name='Filter'
                 component={FilterScreen}
                 options={() => ({
                     header: () => { },
                 })}
             />
-            <Stack.Screen
+            <Drawer.Screen
                 name='Profile'
                 component={ProfileScreen}
                 options={() => ({
                     header: () => <Header />,
                 })}
             />
-        </Stack.Navigator>
+        </Drawer.Navigator>
     )
 }
 
