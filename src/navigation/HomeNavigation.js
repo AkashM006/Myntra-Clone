@@ -9,6 +9,7 @@ import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import HomeStack from './HomeStack'
 
 // const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -16,7 +17,7 @@ const Drawer = createDrawerNavigator()
 const HomeNavigation = () => {
     return (
         <Drawer.Navigator initialRouteName='Home'>
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name='Home'
                 component={HomeScreen}
                 options={{ header: HomeHeader, }}
@@ -33,6 +34,13 @@ const HomeNavigation = () => {
                     header: () => { },
                     // animation: 'slide_from_bottom'
 
+                }}
+            /> */}
+            <Drawer.Screen
+                name='Home'
+                component={HomeStack}
+                options={{
+                    header: () => { }
                 }}
             />
             <Drawer.Screen
