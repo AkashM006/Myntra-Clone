@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
-import CustomText from '../Reusable/CustomText'
+import CustomText from './CustomText'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
 
 const icons = [

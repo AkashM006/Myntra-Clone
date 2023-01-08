@@ -3,7 +3,7 @@ import React from 'react'
 import HeaderSection from '../components/Profile/HeaderSection'
 import OptionsSection from '../components/Profile/OptionsSection'
 import AppVersion from '../components/Profile/AppVersion'
-import Footer from '../components/Home/Footer'
+import Footer from '../components/Reusable/Footer'
 
 const ProfileScreen = () => {
     return (
