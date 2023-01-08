@@ -9,32 +9,37 @@ const icons = [
         name: 'Home',
         active: require('../../icons/logo.png'),
         inactive: require('../../icons/logo-inactive.png'),
-        redirectTo: 'Home'
+        redirectTo: 'Home',
+        routes: ['Main', 'Home', 'List', 'Detail']
     },
     {
         id: 2,
         name: 'Categories',
         active: require('../../icons/categories.png'),
         inactive: require('../../icons/categories-inactive.png'),
+        routes: ['Categories']
     },
     {
         id: 3,
         name: 'Studio',
         active: require('../../icons/studio.png'),
         inactive: require('../../icons/studio-inactive.png'),
+        routes: ['Studio']
     },
     {
         id: 4,
         name: 'Explore',
         active: require('../../icons/explore.png'),
         inactive: require('../../icons/explore-inactive.png'),
+        routes: ['Explore']
     },
     {
         id: 5,
         name: 'Profile',
         active: require('../../icons/profile.png'),
         inactive: require('../../icons/profile-inactive.png'),
-        redirectTo: 'Profile'
+        redirectTo: 'Profile',
+        routes: ['Profile']
     }
 ]
 
@@ -53,11 +58,11 @@ const Footer = () => {
         <View style={styles.container}>
             {icons.map(icon => {
                 const style = [styles.image]
-                if (icon.name !== 'Home') style.push({ tintColor: activeRoute === icon.name ? '#FF69B4' : 'black' })
+                if (icon.name !== 'Home') style.push({ tintColor: icon.routes.includes(activeRoute) ? '#FF69B4' : 'black' })
                 return (
                     <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Image
-                            source={activeRoute === icon.name ? icon.active : icon.inactive}
+                            source={icon.routes.includes(activeRoute) ? icon.active : icon.inactive}
                             style={style}
                         />
                         <CustomText style={[styles.text, { color: icon.name === activeRoute ? '#FF69B4' : 'black', }]}>{icon.name}</CustomText>
