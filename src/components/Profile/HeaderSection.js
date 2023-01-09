@@ -1,8 +1,15 @@
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import { useDispatch } from 'react-redux'
+import { setLoginPopUpStatus } from '../../redux/uiSlice'
 
 const HeaderSection = () => {
+
+    const dispatch = useDispatch()
+
+    const openLoginPopUp = () => { dispatch(setLoginPopUpStatus(true)) }
+
     return (
         <View style={styles.container}>
             <View style={styles.colorContainer} />
@@ -10,7 +17,7 @@ const HeaderSection = () => {
                 <View style={styles.imageContainer}>
                     <Image source={require('../../icons/profile-pic.png')} style={styles.image} />
                 </View>
-                <TouchableOpacity style={styles.login}>
+                <TouchableOpacity onPress={openLoginPopUp} style={styles.login}>
                     <CustomText style={styles.text}>
                         LOG IN/SIGN UP
                     </CustomText>
