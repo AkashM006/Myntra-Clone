@@ -1,10 +1,12 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, ActivityIndicatorBase, ActivityIndicator, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, ActivityIndicator, BackHandler, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
+import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import CustomText from '../Reusable/CustomText'
-import Loader from '../List/Loader'
+import axios from 'axios'
+import { Config } from 'react-native-config'
+import { useNavigation } from '@react-navigation/native'
 
 const LoginPop = () => {
 
@@ -14,21 +16,20 @@ const LoginPop = () => {
     const submitting = useSharedValue(0)
 
     const dispatch = useDispatch()
+    const navigation = useNavigation()
 
     const [phone, setPhone] = useState('')
     const [err, setErr] = useState(null)
     const [submitted, setSubmitted] = useState(false)
 
     const backActionHandler = () => {
-        // if the popup is true then close and return true
-        if (visible === true) {
+        if (visibility.value === 1) {
             dispatch(setLoginPopUpStatus(false))
             setPhone('')
             setErr(null)
             setSubmitted(false)
             return true
         }
-        // otherwise return false
         setPhone('')
         setErr(null)
         setSubmitted(false)
@@ -72,9 +73,7 @@ const LoginPop = () => {
             validatePhone(phone)
         }
 
-        const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
-            validatePhone(phone)
-        })
+        const keyboardListener = Keyboard.addListener('keyboardDidHide', () => { validatePhone(phone) })
 
         return () => {
             keyboardListener.remove()
@@ -109,7 +108,7 @@ const LoginPop = () => {
         return true
     }
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         let isValid = validatePhone(phone)
 
         if (isValid) { // then proceed
@@ -117,12 +116,35 @@ const LoginPop = () => {
             // disable the entire popup
             // then close it
             // then redirect to another page
+            Keyboard.dismiss()
             setSubmitted(true)
 
-            // send request
+            axios.post(`${Config.API_KEY}/authenticate/loginorsignup`, {
+                phoneNumber: '+91 ' + phone
+            })
+                .then(res => {
+                    const data = res.data
 
-            setTimeout(() => setSubmitted(false), 3000)
-            Keyboard.dismiss()
+                    if (data.status === true) {
+                        // then navigate to next page
+                        navigation.navigate('Otp', {
+                            phone,
+                        })
+                        setSubmitted(false)
+                        dispatch(setLoginPopUpStatus(false))
+                        setErr(null)
+                        setPhone('')
+                    } else {
+                        // alert regarding the error
+                        Alert.alert('Whoops!', data.message)
+                        setSubmitted(false)
+                    }
+                })
+                .catch(err => {
+                    setSubmitted(false)
+                    console.log("Err: ", err)
+                })
+
         } else {
             setErr('Please enter valid mobile number')
         }

@@ -10,7 +10,7 @@ const icons = [
         active: require('../../icons/logo.png'),
         inactive: require('../../icons/logo-inactive.png'),
         redirectTo: 'Home',
-        routes: ['Main', 'Home', 'List', 'Detail']
+        routes: ['MainHome', 'Home', 'List', 'Detail']
     },
     {
         id: 2,
@@ -39,7 +39,7 @@ const icons = [
         active: require('../../icons/profile.png'),
         inactive: require('../../icons/profile-inactive.png'),
         redirectTo: 'Profile',
-        routes: ['Profile']
+        routes: ['Profile', 'MainProfile']
     }
 ]
 

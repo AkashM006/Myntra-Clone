@@ -1,15 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
-import HomeHeader from '../components/Home/HomeHeader'
-import ListHeader from '../components/List/ListHeader'
-import Header from '../components/Reusable/Header'
-import DetailScreen from '../screens/DetailScreen'
 import FilterScreen from '../screens/FilterScreen'
-import HomeScreen from '../screens/HomeScreen'
-import ListScreen from '../screens/ListScreen'
-import ProfileScreen from '../screens/ProfileScreen'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import HomeStack from './HomeStack'
+import ProfileStack from './ProfileStack'
 
 // const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -39,23 +33,24 @@ const HomeNavigation = () => {
             <Drawer.Screen
                 name='Home'
                 component={HomeStack}
-                options={{
-                    header: () => { }
-                }}
+                options={() => ({ header: () => { }, })}
             />
             <Drawer.Screen
                 name='Filter'
                 component={FilterScreen}
-                options={() => ({
-                    header: () => { },
-                })}
+                options={() => ({ header: () => { }, })}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name='Profile'
                 component={ProfileScreen}
                 options={() => ({
                     header: () => <Header />,
                 })}
+            /> */}
+            <Drawer.Screen
+                name='Profile'
+                component={ProfileStack}
+                options={() => ({ header: () => { }, })}
             />
         </Drawer.Navigator>
     )
