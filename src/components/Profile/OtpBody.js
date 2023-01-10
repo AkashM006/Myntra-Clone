@@ -3,11 +3,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { setPhone } from '../../redux/userSlice'
 
 const OtpBody = ({ phone }) => {
 
     const [otp, setOtp] = useState('')
+    const dispatch = useDispatch()
 
     const text1 = useRef(null)
 
@@ -26,11 +29,13 @@ const OtpBody = ({ phone }) => {
             })
                 .then(res => {
                     const data = res.data
+                    dispatch(setPhone(phone))
                     if (data.status === true) {
                         if (data.message === 'New User') { // then redirect to registration page
                             navigation.navigate('Registration')
                         } else { // then existing user redirect back
-                            // fill in with the user details and go back
+                            const popAction = StackActions.pop(2)
+                            navigation.dispatch(popAction)
                         }
                     } else {
                         Alert.alert('Whoops!', data.message)
