@@ -23,7 +23,7 @@ const OtpBody = ({ phone }) => {
     useEffect(() => {
         if (otp.length === 4) {
             // here send http request
-            axios.post(`${Config.API_KEY}/authenticate/verifyotp`, {
+            axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {
                 phoneNumber: '+91 ' + phone,
                 otp
             })

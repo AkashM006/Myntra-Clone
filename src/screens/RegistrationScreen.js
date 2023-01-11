@@ -1,22 +1,35 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useState } from 'react'
 import CustomText from '../components/Reusable/CustomText'
 import Form from '../components/Profile/Form'
+import { StackActions, useNavigation } from '@react-navigation/native'
+import CustomLoader from '../components/Reusable/CustomLoader'
 
 const RegistrationScreen = () => {
-    const backHandler = () => {
 
+    const navigation = useNavigation()
+
+    const [submitted, setSubmitted] = useState(false)
+
+    const backHandler = () => {
+        if (navigation.canGoBack) {
+            setSubmitted(false)
+            navigation.dispatch(StackActions.popToTop())
+        }
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.haederContainer}>
                 <TouchableOpacity style={styles.back} onPress={backHandler}>
                     <Image source={require('../icons/back.png')} />
                 </TouchableOpacity>
                 <CustomText style={styles.text}>Complete your sign up</CustomText>
             </View>
-            <Form />
-        </View>
+            <Form setSubmitted={setSubmitted} />
+            {submitted && <View style={styles.overlay}>
+                <CustomLoader />
+            </View>}
+        </ScrollView>
     )
 }
 
@@ -39,6 +52,14 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex: 1
+    },
+    overlay: {
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        width: ' 100%',
+        height: '100%',
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 

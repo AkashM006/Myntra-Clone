@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, ActivityIndicator, BackHandler, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 const LoginPop = () => {
 
@@ -69,22 +69,23 @@ const LoginPop = () => {
     }
 
     useEffect(() => {
-        if (err !== null) {
-            validatePhone(phone)
-        }
-
-        const keyboardListener = Keyboard.addListener('keyboardDidHide', () => { validatePhone(phone) })
-
+        const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
+            if (err !== null) {
+                console.log("Keyboard listener")
+                validatePhone(phone)
+            }
+        })
         return () => {
             keyboardListener.remove()
         }
-
-    }, [phone])
+    }, [])
 
     const termsHandler = () => { }
     const policyHandler = () => { }
 
     const validatePhone = (ph) => {
+
+        console.log("Validated")
 
         if (ph.trim().length !== 10) {
             setErr('Phone number should be 10 digits long')
@@ -109,17 +110,14 @@ const LoginPop = () => {
     }
 
     const submitHandler = async () => {
+        console.log("Submit Handler")
         let isValid = validatePhone(phone)
 
-        if (isValid) { // then proceed
-            // then send request
-            // disable the entire popup
-            // then close it
-            // then redirect to another page
+        if (isValid) {
             Keyboard.dismiss()
             setSubmitted(true)
 
-            axios.post(`${Config.API_KEY}/authenticate/loginorsignup`, {
+            axios.post(`${Config.OTP_API_KEY}/authenticate/loginorsignup`, {
                 phoneNumber: '+91 ' + phone
             })
                 .then(res => {
@@ -127,13 +125,13 @@ const LoginPop = () => {
 
                     if (data.status === true) {
                         // then navigate to next page
+                        setErr(null)
+                        setSubmitted(false)
+                        dispatch(setLoginPopUpStatus(false))
+                        setPhone('')
                         navigation.navigate('Otp', {
                             phone,
                         })
-                        setSubmitted(false)
-                        dispatch(setLoginPopUpStatus(false))
-                        setErr(null)
-                        setPhone('')
                     } else {
                         // alert regarding the error
                         Alert.alert('Whoops!', data.message)

@@ -10,7 +10,9 @@ const Drawer = createDrawerNavigator()
 
 const HomeNavigation = () => {
     return (
-        <Drawer.Navigator initialRouteName='Home'>
+        <Drawer.Navigator initialRouteName='Home' screenOptions={{
+            unmountOnBlur: true
+        }} >
             {/* <Drawer.Screen
                 name='Home'
                 component={HomeScreen}
