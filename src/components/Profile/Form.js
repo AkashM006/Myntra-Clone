@@ -120,7 +120,6 @@ const Form = ({ setSubmitted }) => {
 
         axios.post(`${Config.REGISTER_API_KEY}/authenticate/register`, obj)
             .then(res => {
-                console.log("Response: ", res.data)
                 const data = res.data
                 if (data.status === true) {
                     // then store the token
