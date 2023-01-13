@@ -16,7 +16,6 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import MainScreen from './src/screens/MainScreen';
-import { Config } from 'react-native-config'
 
 const App = () => {
 

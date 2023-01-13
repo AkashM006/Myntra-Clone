@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, Pressable, Keyboard, TextInput, Alert } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
-import { StackActions, useNavigation } from '@react-navigation/native'
+import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setPhone } from '../../redux/userSlice'
+import { removeListener, startOtpListener } from 'react-native-otp-verify'
 
 const OtpBody = ({ phone }) => {
 
@@ -19,6 +20,18 @@ const OtpBody = ({ phone }) => {
     }
 
     const navigation = useNavigation()
+
+    useFocusEffect(
+        useCallback(() => {
+            startOtpListener(message => {
+                if (message) {
+                    const otp = /(\d{4})/g.exec(message)[1];
+                    setOtp(otp);
+                }
+            });
+            return () => removeListener()
+        }, [])
+    )
 
     useEffect(() => {
         if (otp.length === 4) {

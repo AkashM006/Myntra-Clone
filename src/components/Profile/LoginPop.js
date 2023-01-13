@@ -71,7 +71,6 @@ const LoginPop = () => {
     useEffect(() => {
         const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
             if (err !== null) {
-                console.log("Keyboard listener")
                 validatePhone(phone)
             }
         })
@@ -84,8 +83,6 @@ const LoginPop = () => {
     const policyHandler = () => { }
 
     const validatePhone = (ph) => {
-
-        console.log("Validated")
 
         if (ph.trim().length !== 10) {
             setErr('Phone number should be 10 digits long')
@@ -110,7 +107,6 @@ const LoginPop = () => {
     }
 
     const submitHandler = async () => {
-        console.log("Submit Handler")
         let isValid = validatePhone(phone)
 
         if (isValid) {
