@@ -23,7 +23,7 @@ const RegistrationScreen = () => {
                 <TouchableOpacity style={styles.back} onPress={backHandler}>
                     <Image source={require('../icons/back.png')} />
                 </TouchableOpacity>
-                <CustomText style={styles.text}>Complete your sign up</CustomText>
+                <CustomText weight={'light'} style={styles.text}>Complete your sign up</CustomText>
             </View>
             <Form setSubmitted={setSubmitted} />
             {submitted && <View style={styles.overlay}>
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     text: {
         color: 'black',
         fontSize: 18,
-        fontWeight: '700'
     },
     container: {
         backgroundColor: 'white',

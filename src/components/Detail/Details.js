@@ -35,7 +35,7 @@ const Details = () => {
                             </View>
                             <View style={styles.row}>
                                 <View style={[styles.detailCard, { marginRight: 20 }]}>
-                                    <CustomText style={styles.title}>
+                                    <CustomText weight='light' style={styles.title}>
                                         Waist Rise
                                     </CustomText>
                                     <CustomText style={styles.text}>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 14,
-        fontWeight: '700',
         color: 'black'
     },
     text: {

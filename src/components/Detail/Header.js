@@ -21,7 +21,7 @@ const Header = ({ brand, name, price, discount }) => {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <CustomText style={styles.brand}>
+                <CustomText weight={'bold'} style={styles.brand}>
                     {brand}
                     <CustomText style={styles.name}>
                         {' ' + name}
@@ -36,7 +36,7 @@ const Header = ({ brand, name, price, discount }) => {
                     <CustomText style={[styles.price, priceStyle[hasDiscount]]}>
                         {formatCurrency(price).split('.')[0]}
                     </CustomText>
-                    {hasDiscount && <CustomText style={styles.discountedPrice}>
+                    {hasDiscount && <CustomText weight={'light'} style={styles.discountedPrice}>
                         {formatCurrency(+calculateDiscount(price, discount)).split('.')[0]}
                     </CustomText>}
                     {hasDiscount && <CustomText style={styles.discount}>
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     },
     brand: {
         color: 'black',
-        fontWeight: '800',
         fontSize: 16
     },
     titleContainer: {
@@ -84,7 +83,6 @@ const styles = StyleSheet.create({
     discountedPrice: {
         color: 'black',
         marginLeft: 5,
-        fontWeight: '700'
     },
     discount: {
         marginLeft: 5,

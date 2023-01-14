@@ -14,6 +14,9 @@ const OtpBody = ({ phone }) => {
     const dispatch = useDispatch()
 
     const text1 = useRef(null)
+    const [time, setTime] = useState(5)
+
+    const [cleared, setCleared] = useState(false)
 
     const handleTextChange = value => {
         if (otp.length <= 4 && value.length <= 4) setOtp(value)
@@ -21,10 +24,40 @@ const OtpBody = ({ phone }) => {
 
     const navigation = useNavigation()
 
+    let timer;
+
+    useFocusEffect(
+        useCallback(() => {
+            timer = setInterval(() => {
+                setTime(prev => prev - 1)
+            }, 1000)
+            return () => {
+                clearInterval(timer)
+            }
+        }, [])
+    )
+
+    useFocusEffect(
+        useCallback(() => {
+
+            if (time > 0 && cleared === true) {
+                timer = setInterval(() => {
+                    setTime(15)
+                    setCleared(false)
+                }, 1000)
+            }
+
+            if (time === 0) {
+                clearInterval(timer)
+                setCleared(true)
+            }
+        }, [time, cleared])
+    )
+
     useFocusEffect(
         useCallback(() => {
             startOtpListener(message => {
-                if (message) {
+                if (message !== null) {
                     const otp = /(\d{4})/g.exec(message)[1];
                     setOtp(otp);
                 }
@@ -63,10 +96,32 @@ const OtpBody = ({ phone }) => {
 
     const focused = _ => text1.current.focus()
 
+    const handleLoginWithPassword = () => {
+        navigation.navigate('Password', {
+            phone
+        })
+    }
+
+    const resendOtp = () => {
+        axios.post(`${Config.OTP_API_KEY}/authenticate/loginorsignup`, {
+            phoneNumber: '+91 ' + phone
+        })
+            .then(res => {
+                const data = res.data
+
+                if (data.status === true) {
+                    setTime(15)
+                }
+            })
+            .catch(err => {
+                console.log("Err: ", err)
+            })
+    }
+
 
     return (
         <View style={styles.container}>
-            <CustomText style={styles.title}>
+            <CustomText weight={'light'} style={styles.title}>
                 Verify with OTP
             </CustomText>
             <CustomText style={styles.subtitle}>
@@ -80,22 +135,28 @@ const OtpBody = ({ phone }) => {
                 <TextInput value={otp} style={{ opacity: 1 }} cursorColor='white' ref={text1} keyboardType='decimal-pad' onChangeText={handleTextChange} />
             </View>
             <View style={styles.textContainer}>
-                <View style={styles.textInnerContainer}>
-                    <CustomText style={styles.text}>Did not reveive OTP?</CustomText>
-                    <Pressable>
-                        <CustomText style={styles.highlight}> Resend OTP</CustomText>
-                    </Pressable>
-                </View>
+                {time <= 0 ?
+                    <View style={styles.textInnerContainer}>
+                        <CustomText style={styles.text}>Did not reveive OTP?</CustomText>
+                        <Pressable onPress={resendOtp}>
+                            <CustomText weight={'light'} style={styles.highlight}> Resend OTP</CustomText>
+                        </Pressable>
+                    </View> :
+                    <View style={styles.textInnerContainer}>
+                        <CustomText style={styles.light}>Trying to auto-fill OTP</CustomText>
+                        <CustomText style={styles.text}> 00:{(time + '').padStart(2)}</CustomText>
+                    </View>
+                }
                 <View style={styles.textInnerContainer}>
                     <CustomText style={styles.text}>Log in using </CustomText>
-                    <Pressable>
-                        <CustomText style={styles.highlight}>Password</CustomText>
+                    <Pressable onPress={handleLoginWithPassword}>
+                        <CustomText weight={'light'} style={styles.highlight}>Password</CustomText>
                     </Pressable>
                 </View>
                 <View style={styles.textInnerContainer}>
                     <CustomText style={styles.text}>Having trouble logging in? </CustomText>
                     <Pressable>
-                        <CustomText style={styles.highlight}>Get help</CustomText>
+                        <CustomText weight={'light'} style={styles.highlight}>Get help</CustomText>
                     </Pressable>
                 </View>
             </View>
@@ -111,7 +172,6 @@ const styles = StyleSheet.create({
     highlight: {
         color: '#ff406c',
         fontSize: 12,
-        fontWeight: '700'
     },
     textInnerContainer: {
         flexDirection: 'row',
@@ -126,7 +186,6 @@ const styles = StyleSheet.create({
     },
     title: {
         color: 'black',
-        fontWeight: '700',
         fontSize: 24,
         marginBottom: 10
     },
@@ -150,6 +209,10 @@ const styles = StyleSheet.create({
     numberContainer: {
         flexDirection: 'row',
         marginTop: 10
+    },
+    light: {
+        color: '#bbbbbb',
+        fontSize: 12
     }
 })
 

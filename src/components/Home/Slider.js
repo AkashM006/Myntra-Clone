@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
@@ -14,7 +14,7 @@ const Slider = ({ card }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText style={styles.text}>{card.title}</CustomText>
+            <CustomText weight={'light'} style={styles.text}>{card.title}</CustomText>
             <FlatList
                 data={card.url}
                 horizontal
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         color: 'black',
-        fontWeight: '700'
     },
     container: {
         backgroundColor: 'white'

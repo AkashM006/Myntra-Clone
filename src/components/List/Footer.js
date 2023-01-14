@@ -40,14 +40,14 @@ const Footer = () => {
             <View style={styles.container}>
                 <TouchableOpacity onPress={sortHandler} style={styles.option}>
                     <Image source={require('../../icons/sort.png')} style={styles.icon} />
-                    <CustomText style={styles.text}>
+                    <CustomText weight={'bold'} style={styles.text}>
                         SORT
                     </CustomText>
                 </TouchableOpacity>
                 <View style={styles.separator} />
                 <TouchableOpacity style={styles.option}>
                     <Image source={require('../../icons/filter.png')} style={styles.icon} />
-                    <CustomText style={styles.text}>
+                    <CustomText weight={'bold'} style={styles.text}>
                         FILTER
                     </CustomText>
                 </TouchableOpacity>
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'black',
-        fontWeight: '800',
     },
     separator: {
         height: 25,

@@ -35,7 +35,7 @@ const ListHeader = () => {
                     <Image source={require('../../icons/back.png')} style={styles.back} />
                 </TouchableOpacity>
                 <View style={styles.left}>
-                    <CustomText style={styles.text}>
+                    <CustomText weight={'light'} style={styles.text}>
                         {title}
                     </CustomText>
                     {count === null ? <Skeleton height={15} width={70} borderRadius={4} /> : <CustomText style={styles.count}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: '3.5%',
         justifyContent: 'space-between',
     },
-    text: { color: 'black', fontWeight: '700', },
+    text: { color: 'black', },
     back: { height: 20, width: 20, },
     backContainer: { marginRight: 15 },
     count: { color: '#C0C0C0', fontSize: 12, },

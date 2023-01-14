@@ -11,7 +11,7 @@ const ProfileScreen = () => {
     return (
         <>
             <Overlay />
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <HeaderSection />
                 <OptionsSection />
                 <AppVersion />

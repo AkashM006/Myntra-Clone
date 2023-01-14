@@ -70,7 +70,7 @@ const Card = ({ item, index, length, separator, moreicon, titleStyle }) => {
                     <View style={styles.icon} />
             }
             <View>
-                <CustomText style={[styles.title, titleStyle]}>{item.title}</CustomText>
+                <CustomText weight={'bolder'} style={[styles.title, titleStyle]}>{item.title}</CustomText>
                 {item.subtitle && <CustomText style={styles.subtitle}>{item.subtitle}</CustomText>}
             </View>
         </View>
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        fontWeight: '900',
         color: '#71727c',
         marginBottom: 3
     },

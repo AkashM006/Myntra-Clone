@@ -28,7 +28,7 @@ const Carousel = ({ item }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText style={styles.heading}>
+            <CustomText weight={'bold'} style={styles.heading}>
                 {item.title}
             </CustomText>
             <Animated.FlatList
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontSize: 18,
-        fontWeight: '800',
         color: 'black',
         textAlign: 'center',
         marginVertical: 5

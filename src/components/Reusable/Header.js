@@ -8,7 +8,7 @@ const Header = () => {
 
     return (
         <View style={styles.container}>
-            <CustomText style={styles.text}>{title}</CustomText>
+            <CustomText weight={'bolder'} style={styles.text}>{title}</CustomText>
         </View>
     )
 }
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontWeight: '900',
         color: 'gray'
     }
 })

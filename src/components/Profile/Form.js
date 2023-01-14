@@ -197,11 +197,11 @@ const Form = ({ setSubmitted }) => {
                     This name will be a hint for your alternate number
                 </CustomText>
             </View>
-            <CustomText style={styles.highlight}>
+            <CustomText weight={'light'} style={styles.highlight}>
                 I have a referral code
             </CustomText>
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                <CustomText style={styles.buttonText}>
+                <CustomText weight={'light'} style={styles.buttonText}>
                     CREATE ACCOUNT
                 </CustomText>
             </TouchableOpacity>
@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
     highlight: {
         color: '#ff406c',
         fontSize: 12,
-        fontWeight: '700',
         marginVertical: 20
     },
     button: {
@@ -250,7 +249,6 @@ const styles = StyleSheet.create({
         paddingVertical: 15
     },
     buttonText: {
-        fontWeight: '700',
         color: 'white'
     }
 })

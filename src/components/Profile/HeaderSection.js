@@ -18,7 +18,7 @@ const HeaderSection = () => {
                     <Image source={require('../../icons/profile-pic.png')} style={styles.image} />
                 </View>
                 <TouchableOpacity onPress={openLoginPopUp} style={styles.login}>
-                    <CustomText style={styles.text}>
+                    <CustomText weight={'bolder'} style={styles.text}>
                         LOG IN/SIGN UP
                     </CustomText>
                 </TouchableOpacity>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         left: '35%'
     },
     text: {
-        fontWeight: '900',
         color: 'white'
     },
     container: {

@@ -7,11 +7,11 @@ const Size = ({ sizes, itemSizes, setStickyFooter }) => {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <CustomText style={styles.title}>
+                <CustomText weight={'light'} style={styles.title}>
                     Select Size
                 </CustomText>
                 <TouchableOpacity>
-                    <CustomText style={styles.select}>
+                    <CustomText weight={'light'} style={styles.select}>
                         Size chart
                     </CustomText>
                 </TouchableOpacity>
@@ -35,13 +35,13 @@ const Size = ({ sizes, itemSizes, setStickyFooter }) => {
                 style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <Image source={require('../../icons/heart.png')} style={styles.icon} />
-                    <CustomText style={[styles.text, { color: 'black' }]}>
+                    <CustomText weight={'light'} style={[styles.text, { color: 'black' }]}>
                         WISHLIST
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
                     <Image source={require('../../icons/bag.png')} style={[styles.icon, { tintColor: 'white' }]} />
-                    <CustomText style={[styles.text, { color: 'white' }]}>
+                    <CustomText weight={'light'} style={[styles.text, { color: 'white' }]}>
                         ADD TO BAG
                     </CustomText>
                 </TouchableOpacity>
@@ -65,12 +65,10 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontWeight: '700',
         color: 'black',
     },
     select: {
         fontSize: 14,
-        fontWeight: '700',
         color: '#FF69B4',
     },
     sizesContainer: {
@@ -116,7 +114,6 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 12,
-        fontWeight: '700',
         marginLeft: 10
     }
 })

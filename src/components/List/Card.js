@@ -51,7 +51,7 @@ const Card = ({ cloth, index }) => {
             </View>
             <View style={styles.body}>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.text}>
+                    <CustomText weight={'bold'} style={styles.text}>
                         {substring(cloth.brand, 20)}
                     </CustomText>
                     <TouchableOpacity onPress={() => setIsFavourite(prev => !prev)}>
@@ -68,7 +68,7 @@ const Card = ({ cloth, index }) => {
                     <CustomText style={[styles.price, priceTextStyle[hasDiscount]]}>
                         {formatCurrency(cloth.price).split('.')[0]}
                     </CustomText>
-                    {hasDiscount && <CustomText style={styles.discount}>
+                    {hasDiscount && <CustomText weight={'light'} style={styles.discount}>
                         {formatCurrency(+calculateDiscount(cloth.price, cloth.discount)).split('.')[0]}
                     </CustomText>}
                     {hasDiscount && <CustomText style={styles.percentage}>
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#696969',
-        fontWeight: '800',
         fontSize: 14,
     },
     name: {
@@ -124,7 +123,6 @@ const styles = StyleSheet.create({
     price: { fontSize: 14, },
     discount: {
         fontSize: 12,
-        fontWeight: '700',
         color: 'black',
         marginLeft: 5,
     },

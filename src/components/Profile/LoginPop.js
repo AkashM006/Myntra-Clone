@@ -163,10 +163,10 @@ const LoginPop = () => {
             </View>
             <View>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.bold}>
+                    <CustomText weight={'light'} style={styles.bold}>
                         Login
                     </CustomText>
-                    <CustomText style={styles.thin}>
+                    <CustomText weight={'light'} style={styles.thin}>
                         {' '} or {' '}
                     </CustomText>
                     <CustomText style={styles.bold}>
@@ -210,7 +210,7 @@ const LoginPop = () => {
                     </CustomText>
                 </View>
                 <TouchableOpacity onPress={submitHandler} style={styles.button}>
-                    <CustomText style={styles.buttonText}>CONTINUE</CustomText>
+                    <CustomText weight={'light'} style={styles.buttonText}>CONTINUE</CustomText>
                 </TouchableOpacity>
                 <View style={styles.helpContainer}>
                     <CustomText style={styles.text}>
@@ -236,7 +236,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     buttonText: {
-        fontWeight: '700',
         color: 'white',
     },
     countryCode: {
@@ -288,7 +287,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     bold: {
-        fontWeight: '700',
         color: 'black',
         fontSize: 18
     },
