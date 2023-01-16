@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Alert, Image, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,8 +10,9 @@ import { setToken } from '../../redux/userSlice'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import CustomTextInput from '../Reusable/CustomTextInput'
+import CustomButton from '../Reusable/CustomButton'
 
-const Form = ({ setSubmitted }) => {
+const Form = ({ setSubmitted, submitted }) => {
 
     const phone = useSelector(state => state.user.phone)
     const dispatch = useDispatch()
@@ -103,6 +104,7 @@ const Form = ({ setSubmitted }) => {
 
     const handleSubmit = () => {
         if (!validate()) return
+        Keyboard.dismiss()
         setSubmitted(true)
         let obj = {
             password,
@@ -129,6 +131,8 @@ const Form = ({ setSubmitted }) => {
             })
             .catch(err => {
                 console.log("Err: ", err)
+                setSubmitted(false)
+                Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
             })
     }
 
@@ -171,9 +175,10 @@ const Form = ({ setSubmitted }) => {
             />
             <CustomText size={11} color={COLORS.SHADEDARK}>This name will be a hint for your alternate number</CustomText>
             <CustomText weight={'light'} color={COLORS.PRIMARY} vertical={20}>I have a referral code</CustomText>
-            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            {/* <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <CustomText weight={'light'} color={COLORS.WHITE}>CREATE ACCOUNT</CustomText>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <CustomButton disabled={submitted} onPressHandler={handleSubmit} text='CREATE ACCOUNT' />
         </View>
     )
 }

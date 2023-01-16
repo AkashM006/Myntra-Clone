@@ -18,10 +18,8 @@ const ProfileStack = () => {
         <Stack.Navigator>
             <Stack.Screen
                 name='MainProfile'
-                // component={ProfileScreen}
-                // options={{ header: Header, }}
-                component={OtpScreen}
-                options={options}
+                component={ProfileScreen}
+                options={{ header: Header, }}
             />
             <Stack.Screen
                 name='Otp'

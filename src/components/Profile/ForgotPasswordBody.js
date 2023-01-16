@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from 'react-native'
+import { View, StyleSheet, Pressable, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import CustomTextInput from '../Reusable/CustomTextInput'
 import CustomButton from '../Reusable/CustomButton'
@@ -27,6 +27,7 @@ const ForgotPasswordBody = ({ submitted, setSubmitted }) => {
     const handleSubmit = () => {
 
         if (validateUserId()) {
+            Keyboard.dismiss()
             setSubmitted(true)
             // send request for reset
 

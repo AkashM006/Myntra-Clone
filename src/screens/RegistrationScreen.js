@@ -1,9 +1,9 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../components/Reusable/CustomText'
 import Form from '../components/Profile/Form'
 import { StackActions, useNavigation } from '@react-navigation/native'
-import CustomLoader from '../components/Reusable/CustomLoader'
+import Overlay from '../components/Reusable/Overlay'
 
 const RegistrationScreen = () => {
 
@@ -25,10 +25,8 @@ const RegistrationScreen = () => {
                 </TouchableOpacity>
                 <CustomText weight={'light'} size={18}>Complete your sign up</CustomText>
             </View>
-            <Form setSubmitted={setSubmitted} />
-            {submitted && <View style={styles.overlay}>
-                <CustomLoader />
-            </View>}
+            <Form setSubmitted={setSubmitted} submitted={submitted} />
+            <Overlay render={submitted} />
         </ScrollView>
     )
 }
@@ -48,14 +46,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1
     },
-    overlay: {
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        width: ' 100%',
-        height: '100%',
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
 })
 
 export default RegistrationScreen

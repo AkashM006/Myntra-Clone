@@ -140,6 +140,7 @@ const LoginPop = () => {
                 .catch(err => {
                     setSubmitted(false)
                     console.log("Err: ", err)
+                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
                 })
 
         } else {

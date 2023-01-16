@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, TouchableOpacity, Pressable, Keyboard } from 'react-native'
+import { View, StyleSheet, Pressable, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
@@ -72,6 +72,7 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
                 value={password}
                 onChangeTextHandler={setPassword}
                 error={passwordError}
+                secure={true}
             />
             <CustomButton disabled={submitted} text='LOGIN' onPressHandler={submitHandler} />
             <View style={styles.textContainer}>

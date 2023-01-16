@@ -95,6 +95,8 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 })
                 .catch(err => {
                     console.log("Err: ", err)
+                    setSubmitted(false)
+                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
                 })
         }
     }, [otp])

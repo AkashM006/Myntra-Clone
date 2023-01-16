@@ -8,7 +8,7 @@ const PasswordScreen = () => {
 
     const phone = useRoute().params?.phone
     const navigation = useNavigation()
-    const [submitted, setSubmited] = useState(false)
+    const [submitted, setSubmitted] = useState(false)
 
     const handleBack = () => {
         if (navigation.canGoBack) {
@@ -22,7 +22,7 @@ const PasswordScreen = () => {
             <TouchableOpacity onPress={handleBack}>
                 <Image source={require('../icons/back.png')} />
             </TouchableOpacity>
-            <PasswordBody submitted={submitted} setSubmited={setSubmited} phone={phone} />
+            <PasswordBody submitted={submitted} setSubmitted={setSubmitted} phone={phone} />
         </View>
     )
 }

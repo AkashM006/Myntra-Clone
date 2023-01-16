@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import ForgotPasswordBody from '../components/Profile/ForgotPasswordBody'
+import Overlay from '../components/Reusable/Overlay'
 
 const ForgotPasswordScreen = () => {
 
@@ -21,6 +22,7 @@ const ForgotPasswordScreen = () => {
                 <Image source={require('../icons/back.png')} />
             </TouchableOpacity>
             <ForgotPasswordBody submitted={submitted} setSubmitted={setSubmitted} />
+            <Overlay render={submitted} />
         </View>
     )
 }
