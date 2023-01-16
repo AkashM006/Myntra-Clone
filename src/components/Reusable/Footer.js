@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import React from 'react'
 import CustomText from './CustomText'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
+import COLORS from '../../constants/Colors'
 
 const icons = [
     {
@@ -58,14 +59,14 @@ const Footer = () => {
         <View style={styles.container}>
             {icons.map(icon => {
                 const style = [styles.image]
-                if (icon.name !== 'Home') style.push({ tintColor: icon.routes.includes(activeRoute) ? '#FF69B4' : 'black' })
+                if (icon.name !== 'Home') style.push({ tintColor: icon.routes.includes(activeRoute) ? COLORS.PRIMARY : COLORS.BLACK })
                 return (
                     <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Image
                             source={icon.routes.includes(activeRoute) ? icon.active : icon.inactive}
                             style={style}
                         />
-                        <CustomText style={[styles.text, { color: icon.name === activeRoute ? '#FF69B4' : 'black', }]}>{icon.name}</CustomText>
+                        <CustomText style={[styles.text, { color: icon.name === activeRoute ? COLORS.PRIMARY : COLORS.BLACK, }]}>{icon.name}</CustomText>
                     </TouchableOpacity>
                 )
             })}
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        fontSize: 12,
     }
 })
 

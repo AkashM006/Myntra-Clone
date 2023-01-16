@@ -2,11 +2,9 @@ import { View, StyleSheet, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import CustomTextInput from '../Reusable/CustomTextInput'
 import CustomButton from '../Reusable/CustomButton'
-import CustomTitle from '../Reusable/CustomTitle'
-import CustomSubtitle from '../Reusable/CustomSubtitle'
-import CustomHighlightedText from '../Reusable/CustomHighlightedText'
-import CustomMediumText from '../Reusable/CustomMediumText'
 import { phoneValidator, emailValidator } from '../../validators'
+import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 
 const ForgotPasswordBody = ({ submitted, setSubmitted }) => {
@@ -41,8 +39,10 @@ const ForgotPasswordBody = ({ submitted, setSubmitted }) => {
 
     return (
         <View style={styles.container}>
-            <CustomTitle text='Reset password' />
-            <CustomSubtitle text={`Enter your email or mobile number and we'll send a link on your email to reset your password.`} />
+            <CustomText size={24} weight={'light'} bottom={10} >Reset Password</CustomText>
+            <CustomText color={COLORS.SHADELIGHT} bottom={20}>
+                Enter your email or mobile number and we'll send a link on your email to reset your password.
+            </CustomText>
             <CustomTextInput
                 placeholder='Email or Mobile Number*'
                 value={userId}
@@ -51,9 +51,13 @@ const ForgotPasswordBody = ({ submitted, setSubmitted }) => {
             />
             <CustomButton disabled={submitted} onPressHandler={handleSubmit} text='SEND LINK' />
             <View style={styles.textContainer}>
-                <CustomMediumText text='Unable to reset password? ' />
+                <CustomText color={COLORS.SHADEDARK}>
+                    Unable to reset password? {' '}
+                </CustomText>
                 <Pressable>
-                    <CustomHighlightedText text='Get help' />
+                    <CustomText color={COLORS.PRIMARY} weight='light'>
+                        Get help
+                    </CustomText>
                 </Pressable>
             </View>
         </View>

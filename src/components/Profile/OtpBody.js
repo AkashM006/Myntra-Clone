@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Keyboard, TextInput, Alert } from 'react-native'
+import { View, StyleSheet, Pressable, Keyboard, TextInput, Alert } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
@@ -7,14 +7,15 @@ import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/n
 import { useDispatch } from 'react-redux'
 import { setPhone } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
+import COLORS from '../../constants/Colors'
 
-const OtpBody = ({ phone }) => {
+const OtpBody = ({ phone, setSubmitted }) => {
 
     const [otp, setOtp] = useState('')
     const dispatch = useDispatch()
 
     const text1 = useRef(null)
-    const [time, setTime] = useState(5)
+    const [time, setTime] = useState(15)
 
     const [cleared, setCleared] = useState(false)
 
@@ -58,8 +59,12 @@ const OtpBody = ({ phone }) => {
         useCallback(() => {
             startOtpListener(message => {
                 if (message !== null) {
-                    const otp = /(\d{4})/g.exec(message)[1];
-                    setOtp(otp);
+                    try {
+                        const otp = /(\d{4})/g.exec(message)[1];
+                        setOtp(otp);
+                    } catch (err) {
+                        console.log("Err: ", err)
+                    }
                 }
             });
             return () => removeListener()
@@ -69,6 +74,8 @@ const OtpBody = ({ phone }) => {
     useEffect(() => {
         if (otp.length === 4) {
             // here send http request
+            setSubmitted(true)
+            Keyboard.dismiss()
             axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {
                 phoneNumber: '+91 ' + phone,
                 otp
@@ -76,13 +83,11 @@ const OtpBody = ({ phone }) => {
                 .then(res => {
                     const data = res.data
                     dispatch(setPhone(phone))
+                    setSubmitted(false)
                     if (data.status === true) {
-                        if (data.message === 'New User') { // then redirect to registration page
-                            navigation.navigate('Registration')
-                        } else { // then existing user redirect back
-                            const popAction = StackActions.pop(2)
-                            navigation.dispatch(popAction)
-                        }
+                        if (data.message === 'New User') navigation.navigate('Registration')
+                        else navigation.dispatch(StackActions.popToTop())
+
                     } else {
                         Alert.alert('Whoops!', data.message)
                     }
@@ -109,11 +114,11 @@ const OtpBody = ({ phone }) => {
             .then(res => {
                 const data = res.data
 
-                if (data.status === true) {
-                    setTime(15)
-                }
+                if (data.status === true) setTime(15)
+                else Alert.alert("Whoops!", 'Something went wrong! Please try again later')
             })
             .catch(err => {
+                Alert.alert("Whoops!", 'Something went wrong! Please try again later')
                 console.log("Err: ", err)
             })
     }
@@ -121,10 +126,10 @@ const OtpBody = ({ phone }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText weight={'light'} style={styles.title}>
+            <CustomText weight={'light'} size={24}>
                 Verify with OTP
             </CustomText>
-            <CustomText style={styles.subtitle}>
+            <CustomText bottom={20} vertical={10} color={COLORS.SHADELIGHT}>
                 Sent via SMS to {phone}
             </CustomText>
             <View style={styles.numberContainer}>
@@ -132,31 +137,40 @@ const OtpBody = ({ phone }) => {
                 <TextInput style={styles.number} cursorColor='white' defaultValue={otp.charAt(1)} maxLength={1} textAlign='center' keyboardType='decimal-pad' onFocus={focused} />
                 <TextInput style={styles.number} cursorColor='white' defaultValue={otp.charAt(2)} maxLength={1} textAlign='center' keyboardType='decimal-pad' onFocus={focused} />
                 <TextInput style={styles.number} cursorColor='white' defaultValue={otp.charAt(3)} maxLength={1} textAlign='center' keyboardType='decimal-pad' onFocus={focused} />
-                <TextInput value={otp} style={{ opacity: 1 }} cursorColor='white' ref={text1} keyboardType='decimal-pad' onChangeText={handleTextChange} />
+                <TextInput
+                    value={otp}
+                    accessible={false}
+                    style={{ color: 'white' }}
+                    cursorColor='white'
+                    ref={text1}
+                    keyboardType='decimal-pad'
+                    onChangeText={handleTextChange}
+                    contextMenuHidden={true}
+                />
             </View>
             <View style={styles.textContainer}>
                 {time <= 0 ?
                     <View style={styles.textInnerContainer}>
-                        <CustomText style={styles.text}>Did not reveive OTP?</CustomText>
+                        <CustomText color={COLORS.SHADEDARK}>Did not reveive OTP?</CustomText>
                         <Pressable onPress={resendOtp}>
-                            <CustomText weight={'light'} style={styles.highlight}> Resend OTP</CustomText>
+                            <CustomText weight={'light'} color={COLORS.PRIMARY}> Resend OTP</CustomText>
                         </Pressable>
                     </View> :
                     <View style={styles.textInnerContainer}>
-                        <CustomText style={styles.light}>Trying to auto-fill OTP</CustomText>
-                        <CustomText style={styles.text}> 00:{(time + '').padStart(2)}</CustomText>
+                        <CustomText color={COLORS.SHADELIGHT}>Trying to auto-fill OTP</CustomText>
+                        <CustomText color={COLORS.SHADEDARK}> 00:{(time + '').padStart(2, '0')}</CustomText>
                     </View>
                 }
                 <View style={styles.textInnerContainer}>
-                    <CustomText style={styles.text}>Log in using </CustomText>
+                    <CustomText color={COLORS.SHADEDARK}>Log in using </CustomText>
                     <Pressable onPress={handleLoginWithPassword}>
-                        <CustomText weight={'light'} style={styles.highlight}>Password</CustomText>
+                        <CustomText weight={'light'} color={COLORS.PRIMARY}>Password</CustomText>
                     </Pressable>
                 </View>
                 <View style={styles.textInnerContainer}>
-                    <CustomText style={styles.text}>Having trouble logging in? </CustomText>
+                    <CustomText color={COLORS.SHADEDARK}>Having trouble logging in? </CustomText>
                     <Pressable>
-                        <CustomText weight={'light'} style={styles.highlight}>Get help</CustomText>
+                        <CustomText weight={'light'} color={COLORS.PRIMARY}>Get help</CustomText>
                     </Pressable>
                 </View>
             </View>
@@ -165,14 +179,6 @@ const OtpBody = ({ phone }) => {
 }
 
 const styles = StyleSheet.create({
-    text: {
-        color: '#717171',
-        fontSize: 12
-    },
-    highlight: {
-        color: '#ff406c',
-        fontSize: 12,
-    },
     textInnerContainer: {
         flexDirection: 'row',
         marginTop: 30
@@ -183,16 +189,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginTop: 50,
         paddingHorizontal: 40
-    },
-    title: {
-        color: 'black',
-        fontSize: 24,
-        marginBottom: 10
-    },
-    subtitle: {
-        color: '#bfbfbf',
-        fontSize: 12,
-        marginBottom: 20
     },
     number: {
         borderColor: '#aaaaaa',
@@ -210,10 +206,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10
     },
-    light: {
-        color: '#bbbbbb',
-        fontSize: 12
-    }
 })
 
 export default OtpBody

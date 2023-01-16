@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated'
+import COLORS from '../../constants/Colors'
 
 const StickyFooter = ({ scroll, footer }) => {
 
@@ -29,13 +30,13 @@ const StickyFooter = ({ scroll, footer }) => {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                         <Image source={require('../../icons/heart.png')} style={styles.icon} />
-                        <CustomText weight={'light'} style={[styles.text, { color: 'black' }]}>
+                        <CustomText weight={'light'} style={[styles.text]}>
                             WISHLIST
                         </CustomText>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
                         <Image source={require('../../icons/bag.png')} style={[styles.icon, { tintColor: 'white' }]} />
-                        <CustomText weight={'light'} style={[styles.text, { color: 'white' }]}>
+                        <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                             ADD TO BAG
                         </CustomText>
                     </TouchableOpacity>
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
         padding: 10
     },
     text: {
-        fontSize: 12,
         marginLeft: 10
     }
 })

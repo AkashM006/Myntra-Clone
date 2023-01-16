@@ -14,7 +14,7 @@ const Rating = ({ count, total, align }) => {
 
     return (
         <View style={[styles.container, alignment[currentAlignment]]}>
-            <CustomText weight={'light'} style={styles.rating}>
+            <CustomText weight={'light'}>
                 {(total / count).toFixed(1)}
             </CustomText>
             <Image source={require('../../icons/star.png')} style={styles.star} />
@@ -39,10 +39,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
-    rating: {
-        color: 'black',
-        fontSize: 12,
-    },
     star: {
         height: 8,
         width: 8,
@@ -56,8 +52,6 @@ const styles = StyleSheet.create({
         borderColor: '#909090'
     },
     count: {
-        fontSize: 12,
-        color: 'black',
         marginLeft: 5
     }
 })

@@ -11,7 +11,7 @@ const Grid = ({ item }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText weight={'bold'} style={styles.heading}>
+            <CustomText weight={'bold'} size={18} style={styles.heading}>
                 {item.title}
             </CustomText>
             <View style={styles.imageContainer}>
@@ -35,9 +35,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     heading: {
-        fontSize: 18,
         textAlign: 'center',
-        color: 'black'
     },
     imageContainer: {
         flexDirection: 'row',

@@ -2,6 +2,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const Sort = ({ visible }) => {
 
@@ -16,27 +17,27 @@ const Sort = ({ visible }) => {
     return (
         <Animated.View style={[styles.container, rStyle]}>
             <View style={styles.contentContainer}>
-                <CustomText style={styles.heading}>
+                <CustomText color={COLORS.SHADEDARK} style={styles.heading}>
                     SORT BY
                 </CustomText>
                 <TouchableOpacity style={styles.textContainer}>
-                    <CustomText style={styles.text}>
-                        Price - high to low
+                    <CustomText>
+                        PRICE - HIGH TO LOW
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.textContainer}>
-                    <CustomText style={styles.text}>
-                        discount
+                    <CustomText>
+                        DISCOUNT
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.textContainer}>
-                    <CustomText style={styles.text}>
-                        Price - low to high
+                    <CustomText>
+                        PRICE - LOW TO HIGH
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.textContainer}>
-                    <CustomText style={styles.text}>
-                        Customer Rating
+                    <CustomText>
+                        CUSTOM RATING
                     </CustomText>
                 </TouchableOpacity>
             </View>
@@ -62,16 +63,11 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     heading: {
-        color: 'gray',
         paddingHorizontal: 5,
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1,
         paddingBottom: 10,
         marginBottom: 10
-    },
-    text: {
-        color: 'black',
-        textTransform: 'uppercase'
     },
     textContainer: {
         width: '100%',

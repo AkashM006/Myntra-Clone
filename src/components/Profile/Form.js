@@ -1,22 +1,21 @@
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch, useSelector } from 'react-redux'
-import { TextInput } from 'react-native-gesture-handler'
 import PasswordField from './PasswordField'
 import Gender from './Gender'
 import axios from 'axios'
 import Config from 'react-native-config'
 import { setToken } from '../../redux/userSlice'
 import { StackActions, useNavigation } from '@react-navigation/native'
+import COLORS from '../../constants/Colors'
+import CustomTextInput from '../Reusable/CustomTextInput'
 
 const Form = ({ setSubmitted }) => {
 
     const phone = useSelector(state => state.user.phone)
     const dispatch = useDispatch()
     const navigation = useNavigation()
-    // console.log("Phone", phone)
-    // const phone = '9976607000'
 
     const [password, setPassword] = useState('')
     const [isPasswordValid, setIsPasswordValid] = useState(false)
@@ -51,7 +50,7 @@ const Form = ({ setSubmitted }) => {
             setFullNameErr(null)
             return false
         }
-        setFullNameErr('Full name length must be more than or equal to 3')
+        setFullNameErr('Full name must have more than 2 characters')
         return true
     }
 
@@ -83,9 +82,7 @@ const Form = ({ setSubmitted }) => {
         return !a && !b && !c && !d
     }
 
-    useEffect(() => {
-        if (validated === true) validate()
-    }, [password, fullName, email, alternatePhone, isPasswordValid])
+    useEffect(() => { if (validated === true) validate() }, [password, fullName, email, alternatePhone, isPasswordValid])
 
     useEffect(() => {
         return () => {
@@ -106,7 +103,6 @@ const Form = ({ setSubmitted }) => {
 
     const handleSubmit = () => {
         if (!validate()) return
-        // here send request to backend
         setSubmitted(true)
         let obj = {
             password,
@@ -139,71 +135,44 @@ const Form = ({ setSubmitted }) => {
     return (
         <View style={styles.container}>
             <View>
-                <CustomText style={styles.light}>
+                <CustomText color={COLORS.SHADELIGHT} bottom={5}>
                     Mobile Number
                 </CustomText>
-                <CustomText style={styles.dark}>{phone}</CustomText>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                    <CustomText size={14}>{phone}</CustomText>
+                    <Image source={require('../../icons/tick.png')} style={{ height: 20, width: 20 }} />
+                </View>
             </View>
             <PasswordField err={passwordErr} password={password} setPassword={setPassword} setIsPasswordValid={setIsPasswordValid} />
-            <View>
-                <TextInput
-                    placeholderTextColor='#aaaaaa'
-                    value={fullName}
-                    onChangeText={value => setFullName(value)}
-                    placeholder='Full Name (Optional)'
-                    style={[styles.input, { borderColor: fullNameErr === null ? 'lightgray' : 'red' }]}
-                />
-                {fullNameErr && <CustomText style={{ color: 'red', fontSize: 10 }}>
-                    {fullNameErr}
-                </CustomText>}
-            </View>
-            <View>
-                <TextInput
-                    placeholderTextColor='#aaaaaa'
-                    value={email}
-                    onChangeText={value => setEmail(value)}
-                    placeholder='Email (Optional)'
-                    style={[styles.input, { borderColor: emailErr === null ? 'lightgray' : 'red' }]}
-                />
-                {emailErr && <CustomText style={{ color: 'red', fontSize: 10 }}>
-                    {emailErr}
-                </CustomText>}
-            </View>
+            <CustomTextInput
+                placeholder='Full Name (Optional)'
+                value={fullName}
+                onChangeTextHandler={value => setFullName(value)}
+                error={fullNameErr}
+            />
+            <CustomTextInput
+                placeholder='Email (Optional)'
+                value={email}
+                onChangeTextHandler={value => setEmail(value)}
+                error={emailErr}
+            />
             <Gender gender={gender} setGender={setGender} />
-            <View>
-                <TextInput
-                    placeholderTextColor='#aaaaaa'
-                    value={alternatePhone}
-                    onChangeText={value => setAlternatePhone(value)}
-                    placeholder='Alternate Mobile Number'
-                    style={[styles.input, { borderColor: alternatePhoneErr === null ? 'lightgray' : 'red' }]}
-                />
-                {alternatePhoneErr && <CustomText style={{ color: 'red', fontSize: 10 }}>
-                    {alternatePhoneErr}
-                </CustomText>}
-                <CustomText style={styles.text}>
-                    This will help recover your account if needed
-                </CustomText>
-            </View>
-            <View>
-                <TextInput
-                    placeholderTextColor='#aaaaaa'
-                    value={hint}
-                    onChangeText={value => setHint(value)}
-                    placeholder='Hint name'
-                    style={styles.input}
-                />
-                <CustomText style={styles.text}>
-                    This name will be a hint for your alternate number
-                </CustomText>
-            </View>
-            <CustomText weight={'light'} style={styles.highlight}>
-                I have a referral code
-            </CustomText>
+            <CustomTextInput
+                placeholder='Alternate Mobile Number'
+                value={alternatePhone}
+                onChangeTextHandler={value => setAlternatePhone(value)}
+                error={alternatePhoneErr}
+            />
+            <CustomText size={11} color={COLORS.SHADEDARK}>This will help recover your account if needed</CustomText>
+            <CustomTextInput
+                value={hint}
+                onChangeTextHandler={value => setHint(value)}
+                placeholder='Hint name'
+            />
+            <CustomText size={11} color={COLORS.SHADEDARK}>This name will be a hint for your alternate number</CustomText>
+            <CustomText weight={'light'} color={COLORS.PRIMARY} vertical={20}>I have a referral code</CustomText>
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                <CustomText weight={'light'} style={styles.buttonText}>
-                    CREATE ACCOUNT
-                </CustomText>
+                <CustomText weight={'light'} color={COLORS.WHITE}>CREATE ACCOUNT</CustomText>
             </TouchableOpacity>
         </View>
     )
@@ -213,32 +182,8 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 30
     },
-    light: {
-        color: '#aaaaaa',
-        fontSize: 12,
-        marginBottom: 5
-    },
-    dark: {
-        color: 'black',
-        fontSize: 14
-    },
-    input: {
-        borderColor: 'lightgray',
-        borderWidth: 1,
-        marginVertical: 10,
-        padding: 10,
-        borderRadius: 3,
-        color: 'black'
-    },
     text: {
-        color: 'lightgray',
-        fontSize: 11,
         textAlign: 'center'
-    },
-    highlight: {
-        color: '#ff406c',
-        fontSize: 12,
-        marginVertical: 20
     },
     button: {
         backgroundColor: '#ff406c',
@@ -248,9 +193,6 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         paddingVertical: 15
     },
-    buttonText: {
-        color: 'white'
-    }
 })
 
 export default Form

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const Gender = ({ gender, setGender }) => {
 
@@ -17,10 +18,22 @@ const Gender = ({ gender, setGender }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => setGender('Female')} style={[styles.button, { borderColor: borderColor[gender === 'Female'] }]}>
-                <CustomText style={[styles.text, { color: color[gender === 'Female'] }]}>Female</CustomText>
+                <CustomText
+                    color={gender === 'Female' ? COLORS.PRIMARY : COLORS.SHADELIGHT}
+                    weight={gender === 'Female' && 'light'}
+                    style={styles.text}
+                >
+                    Female
+                </CustomText>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setGender('Male')} style={[styles.button, { borderColor: borderColor[gender === 'Male'] }]}>
-                <CustomText style={[styles.text, { color: color[gender === 'Male'] }]}>Male</CustomText>
+                <CustomText
+                    color={gender === 'Male' ? COLORS.PRIMARY : COLORS.SHADELIGHT}
+                    weight={gender === 'Male' && 'light'}
+                    style={styles.text}
+                >
+                    Male
+                </CustomText>
             </TouchableOpacity>
         </View>
     )
@@ -40,7 +53,6 @@ const styles = StyleSheet.create({
         borderRadius: 2
     },
     text: {
-        color: '#b3b3b3',
         textAlign: 'center'
     }
 })

@@ -3,6 +3,7 @@ import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch } from 'react-redux'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
+import COLORS from '../../constants/Colors'
 
 const HeaderSection = () => {
 
@@ -18,7 +19,7 @@ const HeaderSection = () => {
                     <Image source={require('../../icons/profile-pic.png')} style={styles.image} />
                 </View>
                 <TouchableOpacity onPress={openLoginPopUp} style={styles.login}>
-                    <CustomText weight={'bolder'} style={styles.text}>
+                    <CustomText weight={'bolder'} color={COLORS.WHITE}>
                         LOG IN/SIGN UP
                     </CustomText>
                 </TouchableOpacity>
@@ -59,9 +60,6 @@ const styles = StyleSheet.create({
         bottom: 20,
         right: '3.5%',
         left: '35%'
-    },
-    text: {
-        color: 'white'
     },
     container: {
         marginBottom: 10

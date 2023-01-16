@@ -1,16 +1,17 @@
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const Loader = () => {
     return (
         <View style={styles.loaderContainer}>
-            <ActivityIndicator size={'small'} color={'#FF69B4'} style={styles.loader} />
+            <ActivityIndicator size={'small'} color={COLORS.PRIMARY} style={styles.loader} />
             <View style={styles.separator} />
             <CustomText style={styles.text}>
                 "Fashion is the armor to survive the reality of everyday life."
             </CustomText>
-            <CustomText style={{ color: 'gray', textAlign: 'center' }}>
+            <CustomText color={COLORS.SHADEDARK} style={{ textAlign: 'center' }}>
                 - Bill Cunningham
             </CustomText>
         </View>
@@ -34,7 +35,6 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     text: {
-        color: 'black',
         textAlign: 'center',
         marginBottom: 5,
     },

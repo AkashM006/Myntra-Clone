@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import CustomText from '../../components/Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const FIRSTLIST = [
     {
@@ -70,8 +71,8 @@ const Card = ({ item, index, length, separator, moreicon, titleStyle }) => {
                     <View style={styles.icon} />
             }
             <View>
-                <CustomText weight={'bolder'} style={[styles.title, titleStyle]}>{item.title}</CustomText>
-                {item.subtitle && <CustomText style={styles.subtitle}>{item.subtitle}</CustomText>}
+                <CustomText weight={'bolder'} color={COLORS.SHADEDARK} style={[styles.title, titleStyle]}>{item.title}</CustomText>
+                {item.subtitle && <CustomText size={10} color={COLORS.SHADELIGHT} style={styles.subtitle}>{item.subtitle}</CustomText>}
             </View>
         </View>
         {hasMoreIcon && <View>
@@ -83,7 +84,6 @@ const Card = ({ item, index, length, separator, moreicon, titleStyle }) => {
 const OptionsSection = () => {
 
     const titleStyle = {
-        fontSize: 12,
         fontWeight: '700'
     }
 
@@ -126,12 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        color: '#71727c',
         marginBottom: 3
-    },
-    subtitle: {
-        color: '#c5c5c5',
-        fontSize: 10,
     },
     optionsListContainer: {
         marginVertical: 10,

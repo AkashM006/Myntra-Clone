@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const Details = () => {
 
@@ -9,7 +10,7 @@ const Details = () => {
     return (
         <View style={styles.container}>
             <View>
-                <CustomText style={styles.title}>
+                <CustomText size={14}>
                     Product Details
                 </CustomText>
                 {dummy.map((item, index) => {
@@ -17,36 +18,36 @@ const Details = () => {
                         <View key={index}>
                             <View style={styles.row}>
                                 <View style={[styles.detailCard, { marginRight: 20 }]}>
-                                    <CustomText style={styles.title}>
+                                    <CustomText size={14}>
                                         Fit
                                     </CustomText>
-                                    <CustomText style={styles.text}>
+                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
                                         Bootcut
                                     </CustomText>
                                 </View>
                                 <View style={styles.detailCard}>
-                                    <CustomText style={styles.title}>
+                                    <CustomText size={14}>
                                         Length
                                     </CustomText>
-                                    <CustomText style={styles.text}>
+                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
                                         Regular
                                     </CustomText>
                                 </View>
                             </View>
                             <View style={styles.row}>
                                 <View style={[styles.detailCard, { marginRight: 20 }]}>
-                                    <CustomText weight='light' style={styles.title}>
+                                    <CustomText size={14} weight='light'>
                                         Waist Rise
                                     </CustomText>
-                                    <CustomText style={styles.text}>
+                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
                                         Mid-Rise
                                     </CustomText>
                                 </View>
                                 <View style={styles.detailCard}>
-                                    <CustomText style={styles.title}>
+                                    <CustomText size={14}>
                                         Stretch
                                     </CustomText>
-                                    <CustomText style={styles.text}>
+                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
                                         Stretchable
                                     </CustomText>
                                 </View>
@@ -65,12 +66,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10
     },
-    title: {
-        fontSize: 14,
-        color: 'black'
-    },
     text: {
-        color: 'gray',
         marginVertical: 5
     },
     detailCard: {

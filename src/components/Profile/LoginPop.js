@@ -7,6 +7,9 @@ import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import COLORS from '../../constants/Colors'
+import Overlay from '../Reusable/Overlay'
+import CustomButton from '../Reusable/CustomButton'
 
 const LoginPop = () => {
 
@@ -150,11 +153,12 @@ const LoginPop = () => {
 
     return (
         <Animated.View style={[styles.container, rStyle]}>
-            {submitted && <View style={[styles.modal, { backgroundColor: submitted === true ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0)', }]}>
+            {/* {submitted && <View style={[styles.modal, { backgroundColor: submitted === true ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0)', }]}>
                 <View style={styles.loaderContainer}>
-                    <ActivityIndicator size={'small'} color={'#FF69B4'} style={styles.loader} />
+                    <ActivityIndicator size={'small'} color={COLORS.PRIMARY} style={styles.loader} />
                 </View>
-            </View>}
+            </View>} */}
+            <Overlay render={submitted} />
             <View style={styles.iconContainer}>
                 <Image source={require('../../icons/logo.png')} style={{ width: 40, height: 40 }} />
                 <TouchableOpacity onPress={closeHandler}>
@@ -163,19 +167,19 @@ const LoginPop = () => {
             </View>
             <View>
                 <View style={styles.titleContainer}>
-                    <CustomText weight={'light'} style={styles.bold}>
+                    <CustomText weight={'light'} size={18}>
                         Login
                     </CustomText>
-                    <CustomText weight={'light'} style={styles.thin}>
+                    <CustomText weight={'light'} size={14} color={COLORS.SHADEDARK}>
                         {' '} or {' '}
                     </CustomText>
-                    <CustomText style={styles.bold}>
+                    <CustomText weight={'light'} size={18}>
                         Signup
                     </CustomText>
                 </View>
-                <Animated.View style={[styles.inputContainer, { borderColor: (err !== null) ? 'red' : '#717171', }]}>
+                <View style={[styles.inputContainer, { borderColor: (err !== null) ? 'red' : '#717171', }]}>
                     <View style={styles.countryCode}>
-                        <CustomText style={styles.countryCodeText}>
+                        <CustomText color={COLORS.SHADEDARK}>
                             +91
                         </CustomText>
                     </View>
@@ -189,34 +193,32 @@ const LoginPop = () => {
                         defaultValue={phone}
                         onChangeText={textChangeHandler}
                     />
-                </Animated.View>
-                {err && <CustomText style={{ color: 'red' }}>
+                </View>
+                {err && <CustomText color={COLORS.DANGER}>
                     {err}
                 </CustomText>}
                 <View style={styles.termsContainer}>
-                    <CustomText style={styles.text}>
+                    <CustomText size={12} color={COLORS.SHADEDARK}>
                         By continuing I agree to the
                         <Text onPress={termsHandler}>
-                            <CustomText style={styles.highlight}>
+                            <CustomText size={13} weight='light' color={COLORS.PRIMARY}>
                                 { } Terms of Use { }
                             </CustomText>
                         </Text>
-                        { } & { }
+                        & { }
                         <Text onPress={policyHandler}>
-                            <CustomText style={styles.highlight}>
+                            <CustomText size={13} weight='light' color={COLORS.PRIMARY}>
                                 Privacy Policy
                             </CustomText>
                         </Text>
                     </CustomText>
                 </View>
-                <TouchableOpacity onPress={submitHandler} style={styles.button}>
-                    <CustomText weight={'light'} style={styles.buttonText}>CONTINUE</CustomText>
-                </TouchableOpacity>
+                <CustomButton disabled={submitted} text='CONTINUE' onPressHandler={submitHandler} />
                 <View style={styles.helpContainer}>
-                    <CustomText style={styles.text}>
+                    <CustomText size={12} color={COLORS.SHADEDARK}>
                         Having trouble logging in?
                         <Text>
-                            <CustomText style={styles.highlight}>
+                            <CustomText size={13} weight='light' color={COLORS.PRIMARY}>
                                 { } Get help
                             </CustomText>
                         </Text>
@@ -235,25 +237,11 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         flexDirection: 'row',
     },
-    buttonText: {
-        color: 'white',
-    },
     countryCode: {
         justifyContent: 'center',
         padding: 10,
     },
     helpContainer: { marginTop: 20 },
-    text: { color: '#717171', fontSize: 16 },
-    highlight: { color: '#ff406c', fontSize: 16 },
-    countryCodeText: { color: '#717171', },
-    button: {
-        backgroundColor: '#ff406c',
-        marginTop: 20,
-        padding: 20,
-        alignItems: 'center',
-        borderRadius: 3,
-        paddingVertical: 15
-    },
     separator: {
         backgroundColor: '#717171',
         height: '30%',
@@ -286,36 +274,28 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    bold: {
-        color: 'black',
-        fontSize: 18
-    },
-    thin: {
-        fontSize: 14,
-        color: '#71727c',
-    },
     titleContainer: {
         flexDirection: 'row',
         marginTop: 20,
         alignItems: 'center',
     },
-    modal: {
-        position: 'absolute',
-        flex: 1,
-        zIndex: 12,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        top: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    loaderContainer: {
-        backgroundColor: 'white',
-        alignSelf: 'center',
-        borderRadius: 200,
-        padding: 5
-    }
+    // modal: {
+    //     position: 'absolute',
+    //     flex: 1,
+    //     zIndex: 12,
+    //     bottom: 0,
+    //     left: 0,
+    //     right: 0,
+    //     top: 0,
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // },
+    // loaderContainer: {
+    //     backgroundColor: 'white',
+    //     alignSelf: 'center',
+    //     borderRadius: 200,
+    //     padding: 5
+    // }
 })
 
 export default LoginPop

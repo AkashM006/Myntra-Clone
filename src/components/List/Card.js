@@ -4,6 +4,7 @@ import CustomText from '../Reusable/CustomText'
 import { calculateDiscount, formatCurrency, months, substring } from '../../utils/utils'
 import Rating from './Rating'
 import { useNavigation } from '@react-navigation/native'
+import COLORS from '../../constants/Colors'
 
 const Card = ({ cloth, index }) => {
 
@@ -26,11 +27,11 @@ const Card = ({ cloth, index }) => {
 
     const priceTextStyle = {
         true: {
-            color: 'lightgray',
+            color: COLORS.SHADELIGHT,
             textDecorationLine: 'line-through'
         },
         false: {
-            color: 'gray',
+            color: COLORS.SHADEDARK,
             fontWeight: '700'
         }
     }
@@ -51,7 +52,7 @@ const Card = ({ cloth, index }) => {
             </View>
             <View style={styles.body}>
                 <View style={styles.titleContainer}>
-                    <CustomText weight={'bold'} style={styles.text}>
+                    <CustomText weight={'bold'} size={14} color={COLORS.SHADEDARK} style={styles.text}>
                         {substring(cloth.brand, 20)}
                     </CustomText>
                     <TouchableOpacity onPress={() => setIsFavourite(prev => !prev)}>
@@ -61,21 +62,21 @@ const Card = ({ cloth, index }) => {
                         }
                     </TouchableOpacity>
                 </View>
-                <CustomText style={styles.name}>
+                <CustomText size={10} color={COLORS.SHADEDARK} style={styles.name}>
                     {substring(cloth.name, 30)}
                 </CustomText>
                 <View style={styles.priceContainer}>
-                    <CustomText style={[styles.price, priceTextStyle[hasDiscount]]}>
+                    <CustomText size={14} style={priceTextStyle[hasDiscount]}>
                         {formatCurrency(cloth.price).split('.')[0]}
                     </CustomText>
                     {hasDiscount && <CustomText weight={'light'} style={styles.discount}>
                         {formatCurrency(+calculateDiscount(cloth.price, cloth.discount)).split('.')[0]}
                     </CustomText>}
-                    {hasDiscount && <CustomText style={styles.percentage}>
+                    {hasDiscount && <CustomText color={COLORS.PRIMARY} style={styles.percentage}>
                         {cloth.discount + '% OFF'}
                     </CustomText>}
                 </View>
-                {cloth.delivery && cloth.delivery > 0 && <CustomText style={styles.date}>
+                {cloth.delivery && cloth.delivery > 0 && <CustomText color={COLORS.SHADEDARK}>
                     Delivered by {date}
                 </CustomText>}
             </View>
@@ -110,31 +111,16 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         paddingHorizontal: 10,
     },
-    text: {
-        color: '#696969',
-        fontSize: 14,
-    },
     name: {
-        fontSize: 10,
-        color: 'gray',
         marginTop: 2
     },
     priceContainer: { flexDirection: 'row', marginTop: 2, alignItems: 'center' },
-    price: { fontSize: 14, },
     discount: {
-        fontSize: 12,
-        color: 'black',
         marginLeft: 5,
     },
     percentage: {
-        fontSize: 12,
-        color: '#FF69B4',
         marginLeft: 3,
     },
-    date: {
-        color: 'gray',
-        fontSize: 12
-    }
 })
 
 const arePropsEqual = (prev, next) => {

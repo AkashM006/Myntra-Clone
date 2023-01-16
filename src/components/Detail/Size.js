@@ -1,17 +1,18 @@
 import { View, StyleSheet, TouchableOpacity, TouchableOpacityBase, Image } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
 
 const Size = ({ sizes, itemSizes, setStickyFooter }) => {
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <CustomText weight={'light'} style={styles.title}>
+                <CustomText weight={'light'} size={18}>
                     Select Size
                 </CustomText>
                 <TouchableOpacity>
-                    <CustomText weight={'light'} style={styles.select}>
+                    <CustomText weight={'light'} size={14} color={COLORS.PRIMARY}>
                         Size chart
                     </CustomText>
                 </TouchableOpacity>
@@ -22,7 +23,7 @@ const Size = ({ sizes, itemSizes, setStickyFooter }) => {
                         borderColor: !(itemSizes.includes(size)) ? 'lightgray' : 'black'
                     }]}>
                         <View>
-                            <CustomText style={{ color: itemSizes.includes(size) ? 'black' : 'lightgray' }}>
+                            <CustomText color={itemSizes.includes(size) ? COLORS.BLACK : COLORS.SHADEDARK}>
                                 {size}
                             </CustomText>
                         </View>
@@ -35,13 +36,13 @@ const Size = ({ sizes, itemSizes, setStickyFooter }) => {
                 style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <Image source={require('../../icons/heart.png')} style={styles.icon} />
-                    <CustomText weight={'light'} style={[styles.text, { color: 'black' }]}>
+                    <CustomText weight={'light'} style={[styles.text]}>
                         WISHLIST
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
                     <Image source={require('../../icons/bag.png')} style={[styles.icon, { tintColor: 'white' }]} />
-                    <CustomText weight={'light'} style={[styles.text, { color: 'white' }]}>
+                    <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                         ADD TO BAG
                     </CustomText>
                 </TouchableOpacity>
@@ -62,14 +63,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    title: {
-        fontSize: 18,
-        color: 'black',
-    },
-    select: {
-        fontSize: 14,
-        color: '#FF69B4',
     },
     sizesContainer: {
         flexDirection: 'row',
@@ -113,7 +106,6 @@ const styles = StyleSheet.create({
         padding: 10
     },
     text: {
-        fontSize: 12,
         marginLeft: 10
     }
 })

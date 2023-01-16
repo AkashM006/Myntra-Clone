@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
 import Quote from '../Home/Quote'
+import COLORS from '../../constants/Colors'
 
 const ListFooter = ({ count, maxCount }) => {
     return (
         <View style={styles.container}>
             {count < maxCount &&
                 <View>
-                    <ActivityIndicator style={styles.loader} size={'small'} color={'#FF69B4'} />
+                    <ActivityIndicator style={styles.loader} size={'small'} color={COLORS.PRIMARY} />
                 </View>
             }
             <Quote loading={false} />

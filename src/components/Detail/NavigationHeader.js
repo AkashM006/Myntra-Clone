@@ -38,7 +38,7 @@ const NavigationHeader = ({ scroll, name }) => {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
                         <Image source={require('../../icons/back.png')} style={styles.icon} />
                     </TouchableOpacity>
-                    <CustomText isAnimated={true} weight={'bold'} style={[styles.title, textStyle]}>
+                    <CustomText isAnimated={true} weight={'bold'} size={18} style={textStyle}>
                         {substring(name, 20)}
                     </CustomText>
                 </View>
@@ -83,11 +83,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '45%'
-    },
-    title: {
-        fontSize: 18,
-        color: 'black',
-        // alignSelf: 'center',
     },
     leftContainer: {
         flexDirection: 'row',

@@ -2,13 +2,14 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useRoute } from '@react-navigation/native'
 import CustomText from './CustomText'
+import COLORS from '../../constants/Colors'
 
 const Header = () => {
     const title = useRoute().params?.title
 
     return (
         <View style={styles.container}>
-            <CustomText weight={'bolder'} style={styles.text}>{title}</CustomText>
+            <CustomText weight={'bolder'} color={COLORS.SHADEDARK}>{title}</CustomText>
         </View>
     )
 }
@@ -21,9 +22,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: '3.5%',
         justifyContent: 'center',
     },
-    text: {
-        color: 'gray'
-    }
 })
 
 export default Header

@@ -18,9 +18,7 @@ const PasswordScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.overlay}>
-                <Overlay render={submitted} />
-            </View>
+            <Overlay render={submitted} />
             <TouchableOpacity onPress={handleBack}>
                 <Image source={require('../icons/back.png')} />
             </TouchableOpacity>
@@ -36,14 +34,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
     },
-    overlay: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
-    }
 })
 
 export default PasswordScreen

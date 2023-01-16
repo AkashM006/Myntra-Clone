@@ -4,6 +4,7 @@ import Header from './Header'
 import Size from './Size'
 import firestore from '@react-native-firebase/firestore'
 import Details from './Details'
+import COLORS from '../../constants/Colors'
 
 const Body = ({ item, setStickyFooter }) => {
 
@@ -27,7 +28,7 @@ const Body = ({ item, setStickyFooter }) => {
                 discount={item.discount ?? null}
             />
             {isLoading === true ?
-                <ActivityIndicator size={'small'} color={'#FF69B4'} style={styles.loader} />
+                <ActivityIndicator size={'small'} color={COLORS.PRIMARY} style={styles.loader} />
                 :
                 <>
                     <Size

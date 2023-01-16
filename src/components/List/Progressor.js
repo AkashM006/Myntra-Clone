@@ -3,6 +3,7 @@ import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useRoute } from '@react-navigation/native'
 import { substring } from '../../utils/utils'
+import COLORS from '../../constants/Colors'
 
 const Progressor = ({ count, items, goTop }) => {
 
@@ -14,11 +15,11 @@ const Progressor = ({ count, items, goTop }) => {
                 <TouchableOpacity style={styles.container} onPress={goTop}>
                     <View style={styles.leftContainer}>
                         <Image source={require('../../icons/back.png')} style={styles.icon} />
-                        <CustomText style={styles.text}>
+                        <CustomText color={COLORS.WHITE} style={styles.text}>
                             {substring(title.toUpperCase(), 10)}
                         </CustomText>
                     </View>
-                    <CustomText style={styles.text}>
+                    <CustomText color={COLORS.WHITE} style={styles.text}>
                         {items}/{count}
                     </CustomText>
                 </TouchableOpacity>
@@ -44,9 +45,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-    },
-    text: {
-        color: 'white'
     },
     leftContainer: {
         flexDirection: 'row'

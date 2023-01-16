@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { calculateDiscount, formatCurrency } from '../../utils/utils'
+import COLORS from '../../constants/Colors'
 
 const Header = ({ brand, name, price, discount }) => {
 
@@ -10,40 +11,40 @@ const Header = ({ brand, name, price, discount }) => {
     const priceStyle = {
         true: {
             textDecorationLine: 'line-through',
-            color: 'gray'
+            color: COLORS.SHADEDARK
         },
         false: {
             fontWeight: '800',
-            color: '#696969'
+            color: COLORS.SHADELIGHT
         }
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <CustomText weight={'bold'} style={styles.brand}>
+                <CustomText weight={'bold'} size={16}>
                     {brand}
-                    <CustomText style={styles.name}>
+                    <CustomText color={COLORS.SHADEDARK}>
                         {' ' + name}
                     </CustomText>
                 </CustomText>
             </View>
             <View>
                 <View style={styles.priceContainer}>
-                    {hasDiscount && <CustomText style={{ fontSize: 12, color: 'gray', marginRight: 5 }}>
+                    {hasDiscount && <CustomText color={COLORS.SHADEDARK} style={{ marginRight: 5 }}>
                         MRP
                     </CustomText>}
-                    <CustomText style={[styles.price, priceStyle[hasDiscount]]}>
+                    <CustomText size={14} style={[styles.price, priceStyle[hasDiscount]]}>
                         {formatCurrency(price).split('.')[0]}
                     </CustomText>
                     {hasDiscount && <CustomText weight={'light'} style={styles.discountedPrice}>
                         {formatCurrency(+calculateDiscount(price, discount)).split('.')[0]}
                     </CustomText>}
-                    {hasDiscount && <CustomText style={styles.discount}>
+                    {hasDiscount && <CustomText color={COLORS.PRIMARY} style={styles.discount}>
                         ({discount}% OFF)
                     </CustomText>}
                 </View>
-                <CustomText style={styles.info}>
+                <CustomText color={COLORS.SHADEDARK} style={styles.info}>
                     Inclusive of all taxes
                 </CustomText>
             </View>
@@ -58,35 +59,25 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         marginBottom: 10
     },
-    brand: {
-        color: 'black',
-        fontSize: 16
-    },
     titleContainer: {
         width: '70%',
         flexDirection: 'row'
     },
-    name: { color: 'gray' },
     priceContainer: {
         flexDirection: 'row',
         alignItems: 'flex-end',
     },
     price: {
-        fontSize: 14,
         marginTop: 2
     },
     info: {
-        color: 'gray',
-        fontSize: 12,
         marginVertical: 2
     },
     discountedPrice: {
-        color: 'black',
         marginLeft: 5,
     },
     discount: {
         marginLeft: 5,
-        color: '#FF69B4'
     },
 })
 

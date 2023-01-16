@@ -2,6 +2,7 @@ import { Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-nativ
 import React from 'react'
 import Skeleton from '../Reusable/Skeleton'
 import { useNavigation } from '@react-navigation/native'
+import CustomText from '../Reusable/CustomText'
 
 const SectionHeader = ({ sections }) => {
 
@@ -13,7 +14,7 @@ const SectionHeader = ({ sections }) => {
                 title: item.name
             })} >
                 <Image style={styles.image} source={{ uri: item.photoURL }} />
-                <Text style={styles.text}>{item.name.toUpperCase()}</Text>
+                <CustomText size={10} style={styles.text}>{item.name.toUpperCase()}</CustomText>
             </TouchableOpacity>
         )
     }
@@ -60,8 +61,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     text: {
-        color: 'black',
-        fontSize: 10,
         textAlign: 'center',
         marginTop: 2
     },

@@ -2,15 +2,16 @@ import { View, StyleSheet, TextInput, TouchableOpacity, Pressable, Keyboard } fr
 import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import COLORS from '../../constants/Colors'
+import CustomTextInput from '../Reusable/CustomTextInput'
+import CustomButton from '../Reusable/CustomButton'
 
 const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
     const [userId, setUserId] = useState(phone)
-    const [userIdActive, setUserIdActive] = useState(false)
     const [userIdError, setUserIdError] = useState(null)
 
     const [password, setPassword] = useState('')
-    const [passwordActive, setPasswordActive] = useState(false)
     const [passwordError, setPasswordError] = useState(null)
 
     const navigation = useNavigation()
@@ -59,56 +60,33 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText weight={'light'} style={styles.title}>Login to your account</CustomText>
-            <TextInput
-                style={[styles.input, { borderColor: userIdActive ? '#818181' : userIdError === null ? '#c4c4c4' : 'red' }]}
+            <CustomText weight={'light'} size={18} bottom={10}>Login to your account</CustomText>
+            <CustomTextInput
                 placeholder='Email or Mobile Number*'
-                placeholderTextColor={'#aaaaaa'}
                 value={userId}
-                onChangeText={setUserId}
-                onFocus={() => setUserIdActive(true)}
-                onBlur={() => setUserIdActive(false)}
+                onChangeTextHandler={setUserId}
+                error={userIdError}
             />
-            {
-                userIdError !== null && <CustomText style={styles.error}>
-                    {userIdError}
-                </CustomText>
-            }
-            <TextInput
-                style={[styles.input, { borderColor: passwordActive ? '#818181' : passwordError === null ? '#c4c4c4' : 'red' }]}
+            <CustomTextInput
                 placeholder='Password*'
-                placeholderTextColor={'#aaaaaa'}
                 value={password}
-                onChangeText={setPassword}
-                onFocus={() => setPasswordActive(true)}
-                onBlur={() => setPasswordActive(false)}
-                secureTextEntry={true}
+                onChangeTextHandler={setPassword}
+                error={passwordError}
             />
-            {
-                passwordError !== null && <CustomText style={styles.error}>
-                    {passwordError}
-                </CustomText>
-            }
-            <TouchableOpacity onPress={submitHandler} style={[styles.button, { backgroundColor: submitted ? 'gray' : '#ff406c' }]} disabled={submitted}>
-                <CustomText weight={'light'} style={styles.buttonText}>
-                    LOGIN
-                </CustomText>
-            </TouchableOpacity>
+            <CustomButton disabled={submitted} text='LOGIN' onPressHandler={submitHandler} />
             <View style={styles.textContainer}>
                 <View style={styles.textInnerContainer}>
-                    <CustomText style={styles.text}>
+                    <CustomText color={COLORS.SHADEDARK}>
                         Forgot your password?
                     </CustomText>
                     <Pressable onPress={resetHandler}>
-                        <CustomText weight={'light'} style={styles.highlight}> Reset Here</CustomText>
+                        <CustomText weight={'light'} color={COLORS.PRIMARY}> Reset Here</CustomText>
                     </Pressable>
                 </View>
                 <View style={styles.textInnerContainer}>
-                    <CustomText style={styles.text}>
-                        Having trouble logging in?
-                    </CustomText>
+                    <CustomText color={COLORS.SHADEDARK}>Having trouble logging in?</CustomText>
                     <Pressable>
-                        <CustomText weight={'light'} style={styles.highlight}> Get help</CustomText>
+                        <CustomText weight={'light'} color={COLORS.PRIMARY}> Get help</CustomText>
                     </Pressable>
                 </View>
             </View>
@@ -123,51 +101,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         flex: 1
     },
-    title: {
-        color: 'black',
-        fontSize: 18,
-        marginBottom: 10
-    },
-    input: {
-        borderColor: '#c4c4c4',
-        borderWidth: 2,
-        padding: 10,
-        borderRadius: 3,
-        marginVertical: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 50,
-        color: 'black'
-    },
-    button: {
-        marginTop: 20,
-        padding: 20,
-        alignItems: 'center',
-        borderRadius: 3,
-        paddingVertical: 15
-    },
-    buttonText: {
-        color: 'white'
-    },
-    text: {
-        color: '#717171',
-        fontSize: 12
-    },
-    highlight: {
-        color: '#ff406c',
-        fontSize: 12,
-    },
     textInnerContainer: {
         flexDirection: 'row',
         marginTop: 30
     },
-    textContainer: {
-        marginTop: 15
-    },
-    error: {
-        color: 'red',
-        fontSize: 10
-    }
+    textContainer: { marginTop: 15 },
 })
 
 export default PasswordBody

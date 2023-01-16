@@ -1,8 +1,8 @@
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import React from 'react'
 import Animated from 'react-native-reanimated'
 
-const CustomText = ({ children, fontFamily, style, weight, isAnimated }) => {
+const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, color, top, bottom, left, right, vertical, horizontal }) => {
 
     const weightList = {
         light: '700',
@@ -11,9 +11,24 @@ const CustomText = ({ children, fontFamily, style, weight, isAnimated }) => {
         undefined: '300'
     }
 
+    const styles = {
+        fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV',
+        fontWeight: weightList[weight],
+        fontSize: size ?? 12,
+        color: color ?? 'black',
+    }
+
+    if (left) styles['marginLeft'] = left
+    if (right) styles['marginRight'] = right
+    if (bottom) styles['marginBottom'] = bottom
+    if (top) styles['marginTop'] = top
+    if (vertical) styles['marginVertical'] = vertical
+    if (horizontal) styles['marginHorizontal'] = horizontal
+
     if (isAnimated && isAnimated === true)
-        return (<Animated.Text style={[style, { fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV', fontWeight: weightList[weight] }]}>{children}</Animated.Text>)
-    return (<Text style={[style, { fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV' }]}>{children}</Text>)
+        return (<Animated.Text style={[styles, style]}>{children}</Animated.Text>)
+
+    return (<Text style={[styles, style]}>{children}</Text>)
 }
 
 export default CustomText

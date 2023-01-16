@@ -1,6 +1,8 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
+import COLORS from '../../constants/Colors'
+import CustomTextInput from '../Reusable/CustomTextInput'
 
 const PasswordField = ({ password, setPassword, setIsPasswordValid, err }) => {
 
@@ -26,31 +28,30 @@ const PasswordField = ({ password, setPassword, setIsPasswordValid, err }) => {
     }
 
     const color = {
-        true: 'white',
-        false: 'gray'
+        true: COLORS.WHITE,
+        false: COLORS.SHADEDARK
     }
 
     return (
         <View>
-            <TextInput
+            <CustomTextInput
                 value={password}
-                onChangeText={newValue => setPassword(newValue)}
-                style={[styles.input, { borderColor: err !== null ? 'red' : 'lightgray' }]}
+                onChangeTextHandler={value => setPassword(value)}
                 placeholder='Create Password*'
-                secureTextEntry={true}
-                placeholderTextColor='#aaaaaa'
+                secure={true}
+                error={err}
             />
             <View style={styles.textContainer}>
-                <CustomText style={[styles.text, { backgroundColor: backgroundColor[isLong], color: color[isLong] }]}>
+                <CustomText color={COLORS.SHADEDARK} style={[styles.text, { backgroundColor: backgroundColor[isLong], color: color[isLong] }]}>
                     8 Characters
                 </CustomText>
-                <CustomText style={[styles.text, { backgroundColor: backgroundColor[hasUpper], color: color[hasUpper] }]}>
+                <CustomText color={COLORS.SHADEDARK} style={[styles.text, { backgroundColor: backgroundColor[hasUpper], color: color[hasUpper] }]}>
                     1 Uppercase
                 </CustomText>
-                <CustomText style={[styles.text, { backgroundColor: backgroundColor[hasNumber], color: color[hasNumber] }]}>
+                <CustomText color={COLORS.SHADEDARK} style={[styles.text, { backgroundColor: backgroundColor[hasNumber], color: color[hasNumber] }]}>
                     1 Numeric
                 </CustomText>
-                <CustomText style={[styles.text, { backgroundColor: backgroundColor[hasSpecial], color: color[hasSpecial] }]}>
+                <CustomText color={COLORS.SHADEDARK} style={[styles.text, { backgroundColor: backgroundColor[hasSpecial], color: color[hasSpecial] }]}>
                     1 Special
                 </CustomText>
             </View>
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 10,
         borderRadius: 3,
-        color: 'black'
     },
     textContainer: {
         flexDirection: 'row',
@@ -74,13 +74,11 @@ const styles = StyleSheet.create({
     },
     text: {
         marginRight: 20,
-        color: 'gray',
         backgroundColor: '#efefef',
         marginBottom: 10,
         padding: 2,
         paddingHorizontal: 5,
         borderRadius: 4,
-        fontSize: 12
     }
 })
 

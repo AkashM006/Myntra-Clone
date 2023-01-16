@@ -14,7 +14,7 @@ const Slider = ({ card }) => {
 
     return (
         <View style={styles.container}>
-            <CustomText weight={'light'} style={styles.text}>{card.title}</CustomText>
+            <CustomText weight={'light'} size={18} style={styles.text}>{card.title}</CustomText>
             <FlatList
                 data={card.url}
                 horizontal
@@ -32,9 +32,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     text: {
-        fontSize: 18,
         textAlign: 'center',
-        color: 'black',
     },
     container: {
         backgroundColor: 'white'

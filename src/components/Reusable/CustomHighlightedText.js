@@ -7,7 +7,6 @@ const CustomHighlightedText = ({ text }) => <CustomText weight={'light'} style={
 const styles = StyleSheet.create({
     text: {
         color: '#ff406c',
-        fontSize: 12,
     }
 })
 

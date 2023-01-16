@@ -9,6 +9,7 @@ import Footer from '../Reusable/Footer'
 import Quote from './Quote'
 import Grid from './Grid'
 import Carousel from './Carousel'
+import COLORS from '../../constants/Colors'
 
 const Body = () => {
 
@@ -69,7 +70,7 @@ const Body = () => {
                 ListFooterComponent={() => <Quote loading={isLoading} />}
             />
             <Footer />
-            {isLoading === true && <View style={styles.loader}><ActivityIndicator size={'small'} color={'#FF69B4'} /></View>}
+            {isLoading === true && <View style={styles.loader}><ActivityIndicator size={'small'} color={COLORS.PRIMARY} /></View>}
         </View>
     )
 }

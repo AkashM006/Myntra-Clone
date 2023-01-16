@@ -7,7 +7,6 @@ const CustomMediumText = ({ text }) => <CustomText style={styles.text}>{text}</C
 const styles = StyleSheet.create({
     text: {
         color: '#717171',
-        fontSize: 12
     }
 })
 
