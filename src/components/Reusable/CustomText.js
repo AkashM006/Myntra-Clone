@@ -2,7 +2,7 @@ import { Text } from 'react-native'
 import React from 'react'
 import Animated from 'react-native-reanimated'
 
-const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, color, top, bottom, left, right, vertical, horizontal }) => {
+const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, color, top, bottom, left, right, vertical, horizontal, align }) => {
 
     const weightList = {
         light: '700',
@@ -16,6 +16,7 @@ const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, col
         fontWeight: weightList[weight],
         fontSize: size ?? 12,
         color: color ?? 'black',
+        textAlign: align
     }
 
     if (left) styles['marginLeft'] = left

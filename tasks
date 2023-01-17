@@ -1,5 +1,4 @@
 todo: 
-1) PasswordBody.js - integrate to backend for login with password
-2) ForgotPasswordBody.js - integrate to backend for resetting password
-3) OtpBody.js - update to store token in user redux state
-4) Refactor code for screens in profile stack
+2) ForgotPasswordBody.js - integrate to backend for resetting password Sneka should implement
+3) Integrate redux persist
+5) Ask sneka to send all the details regarding the user after login

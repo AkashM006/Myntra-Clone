@@ -1,10 +1,14 @@
-import { View, StyleSheet, Pressable, Keyboard } from 'react-native'
+import { View, StyleSheet, Pressable, Keyboard, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../Reusable/CustomText'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import CustomTextInput from '../Reusable/CustomTextInput'
 import CustomButton from '../Reusable/CustomButton'
+import axios from 'axios'
+import Config from 'react-native-config'
+import { useDispatch } from 'react-redux'
+import { login } from '../../redux/userSlice'
 
 const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
@@ -15,6 +19,7 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
     const [passwordError, setPasswordError] = useState(null)
 
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     const validateUserId = () => {
         if (!isNaN(+userId)) {
@@ -43,16 +48,40 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
     const submitHandler = () => {
         Keyboard.dismiss()
-        // here validate email or phone and then send request
         const isUserIdValid = validateUserId()
         const isPasswordValid = validatePassword()
+        let email = userId
         if (isUserIdValid && isPasswordValid) {
             setSubmitted(true)
+            if (!isNaN(+email)) {
+                email = '+91 ' + email
+            }
 
-            // todo:
-            // send request here to backend and navigate if success else alert the error
+            axios.post(`${Config.OTP_API_KEY}/authenticate/loginEmail`, {
+                email,
+                password
+            })
+                .then(res => {
+                    const data = res.data
+                    if (data.status === true) {
+                        console.log(data.data.jwt)
 
-            setSubmitted(false)
+                        let obj = {
+                            phone: userId,
+                            token: data.data.jwt
+                        }
+                        dispatch(login(obj))
+                        setSubmitted(false)
+                        navigation.dispatch(StackActions.popToTop())
+
+                    } else Alert.alert('Whoops!', data.message)
+                })
+                .catch(err => {
+                    console.log("Error: ", err)
+                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
+                    setSubmitted(false)
+                })
+
         }
     }
 

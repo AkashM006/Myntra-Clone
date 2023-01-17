@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Config } from 'react-native-config'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { setPhone } from '../../redux/userSlice'
+import { setPhone, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
 
@@ -81,16 +81,20 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 otp
             })
                 .then(res => {
-                    const data = res.data
-                    dispatch(setPhone(phone))
+                    // console.log("Res: ", res.data)
                     setSubmitted(false)
+                    const data = res.data
                     if (data.status === true) {
+                        dispatch(setPhone(phone))
                         if (data.message === 'New User') navigation.navigate('Registration')
-                        else navigation.dispatch(StackActions.popToTop())
+                        else {
+                            const jwt = data.data.jwt
+                            dispatch(setToken(jwt))
+                            navigation.dispatch(StackActions.popToTop())
+                        }
 
-                    } else {
-                        Alert.alert('Whoops!', data.message)
-                    }
+                    } else Alert.alert('Whoops!', data.message)
+
 
                 })
                 .catch(err => {

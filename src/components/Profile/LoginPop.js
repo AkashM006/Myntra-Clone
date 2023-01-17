@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, ActivityIndicator, BackHandler, Alert } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, BackHandler, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import Overlay from '../Reusable/Overlay'
 import CustomButton from '../Reusable/CustomButton'
@@ -154,11 +154,6 @@ const LoginPop = () => {
 
     return (
         <Animated.View style={[styles.container, rStyle]}>
-            {/* {submitted && <View style={[styles.modal, { backgroundColor: submitted === true ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0)', }]}>
-                <View style={styles.loaderContainer}>
-                    <ActivityIndicator size={'small'} color={COLORS.PRIMARY} style={styles.loader} />
-                </View>
-            </View>} */}
             <Overlay render={submitted} />
             <View style={styles.iconContainer}>
                 <Image source={require('../../icons/logo.png')} style={{ width: 40, height: 40 }} />
@@ -178,7 +173,7 @@ const LoginPop = () => {
                         Signup
                     </CustomText>
                 </View>
-                <View style={[styles.inputContainer, { borderColor: (err !== null) ? 'red' : '#717171', }]}>
+                <View style={[styles.inputContainer, { borderColor: (err !== null) ? COLORS.DANGER : COLORS.SHADEDARK, }]}>
                     <View style={styles.countryCode}>
                         <CustomText color={COLORS.SHADEDARK}>
                             +91
@@ -280,23 +275,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
     },
-    // modal: {
-    //     position: 'absolute',
-    //     flex: 1,
-    //     zIndex: 12,
-    //     bottom: 0,
-    //     left: 0,
-    //     right: 0,
-    //     top: 0,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
-    // loaderContainer: {
-    //     backgroundColor: 'white',
-    //     alignSelf: 'center',
-    //     borderRadius: 200,
-    //     padding: 5
-    // }
 })
 
 export default LoginPop
