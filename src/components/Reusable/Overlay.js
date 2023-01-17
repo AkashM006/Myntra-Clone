@@ -2,10 +2,15 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import CustomLoader from './CustomLoader'
 
-const Overlay = ({ render }) => {
+const Overlay = ({ render, hideShadow }) => {
+
+    let style = {
+        backgroundColor: hideShadow ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.6)'
+    }
+
     return (
         <>
-            {render && <View style={styles.container}>
+            {render && <View style={[styles.container, style]}>
                 <CustomLoader />
             </View>}
         </>
@@ -14,7 +19,7 @@ const Overlay = ({ render }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        // backgroundColor: 'rgba(0,0,0,0.6)',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

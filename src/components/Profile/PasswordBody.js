@@ -64,7 +64,6 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
                 .then(res => {
                     const data = res.data
                     if (data.status === true) {
-                        console.log(data.data.jwt)
 
                         let obj = {
                             phone: userId,

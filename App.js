@@ -12,24 +12,29 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Text,
 } from 'react-native';
 import { Provider } from 'react-redux';
-import { store } from './src/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import Overlay from './src/components/Reusable/Overlay';
+import { store, persistor } from './src/redux/store';
 import MainScreen from './src/screens/MainScreen';
 
 const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <StatusBar
-          barStyle={'dark-content'}
-          backgroundColor='white'
-        />
-        <NavigationContainer>
-          <MainScreen />
-        </NavigationContainer>
-      </SafeAreaView>
+      <PersistGate loading={<Overlay hideShadow={true} render={true} />} persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar
+            barStyle={'dark-content'}
+            backgroundColor='white'
+          />
+          <NavigationContainer>
+            <MainScreen />
+          </NavigationContainer>
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 };
