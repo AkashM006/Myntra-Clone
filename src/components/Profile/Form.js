@@ -11,6 +11,7 @@ import { StackActions, useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import CustomTextInput from '../Reusable/CustomTextInput'
 import CustomButton from '../Reusable/CustomButton'
+import Toast from 'react-native-root-toast'
 
 const Form = ({ setSubmitted, submitted }) => {
 
@@ -125,14 +126,20 @@ const Form = ({ setSubmitted, submitted }) => {
                     setSubmitted(false)
                     navigation.dispatch(StackActions.popToTop())
                 } else {
-                    Alert.alert('Whoops!', data.message)
+                    Toast.show(data.message, {
+                        duration: Toast.durations.LONG,
+                        position: Toast.positions.BOTTOM,
+                    })
                 }
                 setSubmitted(false)
             })
             .catch(err => {
                 console.log("Err: ", err)
                 setSubmitted(false)
-                Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
+                Toast.show('Something went wrong. Please try again later!', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                })
             })
     }
 
