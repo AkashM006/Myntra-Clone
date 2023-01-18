@@ -10,6 +10,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import Overlay from '../Reusable/Overlay'
 import CustomButton from '../Reusable/CustomButton'
+import Toast from 'react-native-root-toast'
 
 const LoginPop = () => {
 
@@ -142,14 +143,21 @@ const LoginPop = () => {
                         })
                     } else {
                         // alert regarding the error
-                        Alert.alert('Whoops!', data.message)
+                        // Alert.alert('Whoops!', data.message)
+                        Toast.show(data.message, {
+                            duration: Toast.durations.LONG,
+                            position: Toast.positions.BOTTOM,
+                        })
                         setSubmitted(false)
                     }
                 })
                 .catch(err => {
                     setSubmitted(false)
                     console.log("Err: ", err)
-                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
+                    Toast.show('Something went wrong. Please try again later!', {
+                        duration: Toast.durations.LONG,
+                        position: Toast.positions.BOTTOM,
+                    })
                 })
 
         } else {

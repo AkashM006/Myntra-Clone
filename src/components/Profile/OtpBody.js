@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { setPhone, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
+import Toast from 'react-native-root-toast'
 
 const OtpBody = ({ phone, setSubmitted }) => {
 
@@ -123,10 +124,17 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 const data = res.data
 
                 if (data.status === true) setTime(15)
-                else Alert.alert("Whoops!", 'Something went wrong! Please try again later')
+                else Toast.show(data.message, {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                })
             })
             .catch(err => {
-                Alert.alert("Whoops!", 'Something went wrong! Please try again later')
+                // Alert.alert("Whoops!", 'Something went wrong! Please try again later')
+                Toast.show('Something went wrong! Please try again later', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                })
                 console.log("Err: ", err)
             })
     }

@@ -9,6 +9,7 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import { useDispatch } from 'react-redux'
 import { login } from '../../redux/userSlice'
+import Toast from 'react-native-root-toast'
 
 const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
@@ -74,12 +75,19 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
                     } else {
                         setSubmitted(false)
-                        Alert.alert('Whoops!', data.message)
+                        // Alert.alert('Whoops!', data.message)
+                        Toast.show(data.message, {
+                            duration: Toast.durations.LONG,
+                            position: Toast.positions.BOTTOM
+                        })
                     }
                 })
                 .catch(err => {
                     console.log("Error: ", err)
-                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
+                    Toast.show('Something went wrong. Please try again later!', {
+                        duration: Toast.durations.LONG,
+                        position: Toast.positions.BOTTOM
+                    })
                     setSubmitted(false)
                 })
 

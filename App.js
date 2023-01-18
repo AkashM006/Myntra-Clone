@@ -19,21 +19,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Overlay from './src/components/Reusable/Overlay';
 import { store, persistor } from './src/redux/store';
 import MainScreen from './src/screens/MainScreen';
+import { RootSiblingParent } from 'react-native-root-siblings'
 
 const App = () => {
 
   return (
     <Provider store={store}>
       <PersistGate loading={<Overlay hideShadow={true} render={true} />} persistor={persistor}>
-        <SafeAreaView style={styles.container}>
-          <StatusBar
-            barStyle={'dark-content'}
-            backgroundColor='white'
-          />
-          <NavigationContainer>
-            <MainScreen />
-          </NavigationContainer>
-        </SafeAreaView>
+        <RootSiblingParent>
+          <SafeAreaView style={styles.container}>
+            <StatusBar
+              barStyle={'dark-content'}
+              backgroundColor='white'
+            />
+            <NavigationContainer>
+              <MainScreen />
+            </NavigationContainer>
+          </SafeAreaView>
+        </RootSiblingParent>
       </PersistGate>
     </Provider>
   );
