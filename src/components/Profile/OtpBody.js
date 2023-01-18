@@ -19,6 +19,8 @@ const OtpBody = ({ phone, setSubmitted }) => {
 
     const [cleared, setCleared] = useState(false)
 
+    const [err, setErr] = useState(null)
+
     const handleTextChange = value => {
         if (otp.length <= 4 && value.length <= 4) setOtp(value)
     }
@@ -93,7 +95,7 @@ const OtpBody = ({ phone, setSubmitted }) => {
                             navigation.dispatch(StackActions.popToTop())
                         }
 
-                    } else Alert.alert('Whoops!', data.message)
+                    } else setErr(data.message)
 
 
                 })
@@ -155,6 +157,11 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 />
             </View>
             <View style={styles.textContainer}>
+                {err &&
+                    <CustomText top={20} color={COLORS.DANGER} >
+                        {err}
+                    </CustomText>
+                }
                 {time <= 0 ?
                     <View style={styles.textInnerContainer}>
                         <CustomText color={COLORS.SHADEDARK}>Did not reveive OTP?</CustomText>

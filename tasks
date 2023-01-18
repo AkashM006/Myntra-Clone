@@ -1,4 +1,4 @@
 todo: 
-2) ForgotPasswordBody.js - integrate to backend for resetting password Sneka should implement
-3) Integrate redux persist
-5) Ask sneka to send all the details regarding the user after login
+1) ForgotPasswordBody.js - integrate to backend for resetting password Sneka should implement
+2) Integrate redux persist
+3) Get details for user and bag count as soon as login and also logout. Yet to implemented in backend

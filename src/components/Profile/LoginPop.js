@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, BackHandler, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
 import Overlay from '../Reusable/Overlay'
 import CustomButton from '../Reusable/CustomButton'
@@ -81,6 +81,15 @@ const LoginPop = () => {
             keyboardListener.remove()
         }
     }, [])
+
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(setLoginPopUpStatus(false))
+            return () => {
+                dispatch(setLoginPopUpStatus(false))
+            }
+        }, [])
+    )
 
     const termsHandler = () => { }
     const policyHandler = () => { }
