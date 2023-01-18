@@ -50,15 +50,14 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
         Keyboard.dismiss()
         const isUserIdValid = validateUserId()
         const isPasswordValid = validatePassword()
-        let email = userId
+        let id = userId
         if (isUserIdValid && isPasswordValid) {
             setSubmitted(true)
-            if (!isNaN(+email)) {
-                email = '+91 ' + email
+            if (!isNaN(+id)) {
+                id = '+91 ' + id
             }
-
-            axios.post(`${Config.OTP_API_KEY}/authenticate/loginEmail`, {
-                email,
+            axios.post(`${Config.OTP_API_KEY}/authenticate/loginPass`, {
+                userId: id,
                 password
             })
                 .then(res => {
@@ -73,7 +72,10 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
                         setSubmitted(false)
                         navigation.dispatch(StackActions.popToTop())
 
-                    } else Alert.alert('Whoops!', data.message)
+                    } else {
+                        setSubmitted(false)
+                        Alert.alert('Whoops!', data.message)
+                    }
                 })
                 .catch(err => {
                     console.log("Error: ", err)

@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import uiReducer from "./uiSlice";
 import userReducer from './userSlice'
+import bagReducer from './bagSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist'
 
@@ -11,7 +12,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     ui: uiReducer,
-    user: userReducer
+    user: userReducer,
+    bag: bagReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

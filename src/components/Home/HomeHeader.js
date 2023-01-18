@@ -2,8 +2,16 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
+import { useNavigation } from '@react-navigation/native'
 
 const HomeHeader = () => {
+
+    const navigation = useNavigation()
+
+    const bagNavigationHandler = () => {
+        navigation.navigate('Bag')
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.leftContainer}>
@@ -28,7 +36,7 @@ const HomeHeader = () => {
                 <TouchableOpacity>
                     <Image source={require('../../icons/heart.png')} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={bagNavigationHandler}>
                     <Image source={require('../../icons/bag.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
