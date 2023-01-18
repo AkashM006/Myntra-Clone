@@ -3,6 +3,7 @@ import React from 'react'
 import CustomText from '../../components/Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 const FIRSTLIST = [
     {
@@ -49,7 +50,8 @@ const THIRDLIST = [
         id: 1,
         title: 'Manage Your Account',
         subtitle: 'Password, Email ID and Phone number',
-        icon: require('../../icons/edit.png')
+        icon: require('../../icons/edit.png'),
+        to: 'EditProfile'
     },
     {
         id: 2,
@@ -84,14 +86,22 @@ const Card = ({ item, index, length, separator, moreicon, titleStyle }) => {
     let hasSeparator = separator ?? true
     let hasMoreIcon = moreicon ?? true
 
-    return <TouchableOpacity style={[
-        styles.button,
-        {
-            borderBottomWidth: index !== length - 1 && hasSeparator ? 1 : 0,
-            paddingBottom: index !== length - 1 ? 15 : 5,
-            paddingTop: index === 0 ? 5 : 15
-        }
-    ]}>
+    const navigation = useNavigation()
+
+    const pressHandler = () => {
+        if (item.to) navigation.navigate(item.to)
+    }
+
+    return <TouchableOpacity
+        onPress={pressHandler}
+        style={[
+            styles.button,
+            {
+                borderBottomWidth: index !== length - 1 && hasSeparator ? 1 : 0,
+                paddingBottom: index !== length - 1 ? 15 : 5,
+                paddingTop: index === 0 ? 5 : 15
+            }
+        ]}>
         <View style={styles.left}>
             {
                 item.icon ?
