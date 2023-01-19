@@ -3,10 +3,18 @@ import React from 'react'
 import CustomText from './CustomText'
 import COLORS from '../../constants/Colors'
 
-const CustomButton = ({ text, onPressHandler, disabled }) => {
+const CustomButton = ({ text, onPressHandler, disabled, top, border, color, bgColor }) => {
+
+    const style = {
+        marginTop: top ?? 20,
+        borderColor: border?.color ?? 'white',
+        borderWidth: border?.width ?? 0,
+        backgroundColor: disabled ? COLORS.SHADEDARK : bgColor ?? COLORS.PRIMARY
+    }
+
     return (
-        <TouchableOpacity style={[styles.button, { backgroundColor: disabled ? COLORS.SHADEDARK : COLORS.PRIMARY }]} onPress={onPressHandler} disabled={disabled}>
-            <CustomText weight={'light'} color={COLORS.WHITE}>
+        <TouchableOpacity style={[styles.button, , style]} onPress={onPressHandler} disabled={disabled}>
+            <CustomText weight={'light'} color={color ?? 'white'}>
                 {text}
             </CustomText>
         </TouchableOpacity>
@@ -15,7 +23,6 @@ const CustomButton = ({ text, onPressHandler, disabled }) => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: 20,
         padding: 20,
         alignItems: 'center',
         borderRadius: 3,

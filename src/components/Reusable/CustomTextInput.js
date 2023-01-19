@@ -1,11 +1,18 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import { View, TextInput, StyleSheet } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import CustomText from './CustomText'
 import COLORS from '../../constants/Colors'
 
-const CustomTextInput = ({ placeholder, value, onChangeTextHandler, error, secure }) => {
+const CustomTextInput = ({ placeholder, value, onChangeTextHandler, error, secure, onBlurHandler }) => {
 
     const [isActive, setIsActive] = useState(false)
+
+    const handleBlur = onBlurHandler ?? null
+
+    const borderStyle = { borderColor: isActive ? COLORS.SHADEDARK : error == null ? COLORS.SHADELIGHT : COLORS.DANGER }
+
+    const onFocusHandler = useCallback(() => setIsActive(true), [])
+    const onEndEditingHandler = useCallback(() => setIsActive(false), [])
 
     return (
         <View>
@@ -14,9 +21,10 @@ const CustomTextInput = ({ placeholder, value, onChangeTextHandler, error, secur
                 value={value}
                 onChangeText={onChangeTextHandler}
                 placeholderTextColor={COLORS.SHADELIGHT}
-                onFocus={() => setIsActive(true)}
-                onBlur={() => setIsActive(false)}
-                style={[styles.input, { borderColor: isActive ? COLORS.SHADEDARK : error == null ? COLORS.SHADELIGHT : COLORS.DANGER, }]}
+                onFocus={onFocusHandler}
+                onBlur={handleBlur}
+                onEndEditing={onEndEditingHandler}
+                style={[styles.input, borderStyle]}
                 secureTextEntry={secure ?? false}
             />
             {

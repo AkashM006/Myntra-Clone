@@ -44,6 +44,7 @@ const ProfileStack = () => {
             <Stack.Screen
                 name='EditProfile'
                 component={EditAccountScreen}
+                options={options}
             />
         </Stack.Navigator>
     )
