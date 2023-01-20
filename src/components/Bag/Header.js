@@ -12,7 +12,9 @@ const Header = () => {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <TouchableOpacity onPress={backHandler}>
-                    <Image source={require('../../icons/back.png')} />
+                    <Image
+                        source={require('../../icons/back.png')}
+                    />
                 </TouchableOpacity>
                 <CustomText left={10} weight='light' size={16}>
                     SHOPPING BAG
