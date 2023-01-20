@@ -7,6 +7,7 @@ import RegistrationScreen from '../screens/RegistrationScreen'
 import PasswordScreen from '../screens/PasswordScreen'
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen'
 import EditAccountScreen from '../screens/EditAccountScreen'
+import EditPasswordScreen from '../screens/EditPasswordScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -44,6 +45,11 @@ const ProfileStack = () => {
             <Stack.Screen
                 name='EditProfile'
                 component={EditAccountScreen}
+                options={options}
+            />
+            <Stack.Screen
+                name='EditPassword'
+                component={EditPasswordScreen}
                 options={options}
             />
         </Stack.Navigator>

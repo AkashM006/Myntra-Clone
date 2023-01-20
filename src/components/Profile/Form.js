@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Alert, Image, Keyboard } from 'react-native'
+import { View, StyleSheet, Image, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch, useSelector } from 'react-redux'

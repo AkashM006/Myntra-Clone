@@ -1,3 +1,5 @@
+import Toast from "react-native-root-toast"
+
 const substring = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength - 2) + '...' : text
 
 const calculateDiscount = (price, percentage) => (((100 - percentage) * +price) / 100).toFixed()
@@ -8,4 +10,6 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep",
 
 const kFormatter = num => Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
 
-export { substring, calculateDiscount, formatCurrency, months, kFormatter }
+const showToast = msg => Toast.show(msg, { duration: Toast.durations.LONG, position: Toast.positions.BOTTOM })
+
+export { substring, calculateDiscount, formatCurrency, months, kFormatter, showToast }

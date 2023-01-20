@@ -4,7 +4,7 @@ import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import CustomTextInput from '../Reusable/CustomTextInput'
 
-const PasswordField = ({ password, setPassword, setIsPasswordValid, err }) => {
+const PasswordField = ({ password, setPassword, setIsPasswordValid, err, placeholder, onBlurHandler }) => {
 
     const [isLong, setIsLong] = useState(false)
     const [hasUpper, setHasUpper] = useState(false)
@@ -33,13 +33,15 @@ const PasswordField = ({ password, setPassword, setIsPasswordValid, err }) => {
     }
 
     return (
-        <View>
+        <>
             <CustomTextInput
                 value={password}
-                onChangeTextHandler={value => setPassword(value)}
-                placeholder='Create Password*'
+                // onChangeTextHandler={value => setPassword(value)}
+                onChangeTextHandler={setPassword}
+                placeholder={placeholder ?? 'Create Password*'}
                 secure={true}
                 error={err}
+                onBlurHandler={onBlurHandler}
             />
             <View style={styles.textContainer}>
                 <CustomText color={COLORS.SHADEDARK} style={[styles.text, { backgroundColor: backgroundColor[isLong], color: color[isLong] }]}>
@@ -55,7 +57,7 @@ const PasswordField = ({ password, setPassword, setIsPasswordValid, err }) => {
                     1 Special
                 </CustomText>
             </View>
-        </View>
+        </>
     )
 }
 

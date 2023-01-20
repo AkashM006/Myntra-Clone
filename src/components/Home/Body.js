@@ -1,6 +1,5 @@
-import { View, Text, SectionList, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, SectionList, ActivityIndicator, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import commonStyles from '../../styles/Common'
 import firestore from '@react-native-firebase/firestore'
 import SectionHeader from './SectionHeader'
 import Photo from './Photo'
@@ -56,7 +55,7 @@ const Body = () => {
 
 
     return (
-        <View style={commonStyles.fullScreen}>
+        <View style={{ flex: 1 }}>
             <SectionList
                 sections={sections}
                 renderItem={renderItem}

@@ -5,13 +5,16 @@ import CustomTextInput from '../../Reusable/CustomTextInput'
 import CustomText from '../../Reusable/CustomText'
 import COLORS from '../../../constants/Colors'
 import CustomButton from '../../Reusable/CustomButton'
+import { useNavigation } from '@react-navigation/native'
 
 const Form = ({ values, touched, handleChange, handleBlur, errors }) => {
 
     const { mobileNumber, fullName, email, location, hint, altMobNumber } = values
 
+    const navigation = useNavigation()
+
     return (
-        <View style={{ backgroundColor: 'white', paddingHorizontal: 30 }}>
+        <View style={{ backgroundColor: 'white', paddingHorizontal: 30, marginBottom: '10%' }}>
             <Phone phone={mobileNumber} />
             <CustomTextInput
                 onChangeTextHandler={handleChange('fullName')}
@@ -59,6 +62,7 @@ const Form = ({ values, touched, handleChange, handleBlur, errors }) => {
                 border={{ color: COLORS.SHADELIGHT, width: 2 }}
                 color={COLORS.SHADEDARK}
                 bgColor={COLORS.WHITE}
+                onPressHandler={() => navigation.navigate('EditPassword')}
             />
         </View>
     )

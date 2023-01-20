@@ -133,7 +133,6 @@ const LoginPop = () => {
                     const data = res.data
 
                     if (data.status === true) {
-                        // then navigate to next page
                         setErr(null)
                         setSubmitted(false)
                         dispatch(setLoginPopUpStatus(false))
@@ -142,8 +141,6 @@ const LoginPop = () => {
                             phone,
                         })
                     } else {
-                        // alert regarding the error
-                        // Alert.alert('Whoops!', data.message)
                         Toast.show(data.message, {
                             duration: Toast.durations.LONG,
                             position: Toast.positions.BOTTOM,

@@ -1,4 +1,8 @@
 todo: 
-1) ForgotPasswordBody.js - integrate to backend for resetting password Sneka should implement
-2) Integrate redux persist
 3) Get details for user and bag count as soon as login and also logout. Yet to implemented in backend
+4) Make navigation transition smooth
+5) Dark theme
+6) Suspend and resume
+7) Push notifications
+8) Splash Screen
+9) Load icons from online and don't store it in app

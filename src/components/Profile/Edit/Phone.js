@@ -1,9 +1,14 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/Colors'
 import CustomText from '../../Reusable/CustomText'
+import { useNavigation } from '@react-navigation/native'
 
 const Phone = ({ phone }) => {
+
+    const navigation = useNavigation()
+
+    const pressHandler = () => { }
 
     return (
         <View style={[styles.container, { borderColor: COLORS.SHADELIGHT }]}>
@@ -18,7 +23,9 @@ const Phone = ({ phone }) => {
                     <Image source={require('../../../icons/tick.png')} style={{ height: 20, width: 20 }} />
                 </View>
             </View>
-            <CustomText weight='bold' color={COLORS.PRIMARY}>CHANGE</CustomText>
+            <Pressable onPress={pressHandler}>
+                <CustomText weight='bold' color={COLORS.PRIMARY}>CHANGE</CustomText>
+            </Pressable>
         </View>
     )
 }
