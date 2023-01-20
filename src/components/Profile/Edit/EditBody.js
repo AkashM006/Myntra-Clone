@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native'
 import Form from './Form'
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import PopUp from './PopUp'
+import { showToast } from '../../../utils/utils'
 
 const EditBody = () => {
 
@@ -51,7 +53,7 @@ const EditBody = () => {
 }
 
 const Body = ({ user }) => {
-    user.mobileNumber = user.mobileNumber.split(' ')[1]
+    // user.mobileNumber = user.mobileNumber.split(' ')[1]
     const validationSchema = yup.object().shape({
         mobileNumber: yup
             .string()
@@ -71,13 +73,11 @@ const Body = ({ user }) => {
         location: yup
             .string(),
         altMobNumber: yup
-            .string('Please enter valid phone number')
-            .min(10, 'Phone number must be 10 digits long')
+            .string()
             .max(10, 'Phone number must be 10 digits long')
             .test('phone-number', 'Please enter valid phone number', function (value) {
-                if (/^\d+$/.test(value)) return true
-
-                return this.createError({ path: this.path, message: 'Please enter valid phone' })
+                if (!value || (/^\d+$/.test(value) && value.length === 10)) return true
+                return this.createError({ path: this.path, message: 'Please enter valid phone number' })
             })
 
     })
@@ -86,13 +86,48 @@ const Body = ({ user }) => {
 
     }
 
+    const [showPopUp, setShowPopUp] = useState(false)
+
+    let numbers = []
+    numbers.push(user.mobileNumber)
+    if (user.altMobNumber) numbers.push(user.altMobNumber)
+
+    const sendOTP = (selectedPhone) => {
+        setShowPopUp(false)
+        // console.log("Phone: ", selectedPhone)
+        axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
+            phoneNumber: selectedPhone
+        })
+            .then(res => {
+                const data = res.data
+                if (data.status) {
+                    // then navigate
+                } else {
+                    showToast(data.message)
+                }
+            })
+            .catch(err => {
+                console.log("Error: ", err)
+                showToast('Something went wrong. Please try again later!')
+            })
+    }
+
     return (<>
         <Formik validationSchema={validationSchema} initialValues={user} onSubmit={submitHandler}>
             {
                 ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => <>
-                    <ScrollView style={{ backgroundColor: 'white' }}>
-                        <Form touched={touched} handleBlur={handleBlur} errors={errors} values={values} handleChange={handleChange} />
+                    <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }}>
+                        <Form
+                            touched={touched}
+                            handleBlur={handleBlur}
+                            errors={errors}
+                            values={values}
+                            handleChange={handleChange}
+                            setPopUp={setShowPopUp}
+                        />
                     </ScrollView>
+                    <PopUp sendOTP={sendOTP} setPopUp={setShowPopUp} numbers={numbers} render={showPopUp} />
+                    <Overlay hideLoader onPressHandler={() => setShowPopUp(false)} render={showPopUp} />
                     <FooterButton submitHandler={handleSubmit} />
                 </>
             }

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable, Keyboard, TextInput, Alert } from 'react-native'
+import { View, StyleSheet, Pressable, Keyboard, TextInput } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { setPhone, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
-import Toast from 'react-native-root-toast'
+import { showToast } from '../../utils/utils'
 
 const OtpBody = ({ phone, setSubmitted }) => {
 
@@ -76,7 +76,6 @@ const OtpBody = ({ phone, setSubmitted }) => {
 
     useEffect(() => {
         if (otp.length === 4) {
-            // here send http request
             setSubmitted(true)
             Keyboard.dismiss()
             axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {
@@ -84,7 +83,6 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 otp
             })
                 .then(res => {
-                    // console.log("Res: ", res.data)
                     setSubmitted(false)
                     const data = res.data
                     if (data.status === true) {
@@ -103,7 +101,8 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 .catch(err => {
                     console.log("Err: ", err)
                     setSubmitted(false)
-                    Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
+                    showToast('Something went wrong. Please try again later!')
+                    // Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
                 })
         }
     }, [otp])
@@ -124,17 +123,10 @@ const OtpBody = ({ phone, setSubmitted }) => {
                 const data = res.data
 
                 if (data.status === true) setTime(15)
-                else Toast.show(data.message, {
-                    duration: Toast.durations.LONG,
-                    position: Toast.positions.BOTTOM,
-                })
+                else showToast(data.message)
             })
             .catch(err => {
-                // Alert.alert("Whoops!", 'Something went wrong! Please try again later')
-                Toast.show('Something went wrong! Please try again later', {
-                    duration: Toast.durations.LONG,
-                    position: Toast.positions.BOTTOM,
-                })
+                showToast('Something went wrong! Please try again later!')
                 console.log("Err: ", err)
             })
     }

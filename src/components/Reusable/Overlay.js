@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import CustomLoader from './CustomLoader'
 
-const Overlay = ({ render, hideShadow }) => {
+const Overlay = ({ render, hideShadow, onPressHandler, hideLoader }) => {
 
     let style = {
         backgroundColor: hideShadow ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.6)'
@@ -10,9 +10,9 @@ const Overlay = ({ render, hideShadow }) => {
 
     return (
         <>
-            {render && <View style={[styles.container, style]}>
-                <CustomLoader />
-            </View>}
+            {render && <Pressable onPress={onPressHandler} style={[styles.container, style]}>
+                {!hideLoader && <CustomLoader />}
+            </Pressable>}
         </>
     )
 }

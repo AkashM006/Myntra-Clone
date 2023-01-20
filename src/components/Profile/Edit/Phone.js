@@ -2,13 +2,12 @@ import { Image, Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/Colors'
 import CustomText from '../../Reusable/CustomText'
-import { useNavigation } from '@react-navigation/native'
 
-const Phone = ({ phone }) => {
+const Phone = ({ phone, showPopUp }) => {
 
-    const navigation = useNavigation()
-
-    const pressHandler = () => { }
+    const pressHandler = () => {
+        showPopUp(true)
+    }
 
     return (
         <View style={[styles.container, { borderColor: COLORS.SHADELIGHT }]}>
@@ -18,7 +17,7 @@ const Phone = ({ phone }) => {
                 </CustomText>
                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                     <CustomText size={14} right={5}>
-                        {phone}
+                        {phone.split(' ')[1]}
                     </CustomText>
                     <Image source={require('../../../icons/tick.png')} style={{ height: 20, width: 20 }} />
                 </View>
