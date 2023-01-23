@@ -6,8 +6,6 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import Toast from 'react-native-root-toast'
 import { setProfile } from '../redux/userSlice'
-import FastImage from 'react-native-fast-image'
-import ICONS from '../icons/icons'
 
 const MainScreen = () => {
 
