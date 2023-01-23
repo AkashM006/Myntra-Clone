@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
+import React from 'react'
 import CustomText from '../Reusable/CustomText'
-import Filter from './Filter'
 import Sort from './Sort'
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, interpolateColor, Easing } from 'react-native-reanimated'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const Footer = () => {
 
-    // const [isVisible, setIsVisible] = useState(false)
     const visibility = useSharedValue(0)
 
     const sortHandler = () => {
@@ -39,20 +39,19 @@ const Footer = () => {
             <View style={styles.top} />
             <View style={styles.container}>
                 <TouchableOpacity onPress={sortHandler} style={styles.option}>
-                    <Image source={require('../../icons/sort.png')} style={styles.icon} />
+                    <FastImage tintColor={'gray'} source={{ uri: ICONS.ICON_SORT }} style={styles.icon} />
                     <CustomText weight={'bold'}>
                         SORT
                     </CustomText>
                 </TouchableOpacity>
                 <View style={styles.separator} />
                 <TouchableOpacity style={styles.option}>
-                    <Image source={require('../../icons/filter.png')} style={styles.icon} />
+                    <FastImage tintColor={'gray'} source={{ uri: ICONS.ICON_FILTER }} style={styles.icon} />
                     <CustomText weight={'bold'}>
                         FILTER
                     </CustomText>
                 </TouchableOpacity>
             </View>
-            {/* <Filter visible={isVisible} setVisibility={setIsVisible} /> */}
             <Sort visible={visibility} />
             <Animated.View style={[styles.modal, backgroundStyle]}>
                 <Pressable style={{ width: '100%', height: '100%' }} onPress={pressHandler} />
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
         height: 20,
         width: 20,
         marginRight: 10,
-        tintColor: 'gray'
     },
     separator: {
         height: 25,

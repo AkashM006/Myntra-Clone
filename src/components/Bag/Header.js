@@ -2,6 +2,8 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import ICONS from '../../icons/icons'
+import FastImage from 'react-native-fast-image'
 
 const Header = () => {
 
@@ -12,8 +14,10 @@ const Header = () => {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <TouchableOpacity onPress={backHandler}>
-                    <Image
-                        source={require('../../icons/back.png')}
+                    <FastImage
+                        source={{ uri: ICONS.ICON_BACK }}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{ height: 25, width: 25 }}
                     />
                 </TouchableOpacity>
                 <CustomText left={10} weight='light' size={16}>
@@ -21,7 +25,7 @@ const Header = () => {
                 </CustomText>
             </View>
             <TouchableOpacity>
-                <Image source={require('../../icons/heart.png')} style={{ height: 25, width: 25 }} />
+                <FastImage source={{ uri: ICONS.ICON_HEART }} style={{ height: 25, width: 25 }} />
             </TouchableOpacity>
         </View>
     )

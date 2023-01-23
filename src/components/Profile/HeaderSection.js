@@ -1,10 +1,12 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import COLORS from '../../constants/Colors'
 import Avatar from '../Reusable/Avatar'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const HeaderSection = () => {
 
@@ -21,7 +23,7 @@ const HeaderSection = () => {
                 <View style={styles.colorContainer} />
                 <View style={styles.displayContainer}>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../icons/profile-pic.png')} style={styles.image} />
+                        <FastImage source={{ uri: ICONS.ICON_PROFILE_PIC }} style={{ height: '40%', width: '40%' }} />
                     </View>
                     <TouchableOpacity onPress={openLoginPopUp} style={styles.login}>
                         <CustomText weight={'bolder'} color={COLORS.WHITE}>
@@ -40,7 +42,7 @@ const UserLoggedInHeader = ({ user }) => {
                 Shopping for {user.fullName ?? 'You'}
             </CustomText>
             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', }}>
-                <Image source={require('../../icons/crown.png')} style={{ height: 25, width: 25 }} />
+                <FastImage source={{ uri: ICONS.ICON_CROWN }} style={{ height: 25, width: 25 }} />
                 <CustomText color={COLORS.SHADEDARK} left={5}>
                     Become and Insider!
                 </CustomText>

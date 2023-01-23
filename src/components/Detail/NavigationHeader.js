@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
 import CustomText from '../Reusable/CustomText'
 import { substring } from '../../utils/utils'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const NavigationHeader = ({ scroll, name }) => {
 
@@ -36,7 +38,7 @@ const NavigationHeader = ({ scroll, name }) => {
             {scroll && <Animated.View style={[styles.header, rStyle]}>
                 <View style={styles.leftContainer}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
-                        <Image source={require('../../icons/back.png')} style={styles.icon} />
+                        <FastImage source={{ uri: ICONS.ICON_BACK }} style={styles.icon} />
                     </TouchableOpacity>
                     <CustomText isAnimated={true} weight={'bold'} size={18} style={textStyle}>
                         {substring(name, 20)}
@@ -44,13 +46,13 @@ const NavigationHeader = ({ scroll, name }) => {
                 </View>
                 <View style={styles.rightContainer}>
                     <TouchableOpacity style={styles.iconContainer}>
-                        <Image source={require('../../icons/share.png')} style={styles.icon} />
+                        <FastImage source={{ uri: ICONS.ICON_SHARE }} style={styles.icon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer}>
-                        <Image source={require('../../icons/heart.png')} style={styles.icon} />
+                        <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer}>
-                        <Image source={require('../../icons/bag.png')} style={styles.icon} />
+                        <FastImage source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
                     </TouchableOpacity>
                 </View>
             </Animated.View>}

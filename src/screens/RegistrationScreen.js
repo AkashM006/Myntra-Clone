@@ -1,9 +1,11 @@
-import { View, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import CustomText from '../components/Reusable/CustomText'
 import Form from '../components/Profile/Form'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import Overlay from '../components/Reusable/Overlay'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../icons/icons'
 
 const RegistrationScreen = () => {
 
@@ -21,7 +23,7 @@ const RegistrationScreen = () => {
         <ScrollView style={styles.container}>
             <View style={styles.haederContainer}>
                 <TouchableOpacity style={styles.back} onPress={backHandler}>
-                    <Image source={require('../icons/back.png')} />
+                    <FastImage source={{ uri: ICONS.ICON_BACK }} />
                 </TouchableOpacity>
                 <CustomText weight={'light'} size={18}>Complete your sign up</CustomText>
             </View>

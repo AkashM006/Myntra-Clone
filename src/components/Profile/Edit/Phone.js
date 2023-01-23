@@ -1,7 +1,9 @@
-import { Image, Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 import COLORS from '../../../constants/Colors'
 import CustomText from '../../Reusable/CustomText'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../../icons/icons'
 
 const Phone = ({ phone, showPopUp }) => {
 
@@ -19,7 +21,7 @@ const Phone = ({ phone, showPopUp }) => {
                     <CustomText size={14} right={5}>
                         {phone.split(' ')[1]}
                     </CustomText>
-                    <Image source={require('../../../icons/tick.png')} style={{ height: 20, width: 20 }} />
+                    <FastImage source={{ uri: ICONS.ICON_TICK }} style={{ height: 20, width: 20 }} />
                 </View>
             </View>
             <Pressable onPress={pressHandler}>

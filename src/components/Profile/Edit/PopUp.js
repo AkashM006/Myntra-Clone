@@ -5,8 +5,8 @@ import CustomText from '../../Reusable/CustomText'
 import COLORS from '../../../constants/Colors'
 import RadioButton from './RadioButton'
 import CustomButton from '../../Reusable/CustomButton'
-import axios from 'axios'
-import Config from 'react-native-config'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../../icons/icons'
 
 const PopUp = ({ numbers, render, setPopUp, sendOTP }) => {
 
@@ -44,7 +44,7 @@ const PopUp = ({ numbers, render, setPopUp, sendOTP }) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <CustomText size={18} weight='bold' >2-Step Verification Required</CustomText>
                 <Pressable onPress={() => setPopUp(false)}>
-                    <Image source={require('../../../icons/close.png')} style={{ height: 20, width: 20 }} />
+                    <FastImage source={{ uri: ICONS.ICON_CLOSE }} style={{ height: 20, width: 20 }} />
                 </Pressable>
             </View>
             <CustomText color={COLORS.SHADEDARK} size={11} vertical={20} >

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, BackHandler, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, BackHandler, Alert } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
@@ -11,6 +11,8 @@ import COLORS from '../../constants/Colors'
 import Overlay from '../Reusable/Overlay'
 import CustomButton from '../Reusable/CustomButton'
 import Toast from 'react-native-root-toast'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const LoginPop = () => {
 
@@ -170,9 +172,9 @@ const LoginPop = () => {
         <Animated.View style={[styles.container, rStyle]}>
             <Overlay render={submitted} />
             <View style={styles.iconContainer}>
-                <Image source={require('../../icons/logo.png')} style={{ width: 40, height: 40 }} />
+                <FastImage source={{ uri: ICONS.ICON_LOGO }} style={{ width: 40, height: 40 }} />
                 <TouchableOpacity onPress={closeHandler}>
-                    <Image source={require('../../icons/close.png')} style={{ width: 25, height: 25 }} />
+                    <FastImage source={{ uri: ICONS.ICON_CLOSE }} style={{ width: 25, height: 25 }} />
                 </TouchableOpacity>
             </View>
             <View>

@@ -1,8 +1,10 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import { useNavigation } from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const HomeHeader = () => {
 
@@ -16,10 +18,10 @@ const HomeHeader = () => {
         <View style={styles.container}>
             <View style={styles.leftContainer}>
                 <TouchableOpacity style={styles.menuContainer}>
-                    <Image source={require('../../icons/menu.png')} style={styles.menu} />
+                    <FastImage source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.premium}>
-                    <Image source={require('../../icons/myntra.webp')} style={styles.logo} />
+                    <FastImage source={{ uri: ICONS.ICON_MYNTRA }} style={styles.logo} />
                     <View style={{ justifyContent: 'flex-start' }}>
                         <CustomText size={8}>Become</CustomText>
                         <CustomText size={8} color={COLORS.PRIMARY}>Insider</CustomText>
@@ -28,16 +30,16 @@ const HomeHeader = () => {
             </View>
             <View style={styles.rightContainer}>
                 <TouchableOpacity>
-                    <Image source={require('../../icons/search.png')} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage source={{ uri: ICONS.ICON_SEARCH }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image source={require('../../icons/bell.png')} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage source={{ uri: ICONS.ICON_BELL }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image source={require('../../icons/heart.png')} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage source={{ uri: ICONS.ICON_HEART }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={bagNavigationHandler}>
-                    <Image source={require('../../icons/bag.png')} style={styles.icon} />
+                    <FastImage source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
                 </TouchableOpacity>
             </View>
         </View>

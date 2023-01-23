@@ -4,6 +4,8 @@ import CustomText from '../Reusable/CustomText'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore'
 import Skeleton from '../Reusable/Skeleton'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const ListHeader = () => {
 
@@ -32,7 +34,7 @@ const ListHeader = () => {
         <View style={styles.container}>
             <View style={styles.leftContainer}>
                 <TouchableOpacity style={styles.backContainer} onPress={pressHandler}>
-                    <Image source={require('../../icons/back.png')} style={styles.back} />
+                    <FastImage source={{ uri: ICONS.ICON_BACK }} style={styles.back} />
                 </TouchableOpacity>
                 <View style={styles.left}>
                     <CustomText weight={'light'}>
@@ -44,9 +46,9 @@ const ListHeader = () => {
                 </View>
             </View>
             <View style={styles.rightContainer}>
-                <Image source={require('../../icons/search.png')} style={styles.icon} />
-                <Image source={require('../../icons/heart.png')} style={styles.icon} />
-                <Image source={require('../../icons/bag.png')} style={[styles.icon, { marginRight: 10 }]} />
+                <FastImage source={{ uri: ICONS.ICON_SEARCH }} style={styles.icon} />
+                <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
+                <FastImage source={{ uri: ICONS.ICON_BAG }} style={[styles.icon, { marginRight: 10 }]} />
             </View>
         </View>
     )

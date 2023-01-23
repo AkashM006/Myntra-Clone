@@ -4,6 +4,8 @@ import CustomText from '../Reusable/CustomText'
 import { useRoute } from '@react-navigation/native'
 import { substring } from '../../utils/utils'
 import COLORS from '../../constants/Colors'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const Progressor = ({ count, items, goTop }) => {
 
@@ -14,7 +16,7 @@ const Progressor = ({ count, items, goTop }) => {
             {items >= 10 && <View style={styles.animatedContainer}>
                 <TouchableOpacity style={styles.container} onPress={goTop}>
                     <View style={styles.leftContainer}>
-                        <Image source={require('../../icons/back.png')} style={styles.icon} />
+                        <FastImage source={{ uri: ICONS.ICON_BACK }} style={styles.icon} />
                         <CustomText color={COLORS.WHITE} style={styles.text}>
                             {substring(title.toUpperCase(), 10)}
                         </CustomText>

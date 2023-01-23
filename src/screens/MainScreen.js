@@ -6,6 +6,8 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import Toast from 'react-native-root-toast'
 import { setProfile } from '../redux/userSlice'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../icons/icons'
 
 const MainScreen = () => {
 
@@ -42,9 +44,7 @@ const MainScreen = () => {
     }, [token])
 
     return (
-        <View style={{ flex: 1 }}>
-            <HomeNavigation />
-        </View>
+        <View style={{ flex: 1 }}><HomeNavigation /></View>
     )
 }
 

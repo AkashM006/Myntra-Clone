@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { kFormatter } from '../../utils/utils'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const Rating = ({ count, total, align }) => {
 
@@ -17,7 +19,7 @@ const Rating = ({ count, total, align }) => {
             <CustomText weight={'light'}>
                 {(total / count).toFixed(1)}
             </CustomText>
-            <Image source={require('../../icons/star.png')} style={styles.star} />
+            <FastImage tintColor={'#259f23'} source={{ uri: ICONS.ICON_STAR }} style={styles.star} />
             <View style={styles.separator} />
             <CustomText weight={'light'} style={styles.count}>
                 {kFormatter(count)}
@@ -44,7 +46,6 @@ const styles = StyleSheet.create({
         width: 8,
         marginLeft: 2,
         marginRight: 5,
-        tintColor: '#259f23',
     },
     separator: {
         height: 10,

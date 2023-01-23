@@ -4,20 +4,22 @@ import CustomText from '../../components/Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import ICONS from '../../icons/icons'
+import FastImage from 'react-native-fast-image'
 
 const FIRSTLIST = [
     {
         id: 1,
         title: 'Orders',
         subtitle: 'Check your order status',
-        icon: require('../../icons/orders.png'),
+        icon: { uri: ICONS.ICON_ORDERS },
         always: true,
     },
     {
         id: 2,
         title: 'Help Center',
         subtitle: 'Help regarding your recent purchases',
-        icon: require('../../icons/customer_care.png'),
+        icon: { uri: ICONS.ICON_CUSTOMER_CARE },
         always: true
     },
     {
@@ -26,13 +28,13 @@ const FIRSTLIST = [
         subtitle: 'Copuons, offers & rewards await you',
         always: false,
         shouldBeLoggedIn: true,
-        icon: require('../../icons/crown-outline.png')
+        icon: { uri: ICONS.ICON_CROWN_OUTLINE }
     },
     {
         id: 4,
         title: 'Wishlist',
         subtitle: 'Your most loved styles',
-        icon: require('../../icons/heart.png'),
+        icon: { uri: ICONS.ICON_HEART },
         always: true
     }
 ]
@@ -41,7 +43,7 @@ const SECONDLIST = [
     {
         id: 1,
         title: 'Scan for coupon',
-        icon: require('../../icons/qr_code.png'),
+        icon: { uri: ICONS.ICON_QR_CODE },
     }
 ]
 
@@ -50,14 +52,14 @@ const THIRDLIST = [
         id: 1,
         title: 'Manage Your Account',
         subtitle: 'Password, Email ID and Phone number',
-        icon: require('../../icons/edit.png'),
+        icon: { uri: ICONS.ICON_EDIT },
         to: 'EditProfile'
     },
     {
         id: 2,
         title: 'Settings',
         subtitle: 'Manage notifications & app settings',
-        icon: require('../../icons/settings.png')
+        icon: { uri: ICONS.ICON_SETTINGS }
     }
 ]
 
@@ -114,7 +116,7 @@ const Card = ({ item, index, length, separator, moreicon, titleStyle }) => {
             </View>
         </View>
         {hasMoreIcon && <View>
-            <Image source={require('../../icons/right.png')} style={styles.right} />
+            <FastImage source={{ uri: ICONS.ICON_RIGHT }} style={styles.right} />
         </View>}
     </TouchableOpacity>
 }

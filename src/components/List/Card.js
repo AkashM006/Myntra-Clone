@@ -5,6 +5,8 @@ import { calculateDiscount, formatCurrency, months, substring } from '../../util
 import Rating from './Rating'
 import { useNavigation } from '@react-navigation/native'
 import COLORS from '../../constants/Colors'
+import ICONS from '../../icons/icons'
+import FastImage from 'react-native-fast-image'
 
 const Card = ({ cloth, index }) => {
 
@@ -12,8 +14,8 @@ const Card = ({ cloth, index }) => {
     const navigation = useNavigation()
     const [isFavourite, setIsFavourite] = useState(false)
 
-    const activeHeart = require('../../icons/heart-active.png')
-    const heart = require('../../icons/heart.png')
+    const activeHeart = { uri: ICONS.ICON_HEART_ACTIVE }
+    const heart = { uri: ICONS.ICON_HEART }
 
     const hasDiscount = (cloth.discount && cloth.discount > 0) ? true : false
 
@@ -57,8 +59,8 @@ const Card = ({ cloth, index }) => {
                     </CustomText>
                     <TouchableOpacity onPress={() => setIsFavourite(prev => !prev)}>
                         {isFavourite === true ?
-                            <Image source={activeHeart} style={styles.icon} /> :
-                            <Image source={heart} style={styles.icon} />
+                            <FastImage source={activeHeart} style={styles.icon} /> :
+                            <FastImage source={heart} style={styles.icon} />
                         }
                     </TouchableOpacity>
                 </View>

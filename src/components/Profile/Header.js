@@ -1,7 +1,9 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const Header = ({ title }) => {
 
@@ -14,7 +16,7 @@ const Header = ({ title }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={backHandler}>
-                <Image source={require('../../icons/back.png')} />
+                <FastImage source={{ uri: ICONS.ICON_BACK }} />
             </TouchableOpacity>
             <CustomText size={16} weight='light' left={10}>
                 {title}

@@ -12,6 +12,8 @@ import COLORS from '../../constants/Colors'
 import CustomTextInput from '../Reusable/CustomTextInput'
 import CustomButton from '../Reusable/CustomButton'
 import Toast from 'react-native-root-toast'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../../icons/icons'
 
 const Form = ({ setSubmitted, submitted }) => {
 
@@ -151,7 +153,7 @@ const Form = ({ setSubmitted, submitted }) => {
                 </CustomText>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                     <CustomText size={14}>{phone}</CustomText>
-                    <Image source={require('../../icons/tick.png')} style={{ height: 20, width: 20 }} />
+                    <FastImage source={{ uri: ICONS.ICON_TICK }} style={{ height: 20, width: 20 }} />
                 </View>
             </View>
             <PasswordField err={passwordErr} password={password} setPassword={setPassword} setIsPasswordValid={setIsPasswordValid} />

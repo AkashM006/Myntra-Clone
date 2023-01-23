@@ -1,8 +1,10 @@
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { StackActions, useNavigation, useRoute } from '@react-navigation/native'
 import PasswordBody from '../components/Profile/PasswordBody'
 import Overlay from '../components/Reusable/Overlay'
+import FastImage from 'react-native-fast-image'
+import ICONS from '../icons/icons'
 
 const PasswordScreen = () => {
 
@@ -20,7 +22,7 @@ const PasswordScreen = () => {
         <View style={styles.container}>
             <Overlay render={submitted} />
             <TouchableOpacity onPress={handleBack}>
-                <Image source={require('../icons/back.png')} />
+                <FastImage source={{ uri: ICONS.ICON_BACK }} />
             </TouchableOpacity>
             <PasswordBody submitted={submitted} setSubmitted={setSubmitted} phone={phone} />
         </View>
