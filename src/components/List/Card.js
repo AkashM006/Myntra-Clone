@@ -38,11 +38,12 @@ const Card = ({ cloth, index }) => {
         }
     }
 
-    const hasRating = (cloth.ratedCount > 0) ? true : false
+    const hasRating = (cloth.ratings > 0) ? true : false
 
     const pressHandler = () => {
         navigation.navigate('Detail', {
-            name: cloth.name
+            // name: cloth.name
+            id: cloth.id
         })
     }
 
@@ -50,7 +51,7 @@ const Card = ({ cloth, index }) => {
         <TouchableOpacity onPress={pressHandler} style={[styles.container, { height: (height - 65) / 2, borderRightWidth: 1 }]}>
             <View style={styles.imageContainer}>
                 <Image source={{ uri: cloth.photo }} style={styles.image} />
-                {hasRating && <Rating count={cloth.ratedCount} total={cloth.totalRating} />}
+                {hasRating && <Rating count={cloth.ratings} rating={cloth.star} />}
             </View>
             <View style={styles.body}>
                 <View style={styles.titleContainer}>
@@ -69,10 +70,10 @@ const Card = ({ cloth, index }) => {
                 </CustomText>
                 <View style={styles.priceContainer}>
                     <CustomText size={14} style={priceTextStyle[hasDiscount]}>
-                        {formatCurrency(cloth.price).split('.')[0]}
+                        {formatCurrency(cloth.mrp).split('.')[0]}
                     </CustomText>
                     {hasDiscount && <CustomText weight={'light'} style={styles.discount}>
-                        {formatCurrency(+calculateDiscount(cloth.price, cloth.discount)).split('.')[0]}
+                        {formatCurrency(+calculateDiscount(cloth.mrp, cloth.discount)).split('.')[0]}
                     </CustomText>}
                     {hasDiscount && <CustomText color={COLORS.PRIMARY} style={styles.percentage}>
                         {cloth.discount + '% OFF'}

@@ -5,7 +5,14 @@ import COLORS from '../../constants/Colors'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const Size = ({ sizes, itemSizes, setStickyFooter }) => {
+const Size = ({ sizes, setStickyFooter }) => {
+    let clothSizes = { ...sizes }
+
+    delete clothSizes.id
+    delete clothSizes.productId
+
+    clothSizes = Object.entries(clothSizes)
+
 
     return (
         <View style={styles.container}>
@@ -20,16 +27,16 @@ const Size = ({ sizes, itemSizes, setStickyFooter }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.sizesContainer}>
-                {sizes.map((size, index) => (
+                {clothSizes.map((size, index) => (
                     <TouchableOpacity key={index} style={[styles.size, {
-                        borderColor: !(itemSizes.includes(size)) ? 'lightgray' : 'black'
+                        borderColor: !size[1] ? 'lightgray' : 'black'
                     }]}>
                         <View>
-                            <CustomText color={itemSizes.includes(size) ? COLORS.BLACK : COLORS.SHADEDARK}>
-                                {size}
+                            <CustomText color={size[1] ? COLORS.BLACK : COLORS.SHADEDARK}>
+                                {size[0].toUpperCase()}
                             </CustomText>
                         </View>
-                        {!(itemSizes.includes(size)) && <View style={styles.strike} />}
+                        {!size[1] && <View style={styles.strike} />}
                     </TouchableOpacity>
                 ))}
             </View>
@@ -68,7 +75,8 @@ const styles = StyleSheet.create({
     },
     sizesContainer: {
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
+        flexWrap: 'wrap'
     },
     size: {
         borderRadius: 100,

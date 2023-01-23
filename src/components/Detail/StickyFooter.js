@@ -8,7 +8,7 @@ import ICONS from '../../icons/icons'
 
 const StickyFooter = ({ scroll, footer }) => {
 
-    const topEdge = footer?.y - 90 + footer?.height
+    const topEdge = footer?.y - 70 + footer?.height
 
     const rStyle = useAnimatedStyle(() => {
         return {

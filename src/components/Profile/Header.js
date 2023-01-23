@@ -16,7 +16,7 @@ const Header = ({ title }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={backHandler}>
-                <FastImage source={{ uri: ICONS.ICON_BACK }} />
+                <FastImage style={{ height: 25, width: 25 }} source={{ uri: ICONS.ICON_BACK }} />
             </TouchableOpacity>
             <CustomText size={16} weight='light' left={10}>
                 {title}

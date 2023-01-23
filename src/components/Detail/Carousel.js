@@ -5,7 +5,7 @@ import Rating from '../List/Rating'
 const INDICATOR_SIZE = 8
 const INDICATOR_SPACING = 10
 
-const Carousel = ({ images, ratedCount, totalRating }) => {
+const Carousel = ({ images, ratedCount, rating }) => {
 
     const { height, width } = useWindowDimensions()
 
@@ -35,7 +35,7 @@ const Carousel = ({ images, ratedCount, totalRating }) => {
                     bounces={false}
                 />
                 {
-                    ratedCount && ratedCount > 0 && <Rating count={ratedCount} total={totalRating} align='right' />
+                    ratedCount && ratedCount > 0 && <Rating count={ratedCount} rating={rating} align='right' />
                 }
             </View>
             <View style={styles.indicatorContainer}>
@@ -56,32 +56,7 @@ const Carousel = ({ images, ratedCount, totalRating }) => {
 }
 
 const styles = StyleSheet.create({
-    list: {
-        overflow: 'hidden'
-    },
-    // header: {
-    //     position: 'absolute',
-    //     top: 10,
-    //     left: 10,
-    //     right: 10,
-    //     flexDirection: 'row',
-    //     justifyContent: 'space-between'
-    // },
-    // iconContainer: {
-    //     padding: 10,
-    //     backgroundColor: 'white',
-    //     alignSelf: 'flex-start',
-    //     borderRadius: 100
-    // },
-    // icon: {
-    //     height: 20,
-    //     width: 20
-    // },
-    // leftContainer: {
-    //     flexDirection: 'row',
-    //     justifyContent: 'space-around',
-    //     width: '45%'
-    // },
+    list: { overflow: 'hidden' },
     indicatorContainer: {
         marginTop: 10,
         alignItems: 'center',

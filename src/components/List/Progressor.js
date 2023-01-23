@@ -16,7 +16,7 @@ const Progressor = ({ count, items, goTop }) => {
             {items >= 10 && <View style={styles.animatedContainer}>
                 <TouchableOpacity style={styles.container} onPress={goTop}>
                     <View style={styles.leftContainer}>
-                        <FastImage source={{ uri: ICONS.ICON_BACK }} style={styles.icon} />
+                        <FastImage tintColor={'white'} source={{ uri: ICONS.ICON_BACK }} style={styles.icon} />
                         <CustomText color={COLORS.WHITE} style={styles.text}>
                             {substring(title.toUpperCase(), 10)}
                         </CustomText>
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     icon: {
-        tintColor: 'white',
         height: 20,
         width: 20,
         transform: [

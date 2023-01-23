@@ -36,7 +36,6 @@ const PasswordField = ({ password, setPassword, setIsPasswordValid, err, placeho
         <>
             <CustomTextInput
                 value={password}
-                // onChangeTextHandler={value => setPassword(value)}
                 onChangeTextHandler={setPassword}
                 placeholder={placeholder ?? 'Create Password*'}
                 secure={true}

@@ -53,7 +53,7 @@ const EditBody = () => {
 }
 
 const Body = ({ user }) => {
-    // user.mobileNumber = user.mobileNumber.split(' ')[1]
+    const navigation = useNavigation()
     const validationSchema = yup.object().shape({
         mobileNumber: yup
             .string()
@@ -86,28 +86,37 @@ const Body = ({ user }) => {
 
     }
 
+    const [submitted, setSubmitted] = useState(false)
+
     const [showPopUp, setShowPopUp] = useState(false)
 
     let numbers = []
     numbers.push(user.mobileNumber)
     if (user.altMobNumber) numbers.push(user.altMobNumber)
 
-    const sendOTP = (selectedPhone) => {
-        setShowPopUp(false)
-        // console.log("Phone: ", selectedPhone)
+    const sendOTP = selectedPhone => {
+
+        setSubmitted(true)
+
         axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
             phoneNumber: selectedPhone
         })
             .then(res => {
                 const data = res.data
                 if (data.status) {
-                    // then navigate
-                } else {
-                    showToast(data.message)
-                }
+                    navigation.navigate('Otp', {
+                        phone: selectedPhone,
+                        isVerify: true,
+                        type: 'mobile'
+                    })
+                } else showToast(data.message)
+                setShowPopUp(false)
+                setSubmitted(false)
             })
             .catch(err => {
                 console.log("Error: ", err)
+                setShowPopUp(false)
+                setSubmitted(false)
                 showToast('Something went wrong. Please try again later!')
             })
     }
@@ -126,7 +135,7 @@ const Body = ({ user }) => {
                             setPopUp={setShowPopUp}
                         />
                     </ScrollView>
-                    <PopUp sendOTP={sendOTP} setPopUp={setShowPopUp} numbers={numbers} render={showPopUp} />
+                    <PopUp submitted={submitted} sendOTP={sendOTP} setPopUp={setShowPopUp} numbers={numbers} render={showPopUp} />
                     <Overlay hideLoader onPressHandler={() => setShowPopUp(false)} render={showPopUp} />
                     <FooterButton submitHandler={handleSubmit} />
                 </>

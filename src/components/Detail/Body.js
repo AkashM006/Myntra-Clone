@@ -1,42 +1,33 @@
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import Size from './Size'
-import firestore from '@react-native-firebase/firestore'
 import Details from './Details'
 import COLORS from '../../constants/Colors'
 
 const Body = ({ item, setStickyFooter }) => {
 
     const [isLoading, setIsLoading] = useState(true)
-    const [sizes, setSizes] = useState([])
 
-    const getData = async () => {
-        const result = await (await firestore().collection('size').where('type', '==', 'pant').get()).docs
-        setSizes(result[0].data().sizes)
-        setIsLoading(false)
-    }
-
-    useEffect(() => { getData() }, [])
+    useEffect(() => { setIsLoading(false) }, [])
 
     return (
         <View style={styles.container}>
             <Header
-                brand={item.brand}
-                name={item.name}
-                price={item.price}
-                discount={item.discount ?? null}
+                brand={item.product.brand}
+                name={item.product.name}
+                price={item.product.mrp}
+                discount={item.product.discount ?? null}
             />
             {isLoading === true ?
                 <ActivityIndicator size={'small'} color={COLORS.PRIMARY} style={styles.loader} />
                 :
                 <>
                     <Size
-                        sizes={sizes}
-                        itemSizes={item.sizes}
+                        sizes={item.size}
                         setStickyFooter={setStickyFooter}
                     />
-                    <Details />
+                    <Details about={item.product.description} />
                 </>
             }
         </View>

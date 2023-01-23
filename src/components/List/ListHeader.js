@@ -7,26 +7,11 @@ import Skeleton from '../Reusable/Skeleton'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const ListHeader = () => {
-
-    // todo: Need to get count of items from db
-    // use skeleton instead of that
+const ListHeader = ({ itemCount }) => {
 
     const navigation = useNavigation()
     let title = useRoute().params.title?.toUpperCase()
     title = title.length > 20 ? title.substring(0, 18) + '...' : title
-
-    const [count, setCount] = useState(null)
-
-    const getData = async () => {
-        const result = await firestore().collection('clothes').count().get()
-        // setCount(result._data.count) use this when there are more item
-        setCount(result._data.count * 10)
-    }
-
-    useEffect(() => {
-        getData()
-    }, [])
 
     const pressHandler = () => navigation.goBack()
 
@@ -40,8 +25,8 @@ const ListHeader = () => {
                     <CustomText weight={'light'}>
                         {title}
                     </CustomText>
-                    {count === null ? <Skeleton height={15} width={70} borderRadius={4} /> : <CustomText>
-                        {count} Items
+                    {itemCount === null ? <Skeleton height={15} width={70} borderRadius={4} /> : <CustomText>
+                        {itemCount} Items
                     </CustomText>}
                 </View>
             </View>

@@ -10,7 +10,7 @@ import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
 
-const OtpBody = ({ phone, setSubmitted }) => {
+const OtpBody = ({ phone, setSubmitted, isVerify, type }) => {
 
     const [otp, setOtp] = useState('')
     const dispatch = useDispatch()
@@ -66,7 +66,7 @@ const OtpBody = ({ phone, setSubmitted }) => {
                         const otp = /(\d{4})/g.exec(message)[1];
                         setOtp(otp);
                     } catch (err) {
-                        console.log("Err: ", err)
+                        console.log("react-native-verify-otp error: ", err)
                     }
                 }
             });
@@ -75,7 +75,34 @@ const OtpBody = ({ phone, setSubmitted }) => {
     )
 
     useEffect(() => {
-        if (otp.length === 4) {
+
+        if (isVerify && otp.length === 4) {
+
+            setSubmitted(true)
+            Keyboard.dismiss()
+
+            axios.post(`${Config.OTP_API_KEY}/authenticate/verifyupdateotp`, {
+                phoneNumber: phone,
+                otp
+            })
+                .then(res => {
+                    const data = res.data
+                    if (data.status === false) {
+                        setErr(data.message)
+                        setSubmitted(false)
+                        return
+                    }
+                    setSubmitted(false)
+                    if (type === 'mobile') navigation.navigate('EditMobile')
+                    // else if(type === 'save')
+                })
+                .catch(err => {
+                    console.log("Err: ", err)
+                    setSubmitted(false)
+                    showToast('Something went wrong. Please try again later!')
+                })
+
+        } else if (otp.length === 4) {
             setSubmitted(true)
             Keyboard.dismiss()
             axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {
@@ -102,7 +129,6 @@ const OtpBody = ({ phone, setSubmitted }) => {
                     console.log("Err: ", err)
                     setSubmitted(false)
                     showToast('Something went wrong. Please try again later!')
-                    // Alert.alert('Whoops!', 'Something went wrong. Please try again later!')
                 })
         }
     }, [otp])
@@ -174,18 +200,20 @@ const OtpBody = ({ phone, setSubmitted }) => {
                         <CustomText color={COLORS.SHADEDARK}> 00:{(time + '').padStart(2, '0')}</CustomText>
                     </View>
                 }
-                <View style={styles.textInnerContainer}>
-                    <CustomText color={COLORS.SHADEDARK}>Log in using </CustomText>
-                    <Pressable onPress={handleLoginWithPassword}>
-                        <CustomText weight={'light'} color={COLORS.PRIMARY}>Password</CustomText>
-                    </Pressable>
-                </View>
-                <View style={styles.textInnerContainer}>
-                    <CustomText color={COLORS.SHADEDARK}>Having trouble logging in? </CustomText>
-                    <Pressable>
-                        <CustomText weight={'light'} color={COLORS.PRIMARY}>Get help</CustomText>
-                    </Pressable>
-                </View>
+                {!isVerify && <>
+                    <View style={styles.textInnerContainer}>
+                        <CustomText color={COLORS.SHADEDARK}>Log in using </CustomText>
+                        <Pressable onPress={handleLoginWithPassword}>
+                            <CustomText weight={'light'} color={COLORS.PRIMARY}>Password</CustomText>
+                        </Pressable>
+                    </View>
+                    <View style={styles.textInnerContainer}>
+                        <CustomText color={COLORS.SHADEDARK}>Having trouble logging in? </CustomText>
+                        <Pressable>
+                            <CustomText weight={'light'} color={COLORS.PRIMARY}>Get help</CustomText>
+                        </Pressable>
+                    </View>
+                </>}
             </View>
         </View>
     )

@@ -7,8 +7,9 @@ import RadioButton from './RadioButton'
 import CustomButton from '../../Reusable/CustomButton'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../../icons/icons'
+import Overlay from '../../Reusable/Overlay'
 
-const PopUp = ({ numbers, render, setPopUp, sendOTP }) => {
+const PopUp = ({ numbers, render, setPopUp, sendOTP, submitted }) => {
 
     const scroll = useSharedValue(0)
 
@@ -41,6 +42,7 @@ const PopUp = ({ numbers, render, setPopUp, sendOTP }) => {
 
     return (
         <Animated.View style={[styles.container, rStyle, { height: height }]}>
+            <Overlay render={submitted} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <CustomText size={18} weight='bold' >2-Step Verification Required</CustomText>
                 <Pressable onPress={() => setPopUp(false)}>

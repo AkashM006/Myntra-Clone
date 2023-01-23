@@ -20,7 +20,8 @@ const HomeStack = () => {
             <Stack.Screen
                 name='List'
                 component={ListScreen}
-                options={{ header: () => <ListHeader /> }}
+                // options={{ header: () => <ListHeader /> }}
+                options={{ header: () => <></> }}
             />
             <Stack.Screen
                 name='Detail'

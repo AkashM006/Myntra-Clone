@@ -5,7 +5,7 @@ import { kFormatter } from '../../utils/utils'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const Rating = ({ count, total, align }) => {
+const Rating = ({ count, total, align, rating }) => {
 
     const alignment = {
         left: { left: 10 },
@@ -17,12 +17,12 @@ const Rating = ({ count, total, align }) => {
     return (
         <View style={[styles.container, alignment[currentAlignment]]}>
             <CustomText weight={'light'}>
-                {(total / count).toFixed(1)}
+                {rating ? rating : (total / count).toFixed(1)}
             </CustomText>
             <FastImage tintColor={'#259f23'} source={{ uri: ICONS.ICON_STAR }} style={styles.star} />
             <View style={styles.separator} />
             <CustomText weight={'light'} style={styles.count}>
-                {kFormatter(count)}
+                {kFormatter(+count)}
             </CustomText>
         </View>
     )

@@ -5,7 +5,7 @@ import EditBody from '../components/Profile/Edit/EditBody'
 
 const EditAccountScreen = () => {
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Header title='Manage Your Account' />
             <EditBody />
         </View>

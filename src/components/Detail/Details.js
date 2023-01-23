@@ -3,15 +3,18 @@ import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 
-const Details = () => {
+const Details = ({ about }) => {
 
     const dummy = Array(5).fill(1)
 
     return (
         <View style={styles.container}>
             <View>
-                <CustomText size={14}>
+                <CustomText weight={'light'} size={14}>
                     Product Details
+                </CustomText>
+                <CustomText vertical={20} size={13}>
+                    {about}
                 </CustomText>
                 {dummy.map((item, index) => {
                     return (
