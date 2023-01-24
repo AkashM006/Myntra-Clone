@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const Avatar = ({ dimension, fontSize, active }) => {
 
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user.user)
     const { colors } = useSelector(state => state.theme)
     // const user = {
     //     fullName: 'Akash Murugesan',

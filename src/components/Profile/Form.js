@@ -17,7 +17,7 @@ import ICONS from '../../icons/icons'
 
 const Form = ({ setSubmitted, submitted }) => {
 
-    const phone = useSelector(state => state.user.phone)
+    const phone = useSelector(state => state.user.user.phone)
     const dispatch = useDispatch()
     const navigation = useNavigation()
 

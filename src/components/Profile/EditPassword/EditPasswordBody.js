@@ -17,7 +17,7 @@ const EditPasswordBody = () => {
 
     const [isCurrentValid, setIsCurrentValid] = useState(false)
     const [submitted, setSubmitted] = useState(false)
-    const mobileNumber = useSelector(state => state.user.mobileNumber)
+    const mobileNumber = useSelector(state => state.user.user.mobileNumber)
     const navigation = useNavigation()
 
     const submitHandler = (values, formikActions) => {

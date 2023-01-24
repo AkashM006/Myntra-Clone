@@ -73,7 +73,7 @@ const Footer = () => {
                     return <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Avatar dimension={30} fontSize={12} active={isActive} />
                         <CustomText size={10} color={isActive ? COLORS.PRIMARY : COLORS.BLACK} align='center'>
-                            {user.fullName.length === 0 ? 'You' : user.fullName}
+                            {user.user.fullName.length === 0 ? 'You' : user.user.fullName}
                         </CustomText>
                     </TouchableOpacity>
                 }
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 5,
+        paddingHorizontal: 20,
         backgroundColor: 'white',
         elevation: 20
     },

@@ -23,7 +23,7 @@ const HomeHeader = () => {
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.premium}>
-                    <FastImage source={{ uri: ICONS.ICON_MYNTRA }} style={[styles.logo]} />
+                    <FastImage resizeMode='contain' source={{ uri: ICONS.ICON_LOGO }} style={[styles.logo, { backgroundColor: colors['LIGHT'] }]} />
                     <View style={{ justifyContent: 'flex-start' }}>
                         <CustomText size={8}>Become</CustomText>
                         <CustomText size={8} color={COLORS.PRIMARY}>Insider</CustomText>
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     logo: {
         height: 30,
         width: 30,
-        backgroundColor: 'black'
     },
     leftContainer: {
         flexDirection: 'row',

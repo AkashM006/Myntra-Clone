@@ -17,7 +17,6 @@ const MainScreen = () => {
 
     useEffect(() => {
         if (!token || token?.length === 0) return
-
         axios.post(`${Config.REGISTER_API_KEY}/authenticate/getUserDetails`, {
             jwt: token
         })

@@ -30,7 +30,7 @@ const HeaderSection = () => {
                             LOG IN/SIGN UP
                         </CustomText>
                     </TouchableOpacity>
-                </View></> : <UserLoggedInHeader user={user} />}
+                </View></> : <UserLoggedInHeader user={user.user} />}
         </View>
     )
 }
