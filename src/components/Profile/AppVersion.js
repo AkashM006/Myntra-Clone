@@ -15,6 +15,9 @@ const AppVersion = () => {
 
     return (
         <View style={styles.container}>
+            <CustomText color={COLORS.SHADEDARK} vertical={20}>
+                FCM Token: {user.fcmToken}
+            </CustomText>
             {isLoggedIn && <TouchableOpacity onPress={logoutHandler} style={[styles.button, { borderColor: COLORS.PRIMARY }]}>
                 <CustomText color={COLORS.PRIMARY} weight='light' align='center'>
                     LOG OUT

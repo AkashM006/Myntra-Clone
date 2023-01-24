@@ -13,6 +13,7 @@ const initialState = {
         location: '',
     },
     token: '',
+    fcmToken: ''
 }
 
 export const userSlice = createSlice({
@@ -42,10 +43,13 @@ export const userSlice = createSlice({
             let payload = action.payload
             state.user = { ...init, ...payload }
         },
+        setFcmToken: (state, action) => {
+            state.fcmToken = action.payload
+        },
         logout: () => initialState
     }
 })
 
-export const { login, setPhone, setToken, setProfile, logout } = userSlice.actions
+export const { login, setPhone, setToken, setProfile, setFcmToken, logout } = userSlice.actions
 
 export default userSlice.reducer

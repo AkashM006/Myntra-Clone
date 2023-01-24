@@ -11,6 +11,8 @@ const Phone = ({ phone, showPopUp }) => {
         showPopUp(true)
     }
 
+    console.log("Phone: ", phone)
+
     return (
         <View style={[styles.container, { borderColor: COLORS.SHADELIGHT }]}>
             <View>

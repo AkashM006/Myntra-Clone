@@ -27,7 +27,7 @@ const SectionHeader = ({ sections }) => {
         let data = Array(10).fill(1)
         return <FlatList
             horizontal
-            style={styles.list}
+            style={[styles.list, { backgroundColor: colors['LIGHT'] }]}
             contentContainerStyle={styles.container}
             data={data}
             renderItem={renderSkeleton}

@@ -21,7 +21,8 @@ const EditBody = () => {
     const user = useSelector(state => state.user)
     const navigation = useNavigation()
 
-    let userData = { ...user }
+    let userData = { ...user.user }
+
 
     useEffect(() => {
         axios.post(`${Config.REGISTER_API_KEY}/authenticate/getUserDetails`, { jwt: user.token })
