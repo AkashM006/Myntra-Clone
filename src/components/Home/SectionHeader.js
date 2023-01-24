@@ -3,10 +3,12 @@ import React from 'react'
 import Skeleton from '../Reusable/Skeleton'
 import { useNavigation } from '@react-navigation/native'
 import CustomText from '../Reusable/CustomText'
+import { useSelector } from 'react-redux'
 
 const SectionHeader = ({ sections }) => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const renderCard = ({ item, index }) => {
         return (
@@ -37,8 +39,8 @@ const SectionHeader = ({ sections }) => {
     return (
         <FlatList
             horizontal
-            style={styles.list}
-            contentContainerStyle={styles.container}
+            style={[styles.list, { backgroundColor: colors['LIGHT'] }]}
+            contentContainerStyle={[styles.container, { backgroundColor: colors['LIGHT'] }]}
             data={data}
             renderItem={renderCard}
             keyExtractor={(item, index) => index}
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 5,
         marginLeft: 15,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
     text: {
         textAlign: 'center',
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     },
     card: { marginRight: 15, height: 80 },
     list: {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         paddingBottom: 5,
         height: 90,
     }

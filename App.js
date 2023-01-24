@@ -28,13 +28,7 @@ const App = () => {
       <PersistGate loading={<Overlay hideShadow={true} render={true} />} persistor={persistor}>
         <RootSiblingParent>
           <SafeAreaView style={styles.container}>
-            <StatusBar
-              barStyle={'dark-content'}
-              backgroundColor='white'
-            />
-            <NavigationContainer>
-              <MainScreen />
-            </NavigationContainer>
+            <MainScreen />
           </SafeAreaView>
         </RootSiblingParent>
       </PersistGate>

@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import HomeHeader from '../components/Home/HomeHeader'
-import ListHeader from '../components/List/ListHeader'
 import BagScreen from '../screens/BagScreen'
 import DetailScreen from '../screens/DetailScreen'
 import HomeScreen from '../screens/HomeScreen'
@@ -16,12 +15,15 @@ const HomeStack = () => {
                 name='MainHome'
                 component={HomeScreen}
                 options={{ header: HomeHeader, }}
+
             />
             <Stack.Screen
                 name='List'
                 component={ListScreen}
-                // options={{ header: () => <ListHeader /> }}
-                options={{ header: () => <></> }}
+                options={{
+                    header: () => <></>,
+                    animation: 'slide_from_right'
+                }}
             />
             <Stack.Screen
                 name='Detail'

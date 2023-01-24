@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import React, { useEffect } from 'react'
 import HomeNavigation from '../navigation/HomeNavigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,11 +6,14 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import Toast from 'react-native-root-toast'
 import { setProfile } from '../redux/userSlice'
+import { NavigationContainer } from '@react-navigation/native'
 
 const MainScreen = () => {
 
     const token = useSelector(state => state.user.token)
     const dispatch = useDispatch()
+
+    const { colors, theme } = useSelector(state => state.theme)
 
     useEffect(() => {
         if (!token || token?.length === 0) return
@@ -42,7 +45,17 @@ const MainScreen = () => {
     }, [token])
 
     return (
-        <View style={{ flex: 1 }}><HomeNavigation /></View>
+        <>
+            <StatusBar
+                barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+                backgroundColor={colors['LIGHT']}
+            />
+            <NavigationContainer>
+                <View style={{ flex: 1 }}>
+                    <HomeNavigation />
+                </View>
+            </NavigationContainer>
+        </>
     )
 }
 

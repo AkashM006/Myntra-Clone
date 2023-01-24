@@ -2,15 +2,17 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const Grid = ({ item }) => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const pressHandler = () => { navigation.navigate('List', { title: 'You maybe interested in' }) }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <CustomText weight={'bold'} size={18} style={styles.heading}>
                 {item.title}
             </CustomText>
@@ -31,7 +33,6 @@ const styles = StyleSheet.create({
     container: {
         marginVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: 'white',
         paddingVertical: 10
     },
     heading: {

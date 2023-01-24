@@ -2,10 +2,12 @@ import { View, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-nativ
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const Slider = ({ card }) => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const renderItem = ({ item }) =>
         <TouchableOpacity onPress={() => navigation.navigate('List', { title: 'Exclusives' })}>
@@ -13,7 +15,7 @@ const Slider = ({ card }) => {
         </TouchableOpacity>
 
     return (
-        <View style={styles.container}>
+        <View style={{ backgroundColor: colors['LIGHT'] }}>
             <CustomText weight={'light'} size={18} style={styles.text}>{card.title}</CustomText>
             <FlatList
                 data={card.url}
@@ -34,9 +36,6 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    container: {
-        backgroundColor: 'white'
-    }
 })
 
 export default Slider

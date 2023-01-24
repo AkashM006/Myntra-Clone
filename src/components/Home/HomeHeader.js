@@ -5,23 +5,25 @@ import COLORS from '../../constants/Colors'
 import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import { useSelector } from 'react-redux'
 
 const HomeHeader = () => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const bagNavigationHandler = () => {
         navigation.navigate('Bag')
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={styles.leftContainer}>
                 <TouchableOpacity style={styles.menuContainer}>
-                    <FastImage source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
+                    <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.premium}>
-                    <FastImage source={{ uri: ICONS.ICON_MYNTRA }} style={styles.logo} />
+                    <FastImage source={{ uri: ICONS.ICON_MYNTRA }} style={[styles.logo]} />
                     <View style={{ justifyContent: 'flex-start' }}>
                         <CustomText size={8}>Become</CustomText>
                         <CustomText size={8} color={COLORS.PRIMARY}>Insider</CustomText>
@@ -30,16 +32,16 @@ const HomeHeader = () => {
             </View>
             <View style={styles.rightContainer}>
                 <TouchableOpacity>
-                    <FastImage source={{ uri: ICONS.ICON_SEARCH }} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_SEARCH }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <FastImage source={{ uri: ICONS.ICON_BELL }} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BELL }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <FastImage source={{ uri: ICONS.ICON_HEART }} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_HEART }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={bagNavigationHandler}>
-                    <FastImage source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
+                    <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: 60,
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         elevation: 3
     },
     menu: {
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
     logo: {
         height: 30,
         width: 30,
+        backgroundColor: 'black'
     },
     leftContainer: {
         flexDirection: 'row',

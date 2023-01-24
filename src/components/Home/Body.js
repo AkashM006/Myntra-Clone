@@ -9,11 +9,13 @@ import Quote from './Quote'
 import Grid from './Grid'
 import Carousel from './Carousel'
 import COLORS from '../../constants/Colors'
+import { useSelector } from 'react-redux'
 
 const Body = () => {
 
     const [sections, setSections] = useState([{ data: [], title: 'Section Title' }])
     const [isLoading, setIsLoading] = useState(true)
+    const { colors } = useSelector(state => state.theme)
 
     const getData = async () => {
         try {
@@ -69,7 +71,9 @@ const Body = () => {
                 ListFooterComponent={() => <Quote loading={isLoading} />}
             />
             <Footer />
-            {isLoading === true && <View style={styles.loader}><ActivityIndicator size={'small'} color={COLORS.PRIMARY} /></View>}
+            {isLoading === true && <View style={[styles.loader, {
+                backgroundColor: colors.LIGHT
+            }]}><ActivityIndicator size={'small'} color={COLORS.PRIMARY} /></View>}
         </View>
     )
 }
@@ -77,7 +81,7 @@ const Body = () => {
 const styles = StyleSheet.create({
     loader: {
         position: 'absolute',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         padding: 10,
         borderRadius: 100,
         top: 120,

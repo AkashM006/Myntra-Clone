@@ -61,12 +61,14 @@ const Footer = () => {
         })
     }
 
+    const { colors } = useSelector(state => state.theme)
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             {icons.map(icon => {
                 const isActive = icon.routes.includes(activeRoute)
-                const style = [styles.image]
-                if (icon.name !== 'Home') style.push({ tintColor: isActive ? COLORS.PRIMARY : COLORS.BLACK })
+                const style = [styles.image, { backgroundColor: colors['LIGHT'] }]
+                if (icon.name !== 'Home') style.push({ tintColor: isActive ? colors['PRIMARY'] : colors['DARK'] })
                 if (icon.name === 'Profile' && isLoggedIn) {
                     return <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Avatar dimension={30} fontSize={12} active={isActive} />
@@ -79,9 +81,11 @@ const Footer = () => {
                     <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Image
                             source={isActive ? icon.active : icon.inactive}
-                            style={style}
+                            style={[style]}
                         />
-                        <CustomText style={[styles.text, { color: icon.name === activeRoute ? COLORS.PRIMARY : COLORS.BLACK, }]}>{icon.name}</CustomText>
+                        <CustomText color={isActive ? colors['PRIMARY'] : colors['DARK']} weight={isActive ? 'light' : ''} style={[styles.text]}>
+                            {icon.name}
+                        </CustomText>
                     </TouchableOpacity>
                 )
             })}
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         alignSelf: 'center',
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     text: {
         textAlign: 'center',

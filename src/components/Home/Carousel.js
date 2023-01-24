@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, FlatList, useWindowDimensions, Animated,
 import React, { useRef } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const Card = ({ img }) => {
 
@@ -21,13 +22,14 @@ const Carousel = ({ item }) => {
 
     const renderItem = ({ item }) => <Card img={item} />
     const keyExtractor = (_, index) => index
+    const { colors } = useSelector(state => state.theme)
 
     const width = useWindowDimensions().width
 
     const scrollX = useRef(new Animated.Value(0)).current
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <CustomText weight={'bold'} size={18} style={styles.heading}>
                 {item.title}
             </CustomText>
@@ -77,7 +79,6 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: 'white'
     },
     heading: {
         textAlign: 'center',

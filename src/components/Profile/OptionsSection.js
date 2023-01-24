@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Switch } from 'react-native'
 import React from 'react'
 import CustomText from '../../components/Reusable/CustomText'
 import COLORS from '../../constants/Colors'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import ICONS from '../../icons/icons'
 import FastImage from 'react-native-fast-image'
+import { toggle } from '../../redux/ThemeSlice'
+import { useState } from 'react'
 
 const FIRSTLIST = [
     {
@@ -125,6 +127,15 @@ const OptionsSection = () => {
 
     const user = useSelector(state => state.user)
     const isLoggedIn = user.token?.length !== 0
+    const { theme, colors } = useSelector(state => state.theme)
+    const dispatch = useDispatch()
+    const [isEnabled, setIsEnabled] = useState(theme === 'dark')
+
+
+    const handleThemeChange = () => {
+        dispatch(toggle())
+        setIsEnabled(prev => !prev)
+    }
 
     const titleStyle = {
         fontWeight: '700'
@@ -147,6 +158,17 @@ const OptionsSection = () => {
             </View>}
             <View style={styles.optionsListContainer}>
                 {FOURTHLIST.map((item, index) => <Card titleStyle={titleStyle} key={item.id} item={item} index={index} length={THIRDLIST.length} separator={false} moreicon={false} />)}
+            </View>
+            <View style={{ alignSelf: 'center' }}>
+                <CustomText top={10} size={14} align='center'>
+                    Dark Mode
+                </CustomText>
+                <Switch
+                    trackColor={{ false: colors['SHADEDARK'], true: colors['SHADELIGHT'] }}
+                    thumbColor={(isEnabled) ? colors['SHADEDARK'] : colors['SHADELIGHT']}
+                    onValueChange={handleThemeChange}
+                    value={isEnabled}
+                />
             </View>
         </ >
     )

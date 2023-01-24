@@ -4,17 +4,19 @@ import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import { useSelector } from 'react-redux'
 
 const Header = ({ title }) => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const backHandler = () => {
         navigation.goBack()
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <TouchableOpacity onPress={backHandler}>
                 <FastImage style={{ height: 25, width: 25 }} source={{ uri: ICONS.ICON_BACK }} />
             </TouchableOpacity>
@@ -27,7 +29,6 @@ const Header = ({ title }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
         height: 60,
         elevation: 10,
         flexDirection: 'row',
