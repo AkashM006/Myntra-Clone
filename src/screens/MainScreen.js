@@ -11,6 +11,7 @@ import messaging from '@react-native-firebase/messaging'
 import { showToast } from '../utils/utils'
 import { useCallback } from 'react'
 import { useRef } from 'react'
+import SplashScreen from 'react-native-splash-screen'
 
 const MainScreen = () => {
 
@@ -105,6 +106,10 @@ const MainScreen = () => {
         return () => {
             unsubscribe.remove()
         }
+    }, [])
+
+    useEffect(() => {
+        SplashScreen.hide()
     }, [])
 
     return (
