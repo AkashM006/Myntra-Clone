@@ -18,7 +18,7 @@ const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, col
         fontFamily: fontFamily ?? 'EslGothicUnicode_BzdV',
         fontWeight: weightList[weight],
         fontSize: size ?? 12,
-        color: color ?? colors['DARK'],
+        color: color ?? 'black',
         textAlign: align
     }
 

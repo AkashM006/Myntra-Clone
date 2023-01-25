@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import List from './List'
+import Progressor from './Progressor'
 
 const BagList = () => {
     return (
-        <View>
-            <Text>BagList</Text>
-        </View>
+        <>
+            <Progressor />
+            <List />
+        </>
     )
 }
 

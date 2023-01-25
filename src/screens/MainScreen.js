@@ -1,4 +1,4 @@
-import { StatusBar, View } from 'react-native'
+import { AppState, StatusBar, View } from 'react-native'
 import React, { useEffect } from 'react'
 import HomeNavigation from '../navigation/HomeNavigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,12 +10,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import messaging from '@react-native-firebase/messaging'
 import { showToast } from '../utils/utils'
 import { useCallback } from 'react'
+import { useRef } from 'react'
 
 const MainScreen = () => {
 
     const token = useSelector(state => state.user.token)
     const dispatch = useDispatch()
     const userState = useSelector(state => state.user)
+    const appState = useRef(AppState.currentState)
 
     const { colors, theme } = useSelector(state => state.theme)
 
@@ -92,6 +94,18 @@ const MainScreen = () => {
     useEffect(() => { // to get token and store in state each time on mount
         getToken()
     }, [token])
+
+    useEffect(() => {
+        const unsubscribe = AppState.addEventListener('change', currentAppState => {
+            if (appState.current.match(/inactive|background/) && currentAppState === 'active') {
+                showToast('Welcome back! We have some new merchandise for you this time!')
+            }
+            appState.current = currentAppState
+        })
+        return () => {
+            unsubscribe.remove()
+        }
+    }, [])
 
     return (
         <>

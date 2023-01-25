@@ -4,28 +4,35 @@ import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
 import ICONS from '../../icons/icons'
 import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
 
     const navigation = useNavigation()
+    const { colors } = useSelector(state => state.theme)
 
     const backHandler = () => { navigation.goBack() }
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={styles.innerContainer}>
                 <TouchableOpacity onPress={backHandler}>
                     <FastImage
+                        tintColor={colors['DARK']}
                         source={{ uri: ICONS.ICON_BACK }}
                         resizeMode={FastImage.resizeMode.contain}
                         style={{ height: 25, width: 25 }}
                     />
                 </TouchableOpacity>
-                <CustomText left={10} weight='light' size={16}>
+                <CustomText color={colors['DARK']} left={10} weight='light' size={16}>
                     SHOPPING BAG
                 </CustomText>
             </View>
             <TouchableOpacity>
-                <FastImage source={{ uri: ICONS.ICON_HEART }} style={{ height: 25, width: 25 }} />
+                <FastImage
+                    tintColor={colors['DARK']}
+                    source={{ uri: ICONS.ICON_HEART }}
+                    style={{ height: 25, width: 25 }}
+                />
             </TouchableOpacity>
         </View>
     )
@@ -33,7 +40,6 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
         height: 60,
         elevation: 3,
         flexDirection: 'row',
@@ -44,7 +50,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor: 'black',
     }
 })
 

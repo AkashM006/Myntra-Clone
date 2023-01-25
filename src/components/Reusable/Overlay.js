@@ -19,7 +19,6 @@ const Overlay = ({ render, hideShadow, onPressHandler, hideLoader }) => {
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: 'rgba(0,0,0,0.6)',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

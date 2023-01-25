@@ -9,13 +9,19 @@ const BagBody = () => {
 
     const count = useSelector(state => state.bag.count)
     const [loaded, setLoaded] = useState(false)
+    const { colors } = useSelector(state => state.theme)
 
     useEffect(() => {
+        // in this useEffect
+        // load items from server
+        // then setLoaded true
         setTimeout(() => setLoaded(true), 1000)
     }, [])
 
+
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             {
                 loaded === true ? count === 0 ? <BagEmpty /> : <BagList /> : <Overlay render={true} hideShadow />
             }
@@ -26,8 +32,7 @@ const BagBody = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        paddingTop: 20,
+        paddingTop: 10,
         paddingVertical: '3.5%'
     }
 })

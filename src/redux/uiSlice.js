@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoginPopUpVisible: false
+    isLoginPopUpVisible: false,
 }
 
 export const uiSlice = createSlice({
@@ -13,10 +13,10 @@ export const uiSlice = createSlice({
         },
         toggleLoginPopUpStatus: state => {
             state.isLoginPopUpVisible = !state.isLoginPopUpVisible
-        }
+        },
     }
 })
 
-export const { setLoginPopUpStatus, toggleLoginPopUpStatus } = uiSlice.actions
+export const { setLoginPopUpStatus, toggleLoginPopUpStatus, } = uiSlice.actions
 
 export default uiSlice.reducer
