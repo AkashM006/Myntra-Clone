@@ -1,4 +1,4 @@
-import { View, StyleSheet, useWindowDimensions, FlatList } from 'react-native'
+import { View, StyleSheet, useWindowDimensions, FlatList, InteractionManager } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Loader from './Loader'
 import Card from './Card'
@@ -19,16 +19,6 @@ const List = () => {
 
     const getData = async () => {
         if (count !== null && clothes.length >= count) return
-
-        // if (count === null) {
-        //     result = await firestore().collection('clothes').count().get()
-        //     setCount(result._data.count * 10)
-        // }
-
-        // result = await firestore().collection('clothes').get()
-        // result = await result.docs
-        // let temp = result.map(cloth => cloth.data())
-        // setClothes(prev => [...prev, ...temp])
         axios.get(`${Config.PRODUCTS_API_KEY}/data/getproductsm/1`)
             .then(res => {
                 let data = res.data
@@ -53,7 +43,11 @@ const List = () => {
             })
     }
 
-    useEffect(() => { getData() }, [])
+    useEffect(() => {
+        InteractionManager.runAfterInteractions(() => {
+            getData()
+        })
+    }, [])
 
     const renderItem = ({ item, index }) => <Card index={index} cloth={item} />
 
@@ -101,8 +95,8 @@ const List = () => {
                     onViewableItemsChanged={viewableItemsChangedHandler}
                 />}
                 {isLoading && <Loader />}
-                {isLoading === false && <Progressor goTop={scrollToTop} count={count} items={currentItem} />}
-                {isLoading === false && <Footer />}
+                {!isLoading && <Progressor goTop={scrollToTop} count={count} items={currentItem} />}
+                {!isLoading && <Footer />}
             </View>
         </>
     )

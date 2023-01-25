@@ -6,17 +6,13 @@
  * @flow strict-local
  */
 
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
-  StatusBar,
   StyleSheet,
-  Text,
 } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-// import Overlay from './src/components/Reusable/Overlay';
 import { store, persistor } from './src/redux/store';
 import MainScreen from './src/screens/MainScreen';
 import { RootSiblingParent } from 'react-native-root-siblings'
