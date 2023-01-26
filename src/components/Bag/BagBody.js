@@ -7,7 +7,7 @@ import Overlay from '../Reusable/Overlay'
 
 const BagBody = () => {
 
-    const count = useSelector(state => state.bag.count)
+    const { items } = useSelector(state => state.bag)
     const [loaded, setLoaded] = useState(false)
     const { colors } = useSelector(state => state.theme)
 
@@ -23,7 +23,7 @@ const BagBody = () => {
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             {
-                loaded === true ? count === 0 ? <BagEmpty /> : <BagList /> : <Overlay render={true} hideShadow />
+                loaded === true ? items.length === 0 ? <BagEmpty /> : <BagList /> : <Overlay render={true} hideShadow />
             }
         </View>
     )

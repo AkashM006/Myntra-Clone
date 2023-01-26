@@ -12,4 +12,6 @@ const kFormatter = num => Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num)
 
 const showToast = msg => Toast.show(msg, { duration: Toast.durations.LONG, position: Toast.positions.BOTTOM })
 
-export { substring, calculateDiscount, formatCurrency, months, kFormatter, showToast }
+const calculateDiscountedPrice = (price, percentage) => Math.floor(+price * ((100 - percentage) / 100))
+
+export { substring, calculateDiscount, formatCurrency, months, kFormatter, showToast, calculateDiscountedPrice }

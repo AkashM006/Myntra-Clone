@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    count: 1,
     selected: [],
     items: [
         {
@@ -11,6 +10,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -40,6 +40,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -69,6 +70,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -98,6 +100,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -127,6 +130,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -156,6 +160,7 @@ const initialState = {
             name: 'Men White graphic printed cotton T-Shirt',
             soldBy: "Huetrap",
             mrp: 1399,
+            discount: 29,
             qty: 2,
             image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
             currentSize: 'S',
@@ -169,7 +174,7 @@ const initialState = {
                 {
                     name: 'S',
                     available: true,
-                    maxQty: 3
+                    maxQty: 0
                 },
                 {
                     name: 'L',
@@ -185,9 +190,6 @@ export const bagSlice = createSlice({
     name: 'bag',
     initialState,
     reducers: {
-        setCount: (state, action) => {
-            state.count = action.payload
-        },
         addToBag: (state, action) => {
             state.items.push(action.payload)
         },
@@ -222,10 +224,19 @@ export const bagSlice = createSlice({
         removeFromBag: (state, action) => {
             state.selected = state.selected.filter(id => id !== action.payload)
             state.items = state.items.filter(item => item.id !== action.payload)
+        },
+        removeSelected: state => {
+            state.items = state.items.filter(item => !state.selected.includes(item.id))
+            state.selected = []
+        },
+        editItem: (state, action) => {
+            let { id } = action.payload
+            let idx = state.items.findIndex(item => item.id === id)
+            state.items[idx] = { ...action.payload }
         }
     }
 })
 
-export const { setCount, addToBag, addDummy, setSelected, removeSelection, addSelection, removeFromBag } = bagSlice.actions
+export const { addToBag, addDummy, setSelected, removeSelection, addSelection, removeFromBag, removeSelected, editItem } = bagSlice.actions
 
 export default bagSlice.reducer

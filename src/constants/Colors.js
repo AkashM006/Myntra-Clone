@@ -4,7 +4,8 @@ const COLORS = {
     PRIMARY: '#ff406c',
     SHADEDARK: '#717171',
     SHADELIGHT: '#aaaaaa',
-    DANGER: '#ec3e3d',
+    DANGERBG: '#ffada8',
+    DANGER: '#ff5349',
     LIGHT: 'white',
     DARK: '#2C2F33',
 }
@@ -15,7 +16,8 @@ const DARKCOLORS = {
     PRIMARY: '#ff406c',
     SHADELIGHT: '#717171',
     SHADEDARK: '#aaaaaa',
-    DANGER: '#ec3e3d',
+    DANGERBG: '#ffada8',
+    DANGER: '#ff5349',
     LIGHT: '#2C2F33',
     DARK: 'white',
 }

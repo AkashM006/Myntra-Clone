@@ -1,20 +1,20 @@
 import { StyleSheet, Pressable } from 'react-native'
 import React from 'react'
-import CustomText from '../Reusable/CustomText'
 import { useSelector } from 'react-redux'
+import CustomText from '../Reusable/CustomText'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const Size = ({ currentSize, showPopUpHandler, id }) => {
+const Qty = ({ qty, id, showPopUpHandler, disabled }) => {
 
     const { colors } = useSelector(state => state.theme)
 
-    const pressHandler = () => showPopUpHandler('Size', id)
+    const pressHandler = () => showPopUpHandler('Quantity', id)
 
     return (
-        <Pressable onPress={pressHandler} style={styles.container}>
-            <CustomText right={3} weight='bold'>
-                Size: {currentSize}
+        <Pressable disabled={disabled} onPress={pressHandler} style={styles.container}>
+            <CustomText style={{ textDecorationLine: disabled ? 'line-through' : 'none' }} right={3} weight='bold'>
+                Qty: {qty}
             </CustomText>
             <FastImage
                 source={{ uri: ICONS.ICON_DOWN_CARET }}
@@ -28,12 +28,13 @@ const Size = ({ currentSize, showPopUpHandler, id }) => {
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 3,
-        paddingHorizontal: 5,
+        paddingHorizontal: 7,
         backgroundColor: 'lightgray',
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
+        marginLeft: 5,
     }
 })
 
-export default Size
+export default Qty

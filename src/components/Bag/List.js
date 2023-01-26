@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import CountContainer from './CountContainer'
@@ -6,21 +6,45 @@ import Card from './Card'
 import PopUp from './PopUp'
 import Overlay from '../Reusable/Overlay'
 import { useState } from 'react'
+import Progressor from './Progressor'
+import Price from './Price'
+import Footer from './Footer'
 
 const List = () => {
-    const { colors } = useSelector(state => state.theme)
-    const { count, items, selected } = useSelector(state => state.bag)
+    const { items, } = useSelector(state => state.bag)
+
     const [showPopUp, setShowPopUp] = useState(false)
+    const [popUpInfo, setPopUpInfo] = useState('')
+    const [selectedId, setSelectedId] = useState(null)
+
+    const showPopUpHandler = (selectedInfo, selectedId) => {
+        setShowPopUp(true)
+        setPopUpInfo(selectedInfo)
+        setSelectedId(selectedId)
+    }
 
     return (
         <View style={styles.container}>
-            <CountContainer />
             <FlatList
                 data={items}
-                renderItem={({ item }) => <Card item={item} />}
+                renderItem={({ item }) => <Card showPopUpHandler={showPopUpHandler} show item={item} />}
                 contentContainerStyle={{ paddingBottom: 100 }}
+                bounces={false}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <>
+                        <Progressor />
+                        <CountContainer />
+                    </>
+                }
+                ListFooterComponent={
+                    <>
+                        <Price />
+                    </>
+                }
             />
-            <PopUp render={showPopUp} />
+            <Footer />
+            <PopUp setShowPopUp={setShowPopUp} info={popUpInfo} id={selectedId} render={showPopUp} />
             <Overlay render={showPopUp} hideLoader onPressHandler={() => setShowPopUp(false)} />
         </View>
     )
@@ -28,8 +52,8 @@ const List = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: '3.5%',
-        marginTop: 20,
+        marginTop: 5,
+        flex: 1
     }
 })
 
