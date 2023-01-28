@@ -42,7 +42,7 @@ const PopUp = ({ numbers, render, setPopUp, sendOTP, submitted }) => {
 
     return (
         <Animated.View style={[styles.container, rStyle, { height: height }]}>
-            <Overlay render={submitted} />
+            {/* <Overlay render={submitted} /> */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
                 <CustomText size={18} weight='bold' >2-Step Verification Required</CustomText>
                 <Pressable onPress={() => setPopUp(false)}>

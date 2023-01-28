@@ -16,10 +16,14 @@ const HomeHeader = () => {
         navigation.navigate('Bag')
     }
 
+    const menuNavigationHandler = () => {
+        navigation.openDrawer()
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={styles.leftContainer}>
-                <TouchableOpacity style={styles.menuContainer}>
+                <TouchableOpacity onPress={menuNavigationHandler} style={styles.menuContainer}>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.premium}>

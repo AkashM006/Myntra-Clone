@@ -5,13 +5,12 @@ import CustomText from '../../Reusable/CustomText'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../../icons/icons'
 
-const Phone = ({ phone, showPopUp }) => {
+const Phone = ({ phone, showPopUp, setType }) => {
 
     const pressHandler = () => {
         showPopUp(true)
+        setType('phone')
     }
-
-    console.log("Phone: ", phone)
 
     return (
         <View style={[styles.container, { borderColor: COLORS.SHADELIGHT }]}>

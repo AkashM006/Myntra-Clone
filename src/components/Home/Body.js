@@ -81,7 +81,6 @@ const Body = () => {
 const styles = StyleSheet.create({
     loader: {
         position: 'absolute',
-        // backgroundColor: 'white',
         padding: 10,
         borderRadius: 100,
         top: 120,

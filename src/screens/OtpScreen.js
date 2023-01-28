@@ -8,7 +8,7 @@ import ICONS from '../icons/icons'
 
 const OtpScreen = () => {
 
-    const { phone, isVerify, type } = useRoute().params
+    const { phone, isVerify, type, newUser } = useRoute().params
     const navigation = useNavigation()
 
     const handleBack = () => {
@@ -25,7 +25,7 @@ const OtpScreen = () => {
             <TouchableOpacity onPress={handleBack}>
                 <FastImage source={{ uri: ICONS.ICON_BACK }} style={{ height: 25, width: 25 }} />
             </TouchableOpacity>
-            <OtpBody type={type} isVerify={isVerify} phone={phone} setSubmitted={setSubmitted} />
+            <OtpBody newUser={newUser} type={type} isVerify={isVerify} phone={phone} setSubmitted={setSubmitted} />
         </View>
     )
 }

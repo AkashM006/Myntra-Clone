@@ -36,10 +36,11 @@ const HeaderSection = () => {
 }
 
 const UserLoggedInHeader = ({ user }) => {
+
     return (
         <View style={styles.loggedInContainer}>
             <CustomText weight='light' size={14}>
-                Shopping for {user.fullName ?? 'You'}
+                Shopping for {user.fullName && user.fullName.length !== 0 ? user.fullName : 'You'}
             </CustomText>
             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', }}>
                 <FastImage source={{ uri: ICONS.ICON_CROWN }} style={{ height: 25, width: 25 }} />

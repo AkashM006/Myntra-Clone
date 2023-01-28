@@ -31,7 +31,7 @@ const AppVersion = () => {
 }
 
 const styles = StyleSheet.create({
-    container: { height: 175, padding: '3.5%' },
+    container: { height: 250, padding: '3.5%' },
     button: {
         borderWidth: 1,
         padding: 10,

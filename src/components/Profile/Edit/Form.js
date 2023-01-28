@@ -7,7 +7,7 @@ import COLORS from '../../../constants/Colors'
 import CustomButton from '../../Reusable/CustomButton'
 import { useNavigation } from '@react-navigation/native'
 
-const Form = ({ values, touched, handleChange, handleBlur, errors, setPopUp }) => {
+const Form = ({ values, touched, handleChange, handleBlur, errors, setPopUp, setType }) => {
 
     const { mobileNumber, fullName, email, location, hint, altMobNumber } = values
 
@@ -15,7 +15,7 @@ const Form = ({ values, touched, handleChange, handleBlur, errors, setPopUp }) =
 
     return (
         <View style={{ backgroundColor: 'white', paddingHorizontal: 30, marginBottom: '10%' }}>
-            <Phone showPopUp={setPopUp} phone={mobileNumber} />
+            <Phone setType={setType} showPopUp={setPopUp} phone={mobileNumber} />
             <CustomTextInput
                 onChangeTextHandler={handleChange('fullName')}
                 onBlurHandler={handleBlur('fullName')}

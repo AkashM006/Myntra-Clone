@@ -83,8 +83,7 @@ const MainScreen = () => {
         try {
             const data = await messaging().getToken()
             if (userState.fcmToken !== data) {
-                console.log("New token was generated:")
-                console.log(data)
+                console.log("New token was generated:", data)
                 dispatch(setFcmToken(data))
             }
         } catch (err) {

@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Overlay from '../../Reusable/Overlay'
 import FooterButton from './FooterButton'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,14 +54,16 @@ const EditBody = () => {
 }
 
 const Body = ({ user }) => {
+    user.location = user.location ?? ''
+    const [type, setType] = useState(null)
     const navigation = useNavigation()
     const validationSchema = yup.object().shape({
         mobileNumber: yup
             .string()
-            .min(10, 'Phone number must be 10 digits long')
-            .max(10, 'Phone number must be 10 digits long')
             .test('phone-number', 'Please enter valid phone number', function (value) {
-                if (!isNaN(+value)) return true
+                if (!value) return false
+                const phone = value.split(' ')[1]
+                if (!isNaN(+phone) && phone.length === 10) return true
 
                 return this.createError({ path: this.path, message: 'Please enter valid phone' })
             })
@@ -84,7 +86,9 @@ const Body = ({ user }) => {
     })
 
     const submitHandler = (values, formikActions) => {
-
+        console.log("Here")
+        setType('save')
+        setShowPopUp(true)
     }
 
     const [submitted, setSubmitted] = useState(false)
@@ -94,6 +98,8 @@ const Body = ({ user }) => {
     let numbers = []
     numbers.push(user.mobileNumber)
     if (user.altMobNumber) numbers.push(user.altMobNumber)
+
+    const form = useRef(null)
 
     const sendOTP = selectedPhone => {
 
@@ -105,11 +111,22 @@ const Body = ({ user }) => {
             .then(res => {
                 const data = res.data
                 if (data.status) {
-                    navigation.navigate('Otp', {
-                        phone: selectedPhone,
-                        isVerify: true,
-                        type: 'mobile'
-                    })
+                    if (type === 'phone') {
+                        navigation.navigate('Otp', {
+                            phone: selectedPhone,
+                            isVerify: true,
+                            type: 'mobile'
+                        })
+                    } else if (type === 'save') {
+                        let newUser = form.current.value
+                        newUser.location = user.location.length === 0 ? null : newUser.location
+                        navigate.navigate('Otp', {
+                            phone: selectedPhone,
+                            isVerify: true,
+                            type: 'save',
+                            newUser,
+                        })
+                    }
                 } else showToast(data.message)
                 setShowPopUp(false)
                 setSubmitted(false)
@@ -123,11 +140,12 @@ const Body = ({ user }) => {
     }
 
     return (<>
-        <Formik validationSchema={validationSchema} initialValues={user} onSubmit={submitHandler}>
+        <Formik innerRef={form} validationSchema={validationSchema} initialValues={user} onSubmit={submitHandler}>
             {
                 ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => <>
                     <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }}>
                         <Form
+                            setType={setType}
                             touched={touched}
                             handleBlur={handleBlur}
                             errors={errors}
@@ -138,6 +156,7 @@ const Body = ({ user }) => {
                     </ScrollView>
                     <PopUp submitted={submitted} sendOTP={sendOTP} setPopUp={setShowPopUp} numbers={numbers} render={showPopUp} />
                     <Overlay hideLoader onPressHandler={() => setShowPopUp(false)} render={showPopUp} />
+                    <Overlay render={submitted} />
                     <FooterButton submitHandler={handleSubmit} />
                 </>
             }

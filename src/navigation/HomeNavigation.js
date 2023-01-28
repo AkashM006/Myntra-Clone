@@ -1,60 +1,34 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import FilterScreen from '../screens/FilterScreen'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import HomeStack from './HomeStack'
 import ProfileStack from './ProfileStack'
+import Drawer from '../components/Home/DrawerHeader'
 
-// const Stack = createNativeStackNavigator()
-const Drawer = createDrawerNavigator()
+const DrawerNavigator = createDrawerNavigator()
 
 const HomeNavigation = () => {
+    const options = () => ({ header: () => { } })
     return (
-        <Drawer.Navigator initialRouteName='Home' screenOptions={{
+        <DrawerNavigator.Navigator drawerContent={() => <Drawer />} initialRouteName='Home' screenOptions={{
             unmountOnBlur: true
         }} >
-            {/* <Drawer.Screen
-                name='Home'
-                component={HomeScreen}
-                options={{ header: HomeHeader, }}
-            />
-            <Drawer.Screen
-                name='List'
-                component={ListScreen}
-                options={{ header: () => <ListHeader /> }}
-            />
-            <Drawer.Screen
-                name='Detail'
-                component={DetailScreen}
-                options={{
-                    header: () => { },
-                    // animation: 'slide_from_bottom'
-
-                }}
-            /> */}
-            <Drawer.Screen
+            <DrawerNavigator.Screen
                 name='Home'
                 component={HomeStack}
-                options={() => ({ header: () => { }, })}
+                options={options}
             />
-            <Drawer.Screen
+            <DrawerNavigator.Screen
                 name='Filter'
                 component={FilterScreen}
-                options={() => ({ header: () => { }, })}
+                options={options}
             />
-            {/* <Drawer.Screen
-                name='Profile'
-                component={ProfileScreen}
-                options={() => ({
-                    header: () => <Header />,
-                })}
-            /> */}
-            <Drawer.Screen
+            <DrawerNavigator.Screen
                 name='Profile'
                 component={ProfileStack}
-                options={() => ({ header: () => { }, })}
+                options={options}
             />
-        </Drawer.Navigator>
+        </DrawerNavigator.Navigator>
     )
 }
 

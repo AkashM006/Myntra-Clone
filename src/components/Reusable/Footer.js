@@ -2,7 +2,6 @@ import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import CustomText from './CustomText'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
-import COLORS from '../../constants/Colors'
 import { useSelector } from 'react-redux'
 import Avatar from './Avatar'
 import ICONS from '../../icons/icons'
@@ -72,7 +71,7 @@ const Footer = () => {
                 if (icon.name === 'Profile' && isLoggedIn) {
                     return <TouchableOpacity onPress={() => changeRoute(icon.name, icon.redirectTo ?? null)} key={icon.id}>
                         <Avatar dimension={30} fontSize={12} active={isActive} />
-                        <CustomText size={10} color={isActive ? COLORS.PRIMARY : COLORS.BLACK} align='center'>
+                        <CustomText size={10} color={isActive ? colors['PRIMARY'] : colors['DARK']} align='center'>
                             {user.user.fullName.length === 0 ? 'You' : user.user.fullName}
                         </CustomText>
                     </TouchableOpacity>

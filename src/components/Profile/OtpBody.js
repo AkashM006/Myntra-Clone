@@ -10,7 +10,7 @@ import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
 
-const OtpBody = ({ phone, setSubmitted, isVerify, type }) => {
+const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
 
     const [otp, setOtp] = useState('')
     const dispatch = useDispatch()
@@ -75,9 +75,8 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type }) => {
     )
 
     useEffect(() => {
-
-        if (isVerify && otp.length === 4) {
-
+        if (otp.length !== 4) return
+        if (isVerify) {
             setSubmitted(true)
             Keyboard.dismiss()
 
@@ -85,16 +84,38 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type }) => {
                 phoneNumber: phone,
                 otp
             })
-                .then(res => {
+                .then(async res => {
                     const data = res.data
                     if (data.status === false) {
                         setErr(data.message)
                         setSubmitted(false)
                         return
                     }
-                    setSubmitted(false)
-                    if (type === 'mobile') navigation.navigate('EditMobile')
-                    // else if(type === 'save')
+                    if (type === 'mobile') {
+                        setSubmitted(false)
+                        navigation.navigate('EditMobile')
+                    }
+                    else if (type === 'newMobile') {
+                        // todo : send request to change mobile number and then navigate away
+
+                        // after request end
+                        setSubmitted(false)
+                    }
+                    else if (type === 'save') {
+                        try {
+                            const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`)
+                            if (!result.status) {
+                                showToast(result.message)
+                                return
+                            } else {
+                                showToast('User details updated')
+                                navigation(StackActions) // import stackactions
+                            }
+                        } catch (err) {
+                            console.log("Error: ", err)
+                            showToast('Something went wrong. Please try again later')
+                        }
+                    }
                 })
                 .catch(err => {
                     console.log("Err: ", err)
@@ -102,7 +123,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type }) => {
                     showToast('Something went wrong. Please try again later!')
                 })
 
-        } else if (otp.length === 4) {
+        } else {
             setSubmitted(true)
             Keyboard.dismiss()
             axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {

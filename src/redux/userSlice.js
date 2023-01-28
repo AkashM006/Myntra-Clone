@@ -46,7 +46,12 @@ export const userSlice = createSlice({
         setFcmToken: (state, action) => {
             state.fcmToken = action.payload
         },
-        logout: () => initialState
+        logout: state => {
+            let fcmToken = state.fcmToken
+            let result = { ...initialState }
+            result.fcmToken = fcmToken
+            return result
+        }
     }
 })
 

@@ -172,7 +172,7 @@ const LoginPop = () => {
         <Animated.View style={[styles.container, rStyle]}>
             <Overlay render={submitted} />
             <View style={styles.iconContainer}>
-                <FastImage source={{ uri: ICONS.ICON_LOGO }} style={{ width: 40, height: 40 }} />
+                <FastImage source={{ uri: ICONS.ICON_LOGO }} resizeMode='contain' style={{ width: 50, height: 50 }} />
                 <TouchableOpacity onPress={closeHandler}>
                     <FastImage source={{ uri: ICONS.ICON_CLOSE }} style={{ width: 25, height: 25 }} />
                 </TouchableOpacity>
