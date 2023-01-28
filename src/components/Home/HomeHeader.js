@@ -20,6 +20,10 @@ const HomeHeader = () => {
         navigation.openDrawer()
     }
 
+    const wishlistNavigationHandler = () => {
+        navigation.navigate('Wishlist')
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={styles.leftContainer}>
@@ -41,7 +45,7 @@ const HomeHeader = () => {
                 <TouchableOpacity>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BELL }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={wishlistNavigationHandler}>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_HEART }} style={[styles.icon, { marginRight: 17.5 }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={bagNavigationHandler}>

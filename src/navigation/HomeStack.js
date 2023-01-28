@@ -5,10 +5,12 @@ import BagScreen from '../screens/BagScreen'
 import DetailScreen from '../screens/DetailScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
+import WishListScreen from '../screens/WishListScreen'
 
 const Stack = createNativeStackNavigator()
 
 const HomeStack = () => {
+    const options = { header: () => { } }
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -37,7 +39,12 @@ const HomeStack = () => {
             <Stack.Screen
                 name='Bag'
                 component={BagScreen}
-                options={{ header: () => { } }}
+                options={options}
+            />
+            <Stack.Screen
+                name='Wishlist'
+                component={WishListScreen}
+                options={options}
             />
         </Stack.Navigator>
     )

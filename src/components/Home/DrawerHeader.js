@@ -24,7 +24,7 @@ const DrawerHeader = () => {
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={{ width: '100%', height: 125 }}>
                 <FastImage
-                    source={require('../../icons/bg.jpeg')}
+                    source={{ uri: ICONS.ICON_DRAWER_BG }}
                     style={styles.container}
                 />
                 <View style={styles.overlay}>
