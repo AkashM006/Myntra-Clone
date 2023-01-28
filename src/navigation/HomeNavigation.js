@@ -11,7 +11,8 @@ const HomeNavigation = () => {
     const options = () => ({ header: () => { } })
     return (
         <DrawerNavigator.Navigator drawerContent={() => <Drawer />} initialRouteName='Home' screenOptions={{
-            unmountOnBlur: true
+            unmountOnBlur: true,
+            swipeEnabled: false
         }} >
             <DrawerNavigator.Screen
                 name='Home'

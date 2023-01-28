@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { kFormatter } from '../../utils/utils'
