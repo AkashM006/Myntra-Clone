@@ -9,6 +9,9 @@ const SizeList = ({ item, size, setSize }) => {
     const sizes = item?.size
     const { colors } = useSelector(state => state.theme)
 
+    const selectedSize = item?.size.find(value => value.name?.toLowerCase() === size?.toLowerCase())
+    const currentMrp = selectedSize?.amount
+
     return (
         <View style={{ height: 110 }}>
             {sizes && <ScrollView
@@ -39,13 +42,13 @@ const SizeList = ({ item, size, setSize }) => {
                 })}
             </ScrollView>}
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                <CustomText color={colors['DARK']} size={13} weight='bolder'>
-                    {formatCurrency(calculateDiscountedPrice(item.mrp, item.discount)).split('.')[0]}
-                </CustomText>
-                {item.discount && <CustomText color={colors['SHADELIGHT']} left={10} style={{ textDecorationLine: 'line-through' }}>
-                    {formatCurrency(item.mrp).split('.')[0]}
+                {currentMrp && <CustomText color={colors['DARK']} size={13} weight='bolder'>
+                    {formatCurrency(calculateDiscountedPrice(currentMrp, item.discount)).split('.')[0]}
                 </CustomText>}
-                {item.discount && <CustomText color={colors['PRIMARY']} size={13}>
+                {item?.discount && currentMrp && <CustomText color={colors['SHADELIGHT']} left={10} style={{ textDecorationLine: 'line-through' }}>
+                    {formatCurrency(currentMrp).split('.')[0]}
+                </CustomText>}
+                {item?.discount && <CustomText color={colors['PRIMARY']} size={13}>
                     {' '}( {item.discount}% OFF )
                 </CustomText>}
             </View>
@@ -53,7 +56,7 @@ const SizeList = ({ item, size, setSize }) => {
                 <CustomText color={colors['SHADELIGHT']}>
                     Seller:
                     <CustomText weight='light' color={colors['DARK']}>
-                        {" "}{item.soldBy}
+                        {" "}{item?.soldBy}
                     </CustomText>
                 </CustomText>
             </View>

@@ -17,17 +17,17 @@ const List = () => {
     const [popUpInfo, setPopUpInfo] = useState('')
     const [selectedId, setSelectedId] = useState(null)
 
-    const showPopUpHandler = (selectedInfo, selectedId) => {
+    const showPopUpHandler = (selectedInfo, id) => {
         setShowPopUp(true)
         setPopUpInfo(selectedInfo)
-        setSelectedId(selectedId)
+        setSelectedId(id)
     }
 
     return (
         <View style={styles.container}>
             <FlatList
                 data={items}
-                renderItem={({ item }) => <Card showPopUpHandler={showPopUpHandler} show item={item} />}
+                renderItem={({ item }) => <Card showPopUpHandler={showPopUpHandler} item={item} />}
                 contentContainerStyle={{ paddingBottom: 100 }}
                 bounces={false}
                 showsVerticalScrollIndicator={false}
