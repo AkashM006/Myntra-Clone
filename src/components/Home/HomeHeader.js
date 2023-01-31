@@ -5,23 +5,38 @@ import COLORS from '../../constants/Colors'
 import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoginPopUpStatus } from '../../redux/uiSlice'
 
 const HomeHeader = () => {
 
     const navigation = useNavigation()
     const { colors } = useSelector(state => state.theme)
+    const token = useSelector(state => state.user.token)
+    const dispatch = useDispatch()
 
-    const bagNavigationHandler = () => {
-        navigation.navigate('Bag')
+    const bagNavigationHandler = _ => {
+        if (token.length !== 0) navigation.navigate('Bag')
+        else {
+            dispatch(setLoginPopUpStatus(true))
+            navigation.navigate('Profile', {
+                openLogin: true
+            })
+        }
     }
 
-    const menuNavigationHandler = () => {
+    const menuNavigationHandler = _ => {
         navigation.openDrawer()
     }
 
-    const wishlistNavigationHandler = () => {
-        navigation.navigate('Wishlist')
+    const wishlistNavigationHandler = _ => {
+        if (token.length !== 0) navigation.navigate('Wishlist')
+        else {
+            dispatch(setLoginPopUpStatus(true))
+            navigation.navigate('Profile', {
+                openLogin: true
+            })
+        }
     }
 
     return (

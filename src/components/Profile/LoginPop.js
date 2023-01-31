@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, BackHandler, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, BackHandler } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
@@ -53,14 +53,13 @@ const LoginPop = () => {
     const rStyle = useAnimatedStyle(() => {
         return {
             transform: [{
-                translateY: interpolate(visibility.value, [0, 1], [500, 0])
+                translateY: interpolate(visibility.value, [0, 1], [400, 0])
             }],
             backgroundColor: interpolateColor(submitting.value, [0, 1], ['rgba(255,255,255,1)', 'rgba(255,255,255,0.6)'])
         }
     }, [])
 
     useEffect(() => {
-
         let target = (visible === true) ? 1 : 0
 
         visibility.value = withTiming(target, { duration: 300 })
@@ -87,7 +86,6 @@ const LoginPop = () => {
 
     useFocusEffect(
         useCallback(() => {
-            dispatch(setLoginPopUpStatus(false))
             return () => {
                 dispatch(setLoginPopUpStatus(false))
             }
@@ -271,7 +269,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: 'white',
-        height: 450,
+        height: 400,
         transform: [{ translateY: 500 }],
         zIndex: 11,
         paddingTop: 20,

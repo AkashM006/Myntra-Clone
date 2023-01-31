@@ -30,6 +30,7 @@ const WishListScreen = () => {
 
     useEffect(() => {
         // todo: here load the data from backend
+
         setTimeout(() => {
             setLoaded(true)
         }, 2000)

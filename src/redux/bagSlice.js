@@ -4,7 +4,7 @@ const initialState = {
     selected: [], // for storing the ids of selected items in bag for proceding to checkout
     items: [], // storing the items
     itemIds: [], // for storing the ids of items in bag, to display count
-    // {
+    // { // sample format on how to store in state
     //     id: Math.random(),
     //     clothId: 1,
     //     brand: "Huetrap",
@@ -45,20 +45,6 @@ export const bagSlice = createSlice({
             // payload requires id of the cloth which is the productId + selectedSize
             state.items.push(action.payload)
         },
-        // addDummy: (state, action) => {
-        //     state.items.push({
-        //         id: Math.random(),
-        //         clothId: 1,
-        //         brand: "Huetrap",
-        //         name: 'Men White graphic printed cotton T-Shirt',
-        //         soldBy: "Huetrap",
-        //         mrp: 1399,
-        //         qty: 2,
-        //         image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
-        //         currentSize: 'S',
-        //         hasError: false
-        //     })
-        // },
         setSelected: (state, action) => { // for either setting selected to 0 or all
             if (action.payload === 'all') {
                 let result = state.items.map(item => item.id)
@@ -84,15 +70,8 @@ export const bagSlice = createSlice({
             let { id } = action.payload
             let idx = state.items.findIndex(item => item.id === id)
 
-            // get the item that is getting edited
-            // edit the mrp and id
-            // check if there is anyother item with the same id
-            // if there is then change the qty
-            // else add the currentItem to the same index
-
             state.items.splice(idx, 1)
 
-            // here update the mrp
             let item = action.payload
             let selectedSize = item.currentSize
             selectedSize = item.size.find(s => s.name === selectedSize)
@@ -109,7 +88,6 @@ export const bagSlice = createSlice({
                 state.itemIds.splice(idx)
             } else {
                 state.items.splice(idx, 0, item)
-                // alter selected and itemsId
                 idx = state.selected.indexOf(id)
                 state.selected[idx] = item.id
                 idx = state.itemIds.indexOf(id)

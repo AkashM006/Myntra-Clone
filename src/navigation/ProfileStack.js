@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProfileScreen from '../screens/ProfileScreen'
 import Header from '../components/Reusable/Header'
 import OtpScreen from '../screens/OtpScreen'
@@ -9,6 +9,9 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen'
 import EditAccountScreen from '../screens/EditAccountScreen'
 import EditPasswordScreen from '../screens/EditPasswordScreen'
 import EditMobileScreen from '../screens/EditMobileScreen'
+import { useRoute } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { setLoginPopUpStatus } from '../redux/uiSlice'
 
 const Stack = createNativeStackNavigator()
 
@@ -16,12 +19,23 @@ const ProfileStack = () => {
 
     const options = { header: () => { } }
 
+    const params = useRoute().params
+    console.log("Params: ", params)
+
+    const open = params && params?.openLogin ? params.openLogin : false
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (open) dispatch(setLoginPopUpStatus(open))
+    }, [])
+
     return (
         <Stack.Navigator>
             <Stack.Screen
                 name='MainProfile'
                 component={ProfileScreen}
-                options={{ header: Header, }}
+                options={{ header: () => <Header heading='Profile' />, }}
             />
             <Stack.Screen
                 name='Otp'

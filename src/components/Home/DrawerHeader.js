@@ -38,7 +38,7 @@ const DrawerHeader = () => {
                     <View style={styles.textContainer}>
                         <Pressable onPress={navigationHandler}>
                             <CustomText weight='light' size={13} color={colors['WHITE']}>
-                                {user.token ? user.fullName : 'Log In . Sign Up'}
+                                {user.token ? user.user.fullName.length === 0 ? 'You' : user.user.fullName : 'Log In . Sign Up'}
                             </CustomText>
                         </Pressable>
                         <Pressable onPress={navigationHandler}>

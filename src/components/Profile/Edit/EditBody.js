@@ -86,7 +86,6 @@ const Body = ({ user }) => {
     })
 
     const submitHandler = (values, formikActions) => {
-        console.log("Here")
         setType('save')
         setShowPopUp(true)
     }
