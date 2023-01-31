@@ -10,6 +10,7 @@ import Overlay from '../components/Reusable/Overlay'
 import axios from 'axios'
 import Config from 'react-native-config'
 import { showToast } from '../utils/utils'
+import { useSelector } from 'react-redux'
 
 const DetailScreen = () => {
 
@@ -17,6 +18,7 @@ const DetailScreen = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [cloth, setCloth] = useState(null)
     const navigation = useNavigation()
+    const token = useSelector(state => state.user)
 
     const getData = async () => {
         // let result = await firestore().collection('clothes').where('name', '==', 'Men Bootcut Jeans').get()
@@ -47,6 +49,7 @@ const DetailScreen = () => {
 
     const [stickyFooter, setStickyFooter] = useState(null)
     const scrollY = useSharedValue(0)
+    const [selectedSize, setSelectedSize] = useState('')
 
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (e, ctx) => {
@@ -54,17 +57,44 @@ const DetailScreen = () => {
         }
     })
 
+    const onAddToBagHandler = _ => {
+        if (selectedSize === '') {
+            showToast('Please select a size')
+            return
+        } else {
+            // send api request
+            if (!token) {
+                showToast('Please login in order to add clothes to your bag')
+                return
+            }
+
+            axios.post(`${Config.PRODUCTS_API_KEY}/data/addtobag`, {
+                jwt: token,
+                productId: cloth.product.id,
+                size: selectedSize
+            })
+                .then(res => {
+                    const data = res.data
+                    console.log("data: ", data)
+                })
+                .catch(err => {
+                    console.log("Error: ", err)
+                    showToast('Something went wrong. Please try again later!')
+                })
+        }
+    }
+
     return (
         <>
             {isLoading === false ?
-                <View>
+                <>
                     <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
                     <Animated.ScrollView onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
                         <Carousel images={cloth.images} ratedCount={cloth.ratedCount ?? null} rating={cloth.product.star ?? null} />
-                        <Body setStickyFooter={setStickyFooter} item={cloth} />
+                        <Body addToBag={onAddToBagHandler} selectedSize={selectedSize} setSelectedSize={setSelectedSize} setStickyFooter={setStickyFooter} item={cloth} />
                     </Animated.ScrollView>
-                    <StickyFooter scroll={scrollY} footer={stickyFooter} />
-                </View>
+                    <StickyFooter addToBag={onAddToBagHandler} scroll={scrollY} footer={stickyFooter} />
+                </>
                 : <Overlay hideShadow render={true} />}
         </>
     )

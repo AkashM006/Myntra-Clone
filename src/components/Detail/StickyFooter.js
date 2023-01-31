@@ -6,9 +6,9 @@ import COLORS from '../../constants/Colors'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const StickyFooter = ({ scroll, footer }) => {
+const StickyFooter = ({ scroll, footer, addToBag }) => {
 
-    const topEdge = footer?.y - 70 + footer?.height
+    const topEdge = footer?.y + 50
 
     const rStyle = useAnimatedStyle(() => {
         return {
@@ -36,7 +36,7 @@ const StickyFooter = ({ scroll, footer }) => {
                             WISHLIST
                         </CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
+                    <TouchableOpacity onPress={addToBag} style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
                         <FastImage tintColor={'white'} source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
                         <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                             ADD TO BAG

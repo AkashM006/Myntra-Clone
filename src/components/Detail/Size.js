@@ -1,21 +1,65 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import { useSelector } from 'react-redux'
 
-const Size = ({ sizes, setStickyFooter }) => {
+const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
     let clothSizes = { ...sizes }
 
     delete clothSizes.id
     delete clothSizes.productId
 
-    clothSizes = Object.entries(clothSizes)
+    const { colors } = useSelector(state => state.theme)
+
+    const transform = sizes => {
+        return [
+            {
+                id: 1,
+                name: 'XS',
+                available: sizes.xsavailable > 0,
+                maxQty: sizes.xsavailable
+            },
+            {
+                id: 2,
+                name: 'S',
+                available: sizes.savailable > 0,
+                maxQty: sizes.savailable
+            },
+            {
+                id: 3,
+                name: 'M',
+                available: sizes.mavailable > 0,
+                maxQty: sizes.mavailable
+            },
+            {
+                id: 4,
+                name: 'L',
+                available: sizes.lavailable > 0,
+                maxQty: sizes.lavailable
+            },
+            {
+                id: 5,
+                name: 'XL',
+                available: sizes.xlavailable > 0,
+                maxQty: sizes.xlavailable
+            },
+            {
+                id: 6,
+                name: 'XXL',
+                available: sizes.xxlavailable > 0,
+                maxQty: sizes.xxlavailable
+            }
+        ]
+    }
+
+    clothSizes = transform(clothSizes)
 
 
     return (
-        <View style={styles.container}>
+        <View onLayout={event => { setStickyFooter(event.nativeEvent.layout) }} style={styles.container}>
             <View style={styles.titleContainer}>
                 <CustomText weight={'light'} size={18}>
                     Select Size
@@ -26,22 +70,26 @@ const Size = ({ sizes, setStickyFooter }) => {
                     </CustomText>
                 </TouchableOpacity>
             </View>
-            <View style={styles.sizesContainer}>
-                {clothSizes.map((size, index) => (
-                    <TouchableOpacity key={index} style={[styles.size, {
-                        borderColor: !size[1] ? 'lightgray' : 'black'
-                    }]}>
-                        <View>
-                            <CustomText color={size[1] ? COLORS.BLACK : COLORS.SHADEDARK}>
-                                {size[0].toUpperCase()}
-                            </CustomText>
-                        </View>
-                        {!size[1] && <View style={styles.strike} />}
-                    </TouchableOpacity>
+            <ScrollView horizontal style={styles.sizesContainer}>
+                {clothSizes.map(item => (
+                    <View style={styles.sizeInnerContainer} key={item.id}>
+                        <TouchableOpacity disabled={!item.available} onPress={() => setSize(item.name)} style={[styles.size, {
+                            borderColor: item.available ? item.name === size ? COLORS.PRIMARY : COLORS.BLACK : COLORS.SHADEDARK
+                        }]}>
+                            <View>
+                                <CustomText color={item.available ? item.name === size ? COLORS.PRIMARY : COLORS.BLACK : COLORS.SHADEDARK}>
+                                    {item.name}
+                                </CustomText>
+                            </View>
+                            {!item.available && <View style={styles.strike} />}
+                        </TouchableOpacity>
+                        {item.available && item.maxQty <= 5 && <CustomText weight='bold' style={[{ borderColor: colors['DANGER'] }, styles.dangerText]} color={colors['DANGER']}>
+                            {item.maxQty} left
+                        </CustomText>}
+                    </View>
                 ))}
-            </View>
+            </ScrollView>
             <View
-                onLayout={event => { setStickyFooter(event.nativeEvent.layout) }}
                 style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
@@ -49,8 +97,8 @@ const Size = ({ sizes, setStickyFooter }) => {
                         WISHLIST
                     </CustomText>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
-                    <FastImage source={{ uri: ICONS.ICON_BAG }} style={[styles.icon, { tintColor: 'white' }]} />
+                <TouchableOpacity onPress={addToBag} style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
+                    <FastImage source={{ uri: ICONS.ICON_BAG }} tintColor='white' style={[styles.icon, { tintColor: 'white' }]} />
                     <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                         ADD TO BAG
                     </CustomText>
@@ -76,7 +124,7 @@ const styles = StyleSheet.create({
     sizesContainer: {
         flexDirection: 'row',
         marginBottom: 10,
-        flexWrap: 'wrap'
+        height: 90
     },
     size: {
         borderRadius: 100,
@@ -115,8 +163,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 10
     },
-    text: {
-        marginLeft: 10
+    text: { marginLeft: 10 },
+    sizeInnerContainer: {
+        alignItems: 'center',
+    },
+    dangerText: {
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 4
     }
 })
 

@@ -1,11 +1,31 @@
 import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
-import COLORS from '../../constants/Colors'
 
-const Details = ({ about }) => {
+const Details = ({ about, specs }) => {
 
     const dummy = Array(5).fill(1)
+
+    if (specs) {
+        delete specs.id
+        delete specs.productId
+    }
+
+    const renderSpecs = _ => {
+        let n = Object.keys(specs).length
+        n /= 2
+        let obj = {}
+        for (let i = 0; i < n; i++) {
+            let key = specs['s' + (i + 1)]
+            obj[key] = specs['v' + (i + 1)]
+        }
+        return Object.entries(obj).map(item => (
+            <View style={styles.specContainer} key={item[0]}>
+                <CustomText weight='bolder' bottom={5} >{item[0]}</CustomText>
+                <CustomText style={styles.textBody} >{item[1]}</CustomText>
+            </View>
+        ))
+    }
 
     return (
         <View style={styles.container}>
@@ -16,48 +36,9 @@ const Details = ({ about }) => {
                 <CustomText vertical={20} size={13}>
                     {about}
                 </CustomText>
-                {dummy.map((item, index) => {
-                    return (
-                        <View key={index}>
-                            <View style={styles.row}>
-                                <View style={[styles.detailCard, { marginRight: 20 }]}>
-                                    <CustomText size={14}>
-                                        Fit
-                                    </CustomText>
-                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
-                                        Bootcut
-                                    </CustomText>
-                                </View>
-                                <View style={styles.detailCard}>
-                                    <CustomText size={14}>
-                                        Length
-                                    </CustomText>
-                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
-                                        Regular
-                                    </CustomText>
-                                </View>
-                            </View>
-                            <View style={styles.row}>
-                                <View style={[styles.detailCard, { marginRight: 20 }]}>
-                                    <CustomText size={14} weight='light'>
-                                        Waist Rise
-                                    </CustomText>
-                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
-                                        Mid-Rise
-                                    </CustomText>
-                                </View>
-                                <View style={styles.detailCard}>
-                                    <CustomText size={14}>
-                                        Stretch
-                                    </CustomText>
-                                    <CustomText color={COLORS.SHADEDARK} style={styles.text}>
-                                        Stretchable
-                                    </CustomText>
-                                </View>
-                            </View>
-                        </View>
-                    )
-                })}
+                {
+                    specs && Object.keys(specs).length > 0 && <View style={styles.topContainer}>{renderSpecs()}</View>
+                }
             </View>
         </View>
     )
@@ -82,6 +63,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         marginBottom: 10
+    },
+    specContainer: {
+        width: '45%',
+        marginBottom: 20
+    },
+    textBody: {
+        borderBottomWidth: 1,
+        paddingBottom: 5,
+        borderColor: 'black',
+    },
+    topContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
     }
 })
 
