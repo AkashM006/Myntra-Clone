@@ -4,7 +4,7 @@ import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setPhone, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
@@ -27,6 +27,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
     }
 
     const navigation = useNavigation()
+    const user = useSelector(state => state.user.user)
 
     let timer;
 
@@ -93,13 +94,23 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                     }
                     if (type === 'mobile') {
                         setSubmitted(false)
+                        navigation.dispatch(StackActions.pop(1))
                         navigation.navigate('EditMobile')
                     }
                     else if (type === 'newMobile') {
                         // todo : send request to change mobile number and then navigate away
-
-                        // after request end
-                        setSubmitted(false)
+                        try {
+                            const result = await axios.put(`${Config.REGISTER_API_KEY}/authenticate/updatenumber`, {
+                                oldNumber: user.mobileNumber,
+                                newNumber: '+91' + phone
+                            })
+                            setSubmitted(false)
+                            navigation.dispatch(StackActions.pop(2))
+                        } catch (err) {
+                            console.log("Error: ", err)
+                            showToast('Something went wrong. Please try again later')
+                            setSubmitted(false)
+                        }
                     }
                     else if (type === 'save') {
                         try {
@@ -109,7 +120,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                                 return
                             } else {
                                 showToast('User details updated')
-                                navigation(StackActions) // import stackactions
+                                navigation(StackActions.pop(2))
                             }
                         } catch (err) {
                             console.log("Error: ", err)

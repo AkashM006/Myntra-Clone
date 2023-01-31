@@ -20,7 +20,6 @@ const ProfileStack = () => {
     const options = { header: () => { } }
 
     const params = useRoute().params
-    console.log("Params: ", params)
 
     const open = params && params?.openLogin ? params.openLogin : false
 

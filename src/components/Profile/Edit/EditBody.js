@@ -117,9 +117,9 @@ const Body = ({ user }) => {
                             type: 'mobile'
                         })
                     } else if (type === 'save') {
-                        let newUser = form.current.value
-                        newUser.location = user.location.length === 0 ? null : newUser.location
-                        navigate.navigate('Otp', {
+                        let newUser = form.current.values
+                        newUser.location = newUser.location.length === 0 ? null : newUser.location
+                        navigation.navigate('Otp', {
                             phone: selectedPhone,
                             isVerify: true,
                             type: 'save',

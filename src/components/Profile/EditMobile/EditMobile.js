@@ -21,7 +21,7 @@ const EditMobile = () => {
 
     const { colors } = useSelector(state => state.theme)
 
-    const textChangeHandler = newPhone => setMobile(newPhone)
+    const textChangeHandler = newPhone => setPhone(newPhone)
 
     const navigation = useNavigation()
 
@@ -53,10 +53,15 @@ const EditMobile = () => {
             showToast('Something went wrong. Please try again later.')
         }
 
-
         try {
             const result = await axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
                 phoneNumber: "+91 " + phone
+            })
+            setSubmitted(false)
+            navigation.navigate('Otp', {
+                phone,
+                isVerify: true,
+                type: 'newMobile'
             })
         } catch (err) {
             console.log("Error: ", err)
@@ -64,18 +69,8 @@ const EditMobile = () => {
             showToast('Something went wrong. Please try again later.')
 
         }
-        // here navigate to the next page
-        navigation.navigate('Otp', {
-            phone,
-            isVerify: true,
-            type: 'newMobile'
-        })
 
     }
-
-    // useEffect(() => {
-    //     setSubmitted(false)
-    // }, [])
 
     return (
         <View style={styles.container}>
@@ -128,6 +123,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
     },
+    input: {
+        flex: 1
+    }
 })
 
 export default EditMobile
