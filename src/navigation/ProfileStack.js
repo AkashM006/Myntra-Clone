@@ -12,8 +12,10 @@ import EditMobileScreen from '../screens/EditMobileScreen'
 import { useRoute } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setLoginPopUpStatus } from '../redux/uiSlice'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const Stack = createNativeStackNavigator()
+// const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 
 const ProfileStack = () => {
 
@@ -30,7 +32,9 @@ const ProfileStack = () => {
     }, [])
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            detachPreviousScreen: true
+        }}>
             <Stack.Screen
                 name='MainProfile'
                 component={ProfileScreen}

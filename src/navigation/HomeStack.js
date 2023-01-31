@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import HomeHeader from '../components/Home/HomeHeader'
 import BagScreen from '../screens/BagScreen'
@@ -7,7 +8,8 @@ import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
 import WishListScreen from '../screens/WishListScreen'
 
-const Stack = createNativeStackNavigator()
+// const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator()
 
 const HomeStack = () => {
     const options = { header: () => { } }
