@@ -38,7 +38,9 @@ const ICONS = {
     ICON_HEART_BAG: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/heart_bag.png?alt=media&token=91b57444-e425-45b7-9c47-34bf520c67ea',
     ICON_DOWN_CARET: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/down-caret.png?alt=media&token=db496c1f-edf4-4d57-9ee4-3207b07d8915',
     ICON_SPLASH: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/launch_image.png?alt=media&token=52cad1ac-460b-4114-a867-92b8e417a122',
-    ICON_DRAWER_BG: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/bg.jpeg?alt=media&token=98ef11d6-5856-4fe0-b502-5c73751861fa'
+    ICON_DRAWER_BG: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/bg.jpeg?alt=media&token=98ef11d6-5856-4fe0-b502-5c73751861fa',
+    ICON_MAP: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/map.png?alt=media&token=62adb09c-8b9e-4763-aeb2-fedd4119d0a0',
+    ICON_MAP_LARGE: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/map-large.jpg?alt=media&token=1830a179-3c97-431c-96ae-6eee1f66acbc'
 }
 
 export default ICONS

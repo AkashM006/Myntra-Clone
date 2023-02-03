@@ -4,6 +4,7 @@ import userReducer from './userSlice'
 import bagReducer from './bagSlice'
 import themeReducer from './ThemeSlice'
 import wishlistReducer from './wishlistSlice'
+import addressReducer from './addressSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist'
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     user: userReducer,
     bag: bagReducer,
     theme: themeReducer,
-    wishlist: wishlistReducer
+    wishlist: wishlistReducer,
+    address: addressReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

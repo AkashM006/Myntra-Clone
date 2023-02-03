@@ -9,6 +9,7 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import { showToast } from '../../utils/utils'
 import ListHeader from './ListHeader'
+import { useRoute } from '@react-navigation/native'
 
 const List = () => {
 
@@ -16,10 +17,11 @@ const List = () => {
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const height = useWindowDimensions().height
+    const id = useRoute().params?.id
 
     const getData = async () => {
         if (count !== null && clothes.length >= count) return
-        axios.get(`${Config.PRODUCTS_API_KEY}/data/getproductsm/1`)
+        axios.get(`${Config.PRODUCTS_API_KEY}/data/getproductsm/${id}`)
             .then(res => {
                 let data = res.data
                 if (data.status === false) {
@@ -86,6 +88,8 @@ const List = () => {
                     onEndReached={endReachedHandler}
                     onEndReachedThreshold={1}
                     showsVerticalScrollIndicator={false}
+                    removeClippedSubviews
+                    maxToRenderPerBatch={6}
                     getItemLayout={(data, index) => ({
                         length: cardHeight,
                         offset: (index) * cardHeight,

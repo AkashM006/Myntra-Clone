@@ -31,20 +31,16 @@ export const userSlice = createSlice({
             state.token = action.payload
         },
         setProfile: (state, action) => {
-            // state.altMobNumber = action.payload.altMobNumber ?? ''
-            // state.birthDay = action.payload.birthDay ?? ''
-            // state.email = action.payload.email ?? ''
-            // state.fullName = action.payload.fullName ?? ''
-            // state.gender = action.payload.gender
-            // state.hintName = action.payload.hintName ?? ''
-            // state.mobileNumber = action.payload.mobileNumber
-            // state.location = action.payload.location ?? ''
             let init = initialState.user
             let payload = action.payload
             state.user = { ...init, ...payload }
         },
         setFcmToken: (state, action) => {
             state.fcmToken = action.payload
+        },
+        setField: (state, action) => {
+            const { field, value } = action.payload
+            state.user[field] = value
         },
         logout: state => {
             let fcmToken = state.fcmToken
@@ -55,6 +51,6 @@ export const userSlice = createSlice({
     }
 })
 
-export const { login, setPhone, setToken, setProfile, setFcmToken, logout } = userSlice.actions
+export const { login, setPhone, setToken, setProfile, setFcmToken, logout, setField } = userSlice.actions
 
 export default userSlice.reducer

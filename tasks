@@ -1,4 +1,7 @@
 todo: 
 1) Make navigation transition smooth
-2) In edit mobile need to send request to change the mobile number alone. Yet to be implemented in backend
-3) Do all the integration after sneka comes
+2) OtpBody.js, update type = 'newMobile' so that token is reset after response is recieved
+3) Also in OtpBody.js, update type = 'save'
+4) Home/Body.js change getData function to get from backend
+5) Feb second week implement locality selection feature
+6) Integrate address addition form to backend

@@ -10,6 +10,9 @@ import Grid from './Grid'
 import Carousel from './Carousel'
 import COLORS from '../../constants/Colors'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
+import showToast from '../../utils/utils'
+import Config from 'react-native-config'
 
 const Body = () => {
 
@@ -19,8 +22,11 @@ const Body = () => {
 
     const getData = async () => {
         try {
-            let result = await (await firestore().collection('categories').orderBy('position').get()).docs
-            let headerSection = result.map(categ => { return categ._data })
+            // let result = await (await firestore().collection('categories').orderBy('position').get()).docs
+            // let headerSection = result.map(categ => { return categ._data })
+            let result = await axios.get(`${Config.PRODUCTS_API_KEY}/data/getcategoriesm`)
+            result = result.data.data
+            let headerSection = result.map(item => ({ id: item.categoryId, name: item.categoryName, photoURL: item.image }))
 
             result = await (await firestore().collection('gallery').orderBy('position').get()).docs
 
@@ -30,6 +36,7 @@ const Body = () => {
             setIsLoading(false)
         } catch (err) {
             console.log("Error: ", err)
+            showToast('Something went wrong while fetching product categories. Please try again later!')
         }
     }
 

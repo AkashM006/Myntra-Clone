@@ -59,6 +59,13 @@ const THIRDLIST = [
     },
     {
         id: 2,
+        title: 'Address',
+        subtitle: 'Save addresses for a hassle-free checkout',
+        icon: { uri: ICONS.ICON_MAP },
+        to: 'Address'
+    },
+    {
+        id: 3,
         title: 'Settings',
         subtitle: 'Manage notifications & app settings',
         icon: { uri: ICONS.ICON_SETTINGS }
@@ -154,7 +161,7 @@ const OptionsSection = () => {
                 {SECONDLIST.map((item, index) => <Card key={item.id} item={item} index={index} length={SECONDLIST.length} />)}
             </View>
             {isLoggedIn && <View style={styles.optionsListContainer}>
-                {THIRDLIST.map((item, index) => <Card titleStyle={titleStyle} key={item.id} item={item} index={index} length={THIRDLIST.length} separator={false} moreicon={false} />)}
+                {THIRDLIST.map((item, index) => <Card titleStyle={titleStyle} key={item.id} item={item} index={index} length={THIRDLIST.length} separator={false} />)}
             </View>}
             <View style={styles.optionsListContainer}>
                 {FOURTHLIST.map((item, index) => <Card titleStyle={titleStyle} key={item.id} item={item} index={index} length={THIRDLIST.length} separator={false} moreicon={false} />)}

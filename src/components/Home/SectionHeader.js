@@ -13,7 +13,8 @@ const SectionHeader = ({ sections }) => {
     const renderCard = ({ item, index }) => {
         return (
             <TouchableOpacity style={styles.card} key={index} onPress={() => navigation.navigate('List', {
-                title: item.name
+                title: item.name,
+                id: item.id
             })} >
                 <Image style={styles.image} source={{ uri: item.photoURL }} />
                 <CustomText size={10} style={styles.text}>{item.name.toUpperCase()}</CustomText>

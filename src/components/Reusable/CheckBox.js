@@ -1,10 +1,10 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 
-const CheckBox = ({ value, dimension, radius, changeHandler }) => {
+const CheckBox = ({ value, dimension, radius, changeHandler, tickHidden, radio, radioPadding }) => {
 
     const { colors } = useSelector(state => state.theme)
 
@@ -23,11 +23,16 @@ const CheckBox = ({ value, dimension, radius, changeHandler }) => {
 
     return (
         <TouchableOpacity onPress={pressHandler} style={[styles.container, style]}>
-            {value && <FastImage
-                source={{ uri: ICONS.ICON_CHECK }}
-                style={{ height: dimension ?? 12.5, width: dimension ?? 12.5, }}
-                tintColor={colors['WHITE']}
-            />}
+            {
+                radio ?
+                    <View style={{ borderColor: colors['LIGHT'], borderWidth: 2, padding: radioPadding ?? 6, borderRadius: style.borderRadius }} />
+                    :
+                    !tickHidden && value && <FastImage
+                        source={{ uri: ICONS.ICON_CHECK }}
+                        style={{ height: dimension ? 0.7 * dimension : 12.5, width: dimension ? 0.7 * dimension : 12.5, }}
+                        tintColor={colors['WHITE']}
+                    />
+            }
         </TouchableOpacity>
     )
 }

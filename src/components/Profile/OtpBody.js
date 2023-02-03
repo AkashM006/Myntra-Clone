@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Config } from 'react-native-config'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPhone, setToken } from '../../redux/userSlice'
+import { logout, setField, setPhone, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
@@ -82,7 +82,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
             Keyboard.dismiss()
 
             axios.post(`${Config.OTP_API_KEY}/authenticate/verifyupdateotp`, {
-                phoneNumber: phone,
+                phoneNumber: phone.charAt(0) === '+' ? phone : '+91 ' + phone,
                 otp
             })
                 .then(async res => {
@@ -102,10 +102,18 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                         try {
                             const result = await axios.put(`${Config.REGISTER_API_KEY}/authenticate/updatenumber`, {
                                 oldNumber: user.mobileNumber,
-                                newNumber: '+91' + phone
+                                newNumber: phone.charAt(0) === '+' ? phone : '+91 ' + phone
                             })
-                            setSubmitted(false)
-                            navigation.dispatch(StackActions.pop(2))
+                            const { data } = result
+                            if (data.status) {
+                                setSubmitted(false)
+                                navigation.dispatch(StackActions.pop(3))
+                                showToast('Phone number updated. Please login again!')
+                                dispatch(logout())
+                            } else {
+                                setSubmitted(false)
+                                showToast(data.message)
+                            }
                         } catch (err) {
                             console.log("Error: ", err)
                             showToast('Something went wrong. Please try again later')
@@ -113,19 +121,22 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                         }
                     }
                     else if (type === 'save') {
-                        try {
-                            const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`)
-                            if (!result.status) {
-                                showToast(result.message)
-                                return
-                            } else {
-                                showToast('User details updated')
-                                navigation(StackActions.pop(2))
-                            }
-                        } catch (err) {
-                            console.log("Error: ", err)
-                            showToast('Something went wrong. Please try again later')
-                        }
+                        console.log("User: ", newUser)
+                        // try {
+                        //     const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`, {
+
+                        //     })
+                        //     if (!result.status) {
+                        //         showToast(result.message)
+                        //         return
+                        //     } else {
+                        //         showToast('User details updated')
+                        //         navigation(StackActions.pop(2))
+                        //     }
+                        // } catch (err) {
+                        //     console.log("Error: ", err)
+                        //     showToast('Something went wrong. Please try again later')
+                        // }
                     }
                 })
                 .catch(err => {

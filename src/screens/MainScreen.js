@@ -107,9 +107,20 @@ const MainScreen = () => {
         }
     }, [])
 
-    useEffect(() => {
-        SplashScreen.hide()
-    }, [])
+    useEffect(() => { SplashScreen.hide() }, [])
+
+    axios.interceptors.request.use(
+        config => {
+            if (token)
+                config.headers['Authorization'] = 'Bearer ' + token
+            config.headers['Content-Type'] = 'application/json'
+            return config
+        },
+        error => {
+            console.log("Error in request inerceptor: ", error),
+                showToast('Something went wrong while sending request')
+        }
+    )
 
     return (
         <>

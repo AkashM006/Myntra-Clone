@@ -6,21 +6,22 @@ import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 import { useSelector } from 'react-redux'
 
-const Header = ({ title }) => {
+const Header = ({ title, backPressHandler }) => {
 
     const navigation = useNavigation()
     const { colors } = useSelector(state => state.theme)
 
     const backHandler = () => {
-        navigation.goBack()
+        if (backPressHandler) backPressHandler()
+        else navigation.goBack()
     }
 
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <TouchableOpacity onPress={backHandler}>
-                <FastImage style={{ height: 25, width: 25 }} source={{ uri: ICONS.ICON_BACK }} />
+                <FastImage style={{ height: 25, width: 25 }} tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BACK }} />
             </TouchableOpacity>
-            <CustomText size={16} weight='light' left={10}>
+            <CustomText size={16} weight='light' left={10} color={colors['DARK']}>
                 {title}
             </CustomText>
         </View>

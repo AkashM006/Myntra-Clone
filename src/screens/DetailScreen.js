@@ -19,6 +19,7 @@ const DetailScreen = () => {
     const [cloth, setCloth] = useState(null)
     const navigation = useNavigation()
     const token = useSelector(state => state.user)
+    const wishlisted = cloth?.isWishlisted
 
     const getData = async () => {
         // let result = await firestore().collection('clothes').where('name', '==', 'Men Bootcut Jeans').get()
@@ -84,16 +85,41 @@ const DetailScreen = () => {
         }
     }
 
+    const addToWishlistHandler = () => {
+
+        if (wishlisted) {
+            navigation.navigate('Wishlist')
+        }
+
+        axios.post(`${Config.PRODUCTS_API_KEY}/data/addtowish`, {
+            productId: id,
+            jwt: token.token // remove this later
+        })
+            .then(res => {
+                const data = res.data
+                console.log("Response: ", data)
+                if (data.status)
+                    setCloth({ ...cloth, isWishlisted: true })
+                else
+                    showToast(data.message)
+
+            })
+            .catch(err => {
+                console.log("Error: ", err)
+                showToast('Something went wrong. Please try again later!')
+            })
+    }
+
     return (
         <>
             {isLoading === false ?
                 <>
                     <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
-                    <Animated.ScrollView onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
+                    <Animated.ScrollView contentContainerStyle={{ paddingBottom: 150 }} onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
                         <Carousel images={cloth.images} ratedCount={cloth.ratedCount ?? null} rating={cloth.product.star ?? null} />
                         <Body addToBag={onAddToBagHandler} selectedSize={selectedSize} setSelectedSize={setSelectedSize} setStickyFooter={setStickyFooter} item={cloth} />
                     </Animated.ScrollView>
-                    <StickyFooter addToBag={onAddToBagHandler} scroll={scrollY} footer={stickyFooter} />
+                    <StickyFooter wishlisted={wishlisted} addToWishlist={addToWishlistHandler} addToBag={onAddToBagHandler} scroll={scrollY} footer={stickyFooter} />
                 </>
                 : <Overlay hideShadow render={true} />}
         </>

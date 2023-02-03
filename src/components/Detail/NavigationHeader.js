@@ -48,7 +48,7 @@ const NavigationHeader = ({ scroll, name }) => {
                     <TouchableOpacity style={styles.iconContainer}>
                         <FastImage source={{ uri: ICONS.ICON_SHARE }} style={styles.icon} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Wishlist')} >
                         <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer}>

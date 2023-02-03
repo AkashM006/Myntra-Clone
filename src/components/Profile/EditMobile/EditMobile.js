@@ -57,12 +57,18 @@ const EditMobile = () => {
             const result = await axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
                 phoneNumber: "+91 " + phone
             })
-            setSubmitted(false)
-            navigation.navigate('Otp', {
-                phone,
-                isVerify: true,
-                type: 'newMobile'
-            })
+            const data = result.data
+            if (data.status) {
+                setSubmitted(false)
+                navigation.navigate('Otp', {
+                    phone: '+91 ' + phone,
+                    isVerify: true,
+                    type: 'newMobile'
+                })
+            } else {
+                setSubmitted(false)
+                showToast(data.message)
+            }
         } catch (err) {
             console.log("Error: ", err)
             setSubmitted(false)

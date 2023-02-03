@@ -24,28 +24,31 @@ const BagBody = () => {
         // load items from server
         // then setLoaded true
         // todo: After fetching call transfrom function
-        if (token) {
-            axios.get(`${Config.PRODUCTS_API_KEY}/data/bag`, {
-                jwt: token
-            })
-                .then(res => {
-                    const data = res.data
-                    if (data.status) {
-                        console.log("Data: ", data)
-                    } else
-                        showToast(data.message)
+        // if (token) {
+        //     axios.get(`${Config.PRODUCTS_API_KEY}/data/bag`, {
+        //         jwt: token
+        //     })
+        //         .then(res => {
+        //             const data = res.data
+        //             if (data.status) {
+        //                 console.log("Data: ", data)
+        //             } else
+        //                 showToast(data.message)
 
-                    let result = transform(DATA)
-                    dispatch(setBag(result))
-                })
-                .catch(err => {
-                    console.log("Error: ", err)
-                    showToast('Something went wrong. Please try again later')
-                })
-        }
-        // setTimeout(() => setLoaded(true), 1000)
+        //             let result = transform(DATA)
+        //             dispatch(setBag(result))
+        //         })
+        //         .catch(err => {
+        //             console.log("Error: ", err)
+        //             showToast('Something went wrong. Please try again later')
+        //         })
+        // }
+        setTimeout(() => {
+            let result = transform(DATA)
+            dispatch(setBag(result))
+            setLoaded(true)
+        }, 1000)
     }, [])
-
 
 
     return (

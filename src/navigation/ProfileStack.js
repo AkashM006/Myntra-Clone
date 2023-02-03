@@ -13,6 +13,7 @@ import { useRoute } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setLoginPopUpStatus } from '../redux/uiSlice'
 import { createStackNavigator } from '@react-navigation/stack'
+import AddressScreen from '../screens/AddressScreen'
 
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator()
@@ -29,6 +30,7 @@ const ProfileStack = () => {
 
     useEffect(() => {
         if (open) dispatch(setLoginPopUpStatus(open))
+        else dispatch(setLoginPopUpStatus(false))
     }, [])
 
     return (
@@ -73,6 +75,11 @@ const ProfileStack = () => {
             <Stack.Screen
                 name='EditMobile'
                 component={EditMobileScreen}
+                options={options}
+            />
+            <Stack.Screen
+                name='Address'
+                component={AddressScreen}
                 options={options}
             />
         </Stack.Navigator>

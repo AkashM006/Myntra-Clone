@@ -40,9 +40,6 @@ const Body = ({ item, setStickyFooter, selectedSize, setSelectedSize, addToBag }
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
     loader: {
         padding: '3%',
         backgroundColor: 'white',

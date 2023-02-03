@@ -27,12 +27,13 @@ const EditBody = () => {
     useEffect(() => {
         axios.post(`${Config.REGISTER_API_KEY}/authenticate/getUserDetails`, { jwt: user.token })
             .then(res => {
-                const data = res.data.data
+                const data = res.data
                 if (data.status === false) {
                     Toast.show(data.message, { duration: Toast.durations.LONG, position: Toast.positions.BOTTOM, })
                     navigation.goBack()
+                    return
                 }
-                dispatch(setProfile(data))
+                dispatch(setProfile(data.data))
                 setLoaded(true)
             })
             .catch(err => {

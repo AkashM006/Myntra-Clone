@@ -1,18 +1,23 @@
 import { View, TextInput, StyleSheet } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import CustomText from './CustomText'
-import COLORS from '../../constants/Colors'
+import { useSelector } from 'react-redux'
 
-const CustomTextInput = ({ placeholder, value, onChangeTextHandler, error, secure, onBlurHandler }) => {
+const CustomTextInput = ({ placeholder, value, onBlurHandler, onChangeTextHandler, error, secure, onEndEditingHandler, type, ...props }) => {
 
     const [isActive, setIsActive] = useState(false)
 
     const handleBlur = onBlurHandler ?? null
 
-    const borderStyle = { borderColor: isActive ? COLORS.SHADEDARK : error == null ? COLORS.SHADELIGHT : COLORS.DANGER }
+    const { colors } = useSelector(state => state.theme)
+
+    const borderStyle = { borderColor: isActive ? colors['SHADEDARK'] : error == null ? colors['SHADELIGHT'] : colors['DANGER'] }
 
     const onFocusHandler = useCallback(() => setIsActive(true), [])
-    const onEndEditingHandler = useCallback(() => setIsActive(false), [])
+    const handleEndEditing = useCallback(() => {
+        if (onEndEditingHandler) onEndEditingHandler()
+        setIsActive(false)
+    }, [])
 
     return (
         <View>
@@ -20,15 +25,18 @@ const CustomTextInput = ({ placeholder, value, onChangeTextHandler, error, secur
                 placeholder={placeholder}
                 value={value}
                 onChangeText={onChangeTextHandler}
-                placeholderTextColor={COLORS.SHADELIGHT}
+                placeholderTextColor={colors['SHADELIGHT']}
                 onFocus={onFocusHandler}
                 onBlur={handleBlur}
-                onEndEditing={onEndEditingHandler}
-                style={[styles.input, borderStyle]}
+                onEndEditing={handleEndEditing}
+                style={[styles.input, borderStyle, { color: colors['DARK'] }]}
                 secureTextEntry={secure ?? false}
+                keyboardType={type ?? 'ascii-capable'}
+                cursorColor={colors['PRIMARY']}
+                {...props}
             />
             {
-                error && <CustomText bottom={5} size={10} color={COLORS.DANGER}>
+                error && <CustomText bottom={5} size={10} color={colors['DANGER']}>
                     {error}
                 </CustomText>
             }
