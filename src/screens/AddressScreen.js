@@ -5,9 +5,11 @@ import AddressBody from '../components/Profile/Address/AddressBody'
 import Overlay from '../components/Reusable/Overlay'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { setAddress } from '../redux/addressSlice'
-import DATA from '../constants/AddressData'
+import { addAddress, clearAddresses } from '../redux/addressSlice'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
+import { showToast } from '../utils/utils'
+import Config from 'react-native-config'
 
 const AddressScreen = () => {
 
@@ -17,12 +19,23 @@ const AddressScreen = () => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
+    const getData = async _ => {
+        dispatch(clearAddresses())
+        if (loaded) setLoaded(false)
+        try {
+            const result = await axios.get(`${Config.REGISTER_API_KEY}/authenticate/address`)
+            const data = result.data.data
+            dispatch(addAddress(data))
+        } catch (error) {
+            console.log("Error in AddressScreen.js: ", error)
+            showToast('Something went wrong while fetching your addresses. Please try again later')
+        }
+        setLoaded(true)
+    }
+
     useEffect(() => {
-        setTimeout(() => {
-            dispatch(setAddress(DATA))
-            setLoaded(true)
-        }, 1000)
-    }, [])
+        if (!showForm) getData()
+    }, [showForm])
 
     const onBackPress = _ => {
         if (showForm) setShowForm(false)
@@ -34,7 +47,7 @@ const AddressScreen = () => {
             <Header backPressHandler={onBackPress} title='ADDRESS' />
             <View style={{ flex: 1 }}>
                 {loaded ?
-                    <AddressBody showForm={showForm} setShowForm={setShowForm} /> :
+                    <AddressBody rerender={getData} showForm={showForm} setShowForm={setShowForm} /> :
                     <Overlay hideShadow={(theme === 'light')} render={true} />
                 }
             </View>

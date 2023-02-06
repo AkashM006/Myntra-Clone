@@ -12,6 +12,7 @@ import { showToast } from '../utils/utils'
 import { useCallback } from 'react'
 import { useRef } from 'react'
 import SplashScreen from 'react-native-splash-screen'
+import Overlay from '../components/Reusable/Overlay'
 
 const MainScreen = () => {
 
@@ -19,14 +20,13 @@ const MainScreen = () => {
     const dispatch = useDispatch()
     const userState = useSelector(state => state.user)
     const appState = useRef(AppState.currentState)
+    const { loading, hideLoader, hideShadow } = useSelector(state => state.ui)
 
     const { colors, theme } = useSelector(state => state.theme)
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
-        axios.post(`${Config.REGISTER_API_KEY}/authenticate/getUserDetails`, {
-            jwt: token
-        })
+        axios.get(`${Config.REGISTER_API_KEY}/authenticate/getuserdetails`)
             .then(res => {
                 const data = res.data
                 if (!data.status) {
@@ -93,7 +93,7 @@ const MainScreen = () => {
 
     useEffect(() => { // to get token and store in state each time on mount
         getToken()
-    }, [token])
+    }, [])
 
     useEffect(() => {
         const unsubscribe = AppState.addEventListener('change', currentAppState => {
@@ -131,6 +131,11 @@ const MainScreen = () => {
             <NavigationContainer>
                 <View style={{ flex: 1 }}>
                     <HomeNavigation />
+                    <Overlay
+                        render={loading}
+                        hideLoader={hideLoader}
+                        hideShadow={hideShadow}
+                    />
                 </View>
             </NavigationContainer>
         </>

@@ -14,7 +14,9 @@ const Stack = createStackNavigator()
 const HomeStack = () => {
     const options = { header: () => { } }
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            freezeOnBlur: true
+        }}>
             <Stack.Screen
                 name='MainHome'
                 component={HomeScreen}

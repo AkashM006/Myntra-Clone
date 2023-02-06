@@ -25,7 +25,7 @@ const addressValidationSchema = yup.object().shape({
             return false
         })
         .required('Pincode is required'),
-    addr: yup.string('Enter valid address').min(5, 'Enter valid address').required('Address is required'),
+    address: yup.string('Enter valid address').min(5, 'Enter valid address').required('Address is required'),
     state: yup.string('Enter valid state name').required('State is required'),
     locality: yup.string('Enter valid town/locality').required('Town or locality is required'),
     city: yup.string('Enter valid city').required('City is required'),

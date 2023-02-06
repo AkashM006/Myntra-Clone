@@ -1,7 +1,6 @@
 todo: 
 1) Make navigation transition smooth
 2) OtpBody.js, update type = 'newMobile' so that token is reset after response is recieved
-3) Also in OtpBody.js, update type = 'save'
-4) Home/Body.js change getData function to get from backend
-5) Feb second week implement locality selection feature
-6) Integrate address addition form to backend
+3) Feb second week implement locality selection feature
+4) Need to change the sticky footer UI in details page
+5) Check AddressForm.js for updating address

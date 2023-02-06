@@ -1,7 +1,6 @@
 import { View, BackHandler, ScrollView, StyleSheet, Keyboard, Pressable } from 'react-native'
-import React, { useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
 import CustomText from '../../Reusable/CustomText'
 import CustomTextInput from '../../Reusable/CustomTextInput'
@@ -14,6 +13,8 @@ import { addressValidationSchema } from '../../../validators'
 import axios from 'axios'
 import { showToast } from '../../../utils/utils'
 import LocalityList from './LocalityList'
+import Config from 'react-native-config'
+import { setEditing, setSelected } from '../../../redux/addressSlice'
 
 const AddressForm = ({ hideForm, visible }) => {
 
@@ -22,6 +23,10 @@ const AddressForm = ({ hideForm, visible }) => {
     const [loading, setLoading] = useState(false)
     const [localities, setLocalities] = useState([])
     const [showSelection, setShowSelection] = useState(false)
+    const dispatch = useDispatch()
+
+    const { editing, addresses } = useSelector(state => state.address)
+
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', _ => {
@@ -49,7 +54,7 @@ const AddressForm = ({ hideForm, visible }) => {
         }
     }, [visible])
 
-    const initialValues = {
+    let initialValues = editing === null ? {
         name: '',
         mobileNumber: '',
         pincode: '',
@@ -60,18 +65,58 @@ const AddressForm = ({ hideForm, visible }) => {
         open: [],
         defaultAddr: false,
         city: ''
+    } : addresses.find(address => address.id === editing)
+
+    useEffect(() => {
+        return () => {
+            dispatch(setEditing(null))
+        }
+    }, [])
+
+
+    const successHandler = (data, formikActions) => {
+        if (data.status) {
+            hideForm()
+            formikActions.resetForm()
+        } else showToast(data.message)
     }
 
-    const submitHandler = (values, formikActions) => {
-        console.log("Values: ", values)
-
-        setTimeout(() => {
-            formikActions.setSubmitting(false)
-        }, 2000)
+    const submitHandler = async (values, formikActions) => {
+        setLoading(true)
+        if (editing === null) {
+            try {
+                const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/address`, {
+                    ...values
+                })
+                const data = result.data
+                successHandler(data, formikActions)
+                formikActions.setSubmitting(false)
+            } catch (error) {
+                setLoading(false)
+                console.log("Error in Address/AddressForm.js: ", error)
+                showToast('Something went wrong while creating a new address. Please try again later')
+                formikActions.setSubmitting(false)
+            }
+        } else {
+            try {
+                const result = await axios.put(`${Config.REGISTER_API_KEY}/authenticate/address`, {
+                    ...values,
+                    id: editing
+                })
+                const data = result.data
+                successHandler(data, formikActions)
+                formikActions.setSubmitting(false)
+            } catch (error) {
+                setLoading(false)
+                console.log("Error in Address/AddressForm.js: ", error)
+                showToast('Something went wrong while altering your address. Please try again later')
+                formikActions.setSubmitting(false)
+            }
+        }
+        setLoading(false)
     }
 
     const checkPincode = _ => {
-        // here using pincode get different values
         const errors = ref.current.errors
         if ('pincode' in errors) return
         let pincode = ref.current.values.pincode
@@ -101,13 +146,13 @@ const AddressForm = ({ hideForm, visible }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors['LIGHT'], }}>
-            <Overlay render={ref.current?.isSubmitting || loading} />
+            <Overlay hideShadow render={ref.current?.isSubmitting || loading} />
             {false && <LocalityList // todo: can be implement in the next stage
                 data={localities}
                 setRender={setShowSelection}
                 render={showSelection}
             />}
-            <View style={{ width: '100%', paddingHorizontal: '3.5%', paddingVertical: 10, borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors['SHADELIGHT'] }}>
+            <View style={[styles.header, { borderColor: colors['SHADELIGHT'] }]}>
                 <CustomText weight='light' color={colors['DARK']}>
                     ADD NEW ADDRESS
                 </CustomText>
@@ -182,7 +227,7 @@ const AddressForm = ({ hideForm, visible }) => {
                                     editable={false}
                                 />
                                 <AddressType error={errors.typeOfAddress} touched={touched.typeOfAddress} values={values} setFieldValue={setFieldValue} />
-                                {!values.homeWork && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
+                                {!values.typeOfAddress && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
                                 <View style={[styles.default, { borderColor: colors['SHADELIGHT'] }]}>
                                     <CheckBox
                                         value={values.defaultAddr}
@@ -216,6 +261,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopWidth: 1,
         paddingVertical: 10
+    },
+    header: {
+        width: '100%',
+        paddingHorizontal: '3.5%',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
     }
 })
 

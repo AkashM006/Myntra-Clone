@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import EmptyBody from '../components/WishList/EmptyBody'
 import WishlistBody from '../components/WishList/WishlistBody'
 import { useEffect } from 'react'
-import { setIsEditing } from '../redux/wishlistSlice'
+import { reset, setIsEditing, setItems } from '../redux/wishlistSlice'
 import Overlay from '../components/Reusable/Overlay'
 import { useState } from 'react'
+import { showToast, transformWishlistData } from '../utils/utils'
+import axios from 'axios'
+import Config from 'react-native-config'
 
 const WishListScreen = () => {
 
@@ -15,6 +18,9 @@ const WishListScreen = () => {
     const dispatch = useDispatch()
     const [loaded, setLoaded] = useState(false)
     const { colors } = useSelector(state => state.theme)
+
+
+    useEffect(() => { dispatch(reset()) }, [])
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', _ => {
@@ -28,16 +34,23 @@ const WishListScreen = () => {
         return () => backHandler.remove()
     }, [isEditing])
 
-    useEffect(() => {
-        // todo: here load the data from backend
-
-        setTimeout(() => {
+    const getData = async () => {
+        try {
+            const result = await axios.get(`${Config.PRODUCTS_API_KEY}/data/wishlist`)
+            data = result.data.data.items
+            data = transformWishlistData(data)
+            dispatch(setItems(data))
             setLoaded(true)
-        }, 2000)
-
-        return () => {
-            dispatch(setIsEditing(false))
+        } catch (err) {
+            setLoaded(true)
+            console.log("Error: ", err)
+            showToast('Something went wrong while fetching your wishlist details. Please try again later!')
         }
+    }
+
+    useEffect(() => {
+        getData()
+        return () => dispatch(setIsEditing(false))
     }, [])
 
     return (

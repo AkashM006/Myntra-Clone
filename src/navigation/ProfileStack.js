@@ -35,7 +35,7 @@ const ProfileStack = () => {
 
     return (
         <Stack.Navigator screenOptions={{
-            detachPreviousScreen: true
+            detachPreviousScreen: true,
         }}>
             <Stack.Screen
                 name='MainProfile'

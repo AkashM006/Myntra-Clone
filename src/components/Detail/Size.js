@@ -91,7 +91,7 @@ const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
             </ScrollView>
             <View
                 style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
+                {/* <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
                     <CustomText weight={'light'} style={[styles.text]}>
                         WISHLIST
@@ -102,7 +102,7 @@ const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
                     <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                         ADD TO BAG
                     </CustomText>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )
@@ -161,7 +161,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10
+        padding: 10,
+        height: 50,
+        margin: 10
     },
     text: { marginLeft: 10 },
     sizeInnerContainer: {

@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native'
+import { Keyboard, ScrollView, View } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import Overlay from '../../Reusable/Overlay'
 import FooterButton from './FooterButton'
@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from '../../../redux/userSlice'
 import axios from 'axios'
 import Config from 'react-native-config'
-import Toast from 'react-native-root-toast'
 import { useNavigation } from '@react-navigation/native'
 import Form from './Form'
 import { Formik } from 'formik'
@@ -25,11 +24,11 @@ const EditBody = () => {
 
 
     useEffect(() => {
-        axios.post(`${Config.REGISTER_API_KEY}/authenticate/getUserDetails`, { jwt: user.token })
+        axios.get(`${Config.REGISTER_API_KEY}/authenticate/getuserdetails`)
             .then(res => {
                 const data = res.data
                 if (data.status === false) {
-                    Toast.show(data.message, { duration: Toast.durations.LONG, position: Toast.positions.BOTTOM, })
+                    showToast(data.message)
                     navigation.goBack()
                     return
                 }
@@ -38,10 +37,7 @@ const EditBody = () => {
             })
             .catch(err => {
                 console.log("Err: ", err)
-                Toast.show('Something went wrong while fetching user details! Please try again later.', {
-                    duration: Toast.durations.LONG,
-                    position: Toast.positions.BOTTOM,
-                })
+                showToast('Something went wrong while fetching user details! Please try again later.')
                 navigation.goBack()
             })
     }, [])
@@ -75,7 +71,7 @@ const Body = ({ user }) => {
             .string()
             .email('Please enter valid email'),
         location: yup
-            .string(),
+            .string('location', 'Enter valid location', function (value) { return true }).nullable(),
         altMobNumber: yup
             .string()
             .max(10, 'Phone number must be 10 digits long')
@@ -87,6 +83,7 @@ const Body = ({ user }) => {
     })
 
     const submitHandler = (values, formikActions) => {
+        Keyboard.dismiss()
         setType('save')
         setShowPopUp(true)
     }

@@ -1,21 +1,43 @@
-import { Image, Pressable, StyleSheet, View } from 'react-native'
-import React from 'react'
+import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CustomText from '../Reusable/CustomText'
-import { formatCurrency } from '../../utils/utils'
+import { formatCurrency, showToast } from '../../utils/utils'
 import Rating from '../List/Rating'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
-import { addSelected, removeFromBag, removeSelected } from '../../redux/wishlistSlice'
-import { useCallback } from 'react'
-import { useMemo } from 'react'
+import { addSelected, removeFromWishlist, removeSelected } from '../../redux/wishlistSlice'
+import axios from 'axios'
+import { closeLoading, setLoading } from '../../redux/uiSlice'
+import Config from 'react-native-config'
 
-const Card = ({ item, index }) => {
+const Card = ({ item, index, setSelected, disabled }) => {
     const { colors } = useSelector(state => state.theme)
     const { selected, isEditing } = useSelector(state => state.wishlist)
     const dispatch = useDispatch()
+    const token = useSelector(state => state.user.token)
 
-    const removeHandler = useCallback(() => { dispatch(removeFromBag(item.clothId)) }, [])
+    const removeHandler = useCallback(async () => {
+        dispatch(setLoading({
+            loading: true,
+        }))
+
+        try {
+            const result = await axios.delete(`${Config.PRODUCTS_API_KEY}/data/wishlist`, {
+                data: {
+                    productIds: [item.clothId],
+                    jwt: token
+                }
+            })
+            const data = result.data
+            if (!data.status) showToast(data.message)
+            else dispatch(removeFromWishlist(item.clothId))
+        } catch (error) {
+            console.log("Error in Wishlist/Card.js while deleting: ", error)
+            showToast("Something went wrong while removing item from wishlist. Please try again later")
+        }
+        dispatch(closeLoading())
+    }, [])
 
     const addHandler = useCallback(() => {
         if (selected.includes(item.clothId)) dispatch(removeSelected(item.clothId))
@@ -28,8 +50,10 @@ const Card = ({ item, index }) => {
         marginRight: index % 2 === 1 ? '2.5%' : '1%',
     }), [selected])
 
+    const moveToBagHandler = () => { setSelected(item) }
+
     return (
-        <Pressable onPress={addHandler} disabled={!isEditing} style={[
+        <TouchableOpacity onPress={addHandler} disabled={!isEditing || disabled} style={[
             styles.container,
             containerStyle
         ]}>
@@ -38,8 +62,8 @@ const Card = ({ item, index }) => {
                     source={{ uri: item.image }}
                     style={styles.image}
                 />
-                <Rating align='left' count={item.ratings} rating={item.star} />
-                <Pressable disabled={isEditing} onPress={removeHandler} style={[styles.iconContainer, {
+                {item.ratings && item.star && <Rating align='left' count={item.ratings} rating={item.star} />}
+                <Pressable disabled={isEditing || disabled} onPress={removeHandler} style={[styles.iconContainer, {
                     borderColor: colors['SHADELIGHT'],
                     backgroundColor: isEditing && selected.includes(item.clothId) ? colors['PRIMARY'] : colors['SHADEDARK']
                 }]}>
@@ -73,13 +97,13 @@ const Card = ({ item, index }) => {
                     </CustomText>}
                 </View>
             </View>
-            <Pressable disabled={isEditing} style={[styles.bagContainer, { borderTopColor: colors['SHADELIGHT'] }]}>
+            <Pressable onPress={moveToBagHandler} disabled={isEditing || disabled} style={[styles.bagContainer, { borderTopColor: colors['SHADELIGHT'] }]}>
                 <CustomText align='center' color={isEditing ? colors['SHADEDARK'] : colors['PRIMARY']} weight='bold'>
                     MOVE TO BAG
                 </CustomText>
             </Pressable>
             {isEditing && selected.includes(item.clothId) && <View style={[styles.overlay, { backgroundColor: colors['PRIMARY'] }]} />}
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
@@ -119,7 +143,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderWidth: 1,
         right: 10,
-        top: 10
+        top: 10,
+        zIndex: 12,
     },
     icon: { flex: 1 },
     overlay: {

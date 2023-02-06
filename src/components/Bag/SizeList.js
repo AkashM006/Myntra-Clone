@@ -18,6 +18,7 @@ const SizeList = ({ item, size, setSize }) => {
                 style={styles.scroll}
                 contentContainerStyle={{ height: 50 }}
                 horizontal
+                showsHorizontalScrollIndicator={false}
             >
                 {sizes.map(item => {
                     const pressHandler = () => { setSize(item.name) }
@@ -28,7 +29,7 @@ const SizeList = ({ item, size, setSize }) => {
                         return colors['SHADEDARK']
                     }
 
-                    return <Pressable
+                    return (<Pressable
                         disabled={!item.available}
                         style={[styles.circle, { borderColor: getColor() }]}
                         key={item.name}
@@ -38,9 +39,10 @@ const SizeList = ({ item, size, setSize }) => {
                             {item.name}
                         </CustomText>
                         {!item.available && <View style={[styles.line, { backgroundColor: colors['SHADEDARK'] }]} />}
-                    </Pressable>
+                    </Pressable>)
                 })}
-            </ScrollView>}
+            </ScrollView>
+            }
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                 {currentMrp && <CustomText color={colors['DARK']} size={13} weight='bolder'>
                     {formatCurrency(calculateDiscountedPrice(currentMrp, item.discount)).split('.')[0]}
@@ -48,18 +50,18 @@ const SizeList = ({ item, size, setSize }) => {
                 {item?.discount && currentMrp && <CustomText color={colors['SHADELIGHT']} left={10} style={{ textDecorationLine: 'line-through' }}>
                     {formatCurrency(currentMrp).split('.')[0]}
                 </CustomText>}
-                {item?.discount && <CustomText color={colors['PRIMARY']} size={13}>
+                {item?.discount && currentMrp && <CustomText color={colors['PRIMARY']} size={13}>
                     {' '}( {item.discount}% OFF )
                 </CustomText>}
             </View>
-            <View>
+            {item.soldBy && <View>
                 <CustomText color={colors['SHADELIGHT']}>
                     Seller:
                     <CustomText weight='light' color={colors['DARK']}>
                         {" "}{item?.soldBy}
                     </CustomText>
                 </CustomText>
-            </View>
+            </View>}
         </View>
     )
 }

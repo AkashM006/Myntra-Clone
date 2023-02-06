@@ -6,6 +6,10 @@ import ICONS from '../../icons/icons'
 import CustomText from '../../components/Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'
 import { clearSelected, setIsEditing } from '../../redux/wishlistSlice'
+import axios from 'axios'
+import Config from 'react-native-config'
+import { showToast } from '../../utils/utils'
+import { closeLoading, setLoading } from '../../redux/uiSlice'
 
 const Header = () => {
 
@@ -13,12 +17,33 @@ const Header = () => {
     const { items, isEditing, selected } = useSelector(state => state.wishlist)
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const token = useSelector(state => state.user.token)
 
     const backHandler = () => navigation.goBack()
 
-    const editHandler = () => {
+    const editHandler = async () => {
         if (!isEditing) dispatch(setIsEditing(true))
-        else dispatch(clearSelected())
+        else {
+            dispatch(setLoading({
+                loading: true
+            }))
+            try {
+                const result = await axios.delete(`${Config.PRODUCTS_API_KEY}/data/wishlist`, {
+                    data: {
+                        jwt: token,
+                        productIds: selected.filter(id => id !== -1)
+                    }
+                })
+                const data = result.data
+                if (!data.status) showToast(data.message)
+                else dispatch(clearSelected())
+            } catch (error) {
+                console.log("Error in Wishlist/Header.js while deleting items from wishlist: ", error)
+                showToast('Something went wrong while removing items from wishlist. Please try again later')
+            }
+            dispatch(closeLoading())
+            dispatch(setIsEditing(false))
+        }
     }
 
     return (
@@ -37,7 +62,7 @@ const Header = () => {
                         WISHLIST
                     </CustomText>
                     <CustomText left={10} color={colors['SHADEDARK']}>
-                        {items.length} Items
+                        {items.length} {items.length === 1 ? 'Item' : 'Items'}
                     </CustomText>
                 </View>
             </View>

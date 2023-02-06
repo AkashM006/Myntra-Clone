@@ -11,18 +11,15 @@ const HomeNavigation = () => {
     const options = () => ({ header: () => { } })
     return (
         <DrawerNavigator.Navigator useLegacyImplementation={false} drawerContent={() => <Drawer />} initialRouteName='Home' screenOptions={{
-            unmountOnBlur: true,
             swipeEnabled: false,
         }} >
             <DrawerNavigator.Screen
                 name='Home'
                 component={HomeStack}
-                options={options}
-            />
-            <DrawerNavigator.Screen
-                name='Filter'
-                component={FilterScreen}
-                options={options}
+                options={{
+                    unmountOnBlur: true,
+                    header: () => { }
+                }}
             />
             <DrawerNavigator.Screen
                 name='Profile'

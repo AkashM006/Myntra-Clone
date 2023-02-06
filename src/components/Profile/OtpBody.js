@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Config } from 'react-native-config'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, setField, setPhone, setToken } from '../../redux/userSlice'
+import { logout, setField, setPhone, setProfile, setToken } from '../../redux/userSlice'
 import { removeListener, startOtpListener } from 'react-native-otp-verify'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
@@ -121,22 +121,22 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                         }
                     }
                     else if (type === 'save') {
-                        console.log("User: ", newUser)
-                        // try {
-                        //     const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`, {
-
-                        //     })
-                        //     if (!result.status) {
-                        //         showToast(result.message)
-                        //         return
-                        //     } else {
-                        //         showToast('User details updated')
-                        //         navigation(StackActions.pop(2))
-                        //     }
-                        // } catch (err) {
-                        //     console.log("Error: ", err)
-                        //     showToast('Something went wrong. Please try again later')
-                        // }
+                        try {
+                            const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`, {
+                                ...newUser
+                            })
+                            if (!result.status) {
+                                showToast(result.message)
+                                return
+                            } else {
+                                showToast('User details updated')
+                                navigation.dispatch(StackActions.pop(2))
+                                dispatch(setProfile(newUser))
+                            }
+                        } catch (err) {
+                            console.log("Error: ", err)
+                            showToast('Something went wrong. Please try again later')
+                        }
                     }
                 })
                 .catch(err => {

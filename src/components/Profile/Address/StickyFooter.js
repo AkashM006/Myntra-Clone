@@ -1,11 +1,13 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CustomButton from '../../Reusable/CustomButton'
+import { setSelected } from '../../../redux/addressSlice'
 
 const StickyFooter = ({ hideForm, onSubmit }) => {
 
     const { colors } = useSelector(state => state.theme)
+    const dispatch = useDispatch()
 
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
@@ -14,7 +16,10 @@ const StickyFooter = ({ hideForm, onSubmit }) => {
                     bgColor={colors['SHADELIGHT']}
                     text='CANCEL'
                     top={0}
-                    onPressHandler={hideForm}
+                    onPressHandler={() => {
+                        hideForm()
+                        dispatch(setSelected(null))
+                    }}
                 />
             </View>
             <View style={{ width: '45%' }}>

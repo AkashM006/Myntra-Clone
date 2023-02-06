@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import CustomLoader from './CustomLoader'
 
-const Overlay = ({ render, hideShadow, onPressHandler, hideLoader }) => {
+const Overlay = ({ render, hideShadow, onPressHandler, hideLoader, zIndex }) => {
 
     let style = {
-        backgroundColor: hideShadow ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.6)'
+        backgroundColor: hideShadow ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.6)',
+        zIndex: zIndex ?? 10,
     }
 
     return (
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 10,
     }
 })
 

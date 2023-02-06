@@ -24,16 +24,17 @@ const Body = () => {
         try {
             // let result = await (await firestore().collection('categories').orderBy('position').get()).docs
             // let headerSection = result.map(categ => { return categ._data })
-            let result = await axios.get(`${Config.PRODUCTS_API_KEY}/data/getcategoriesm`)
-            result = result.data.data
-            let headerSection = result.map(item => ({ id: item.categoryId, name: item.categoryName, photoURL: item.image }))
+            let { data } = await axios.get(`${Config.PRODUCTS_API_KEY}/data/getcategoriesm`)
+            if (data.data) {
+                let headerSection = data.data.map(item => ({ id: item.categoryId, name: item.categoryName, photoURL: item.image }))
 
-            result = await (await firestore().collection('gallery').orderBy('position').get()).docs
+                result = (await firestore().collection('gallery').orderBy('position').get()).docs
 
-            let contents = result.map(el => el._data)
+                let contents = result.map(el => el._data)
 
-            setSections(prev => [{ data: [...prev[0].data, headerSection, ...contents], title: 'Section Title' }])
-            setIsLoading(false)
+                setSections(prev => [{ data: [...prev[0].data, headerSection, ...contents], title: 'Section Title' }])
+                setIsLoading(false)
+            }
         } catch (err) {
             console.log("Error: ", err)
             showToast('Something went wrong while fetching product categories. Please try again later!')

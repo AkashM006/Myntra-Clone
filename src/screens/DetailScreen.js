@@ -97,7 +97,6 @@ const DetailScreen = () => {
         })
             .then(res => {
                 const data = res.data
-                console.log("Response: ", data)
                 if (data.status)
                     setCloth({ ...cloth, isWishlisted: true })
                 else
@@ -115,7 +114,7 @@ const DetailScreen = () => {
             {isLoading === false ?
                 <>
                     <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
-                    <Animated.ScrollView contentContainerStyle={{ paddingBottom: 150 }} onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
+                    <Animated.ScrollView alwaysBounceHorizontal={false} bounces={false} contentContainerStyle={{ paddingBottom: 150 }} onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
                         <Carousel images={cloth.images} ratedCount={cloth.ratedCount ?? null} rating={cloth.product.star ?? null} />
                         <Body addToBag={onAddToBagHandler} selectedSize={selectedSize} setSelectedSize={setSelectedSize} setStickyFooter={setStickyFooter} item={cloth} />
                     </Animated.ScrollView>

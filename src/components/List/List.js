@@ -17,7 +17,7 @@ const List = () => {
     const [clothes, setClothes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const height = useWindowDimensions().height
-    const id = useRoute().params?.id
+    const id = useRoute().params?.id ?? 1
 
     const getData = async () => {
         if (count !== null && clothes.length >= count) return
