@@ -1,6 +1,5 @@
 todo: 
 1) Make navigation transition smooth
-2) OtpBody.js, update type = 'newMobile' so that token is reset after response is recieved
+2) Integration of bag page. In WishlistBody.js, u need to also add items to bag slice
 3) Feb second week implement locality selection feature
 4) Need to change the sticky footer UI in details page
-5) Check AddressForm.js for updating address
