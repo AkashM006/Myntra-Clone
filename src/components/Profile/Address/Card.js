@@ -60,7 +60,7 @@ const Card = ({ address, index, selected, rerender, showForm }) => {
             {index === 1 && <CustomText weight='bold' color={colors['DARK']} size={13} bottom={20} top={20}>
                 OTHER ADDRESS
             </CustomText>}
-            <View style={[styles.contentContainer, { borderColor: colors['SHADEDARK'] }]}>
+            <View style={[styles.contentContainer, { borderColor: colors['SHADELIGHT'] }]}>
                 <View style={styles.headerContainer}>
                     <CustomText style={styles.text} color={colors['SHADEDARK']} weight='bolder'>
                         {address.name}
@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
         marginVertical: 20
     },
     contentContainer: {
-        borderWidth: 1,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
         padding: 10,
         borderRadius: 4
     },

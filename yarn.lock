@@ -5940,10 +5940,10 @@ react-native-gradle-plugin@^0.70.3:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz#cbcf0619cbfbddaa9128701aa2d7b4145f9c4fc8"
   integrity sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==
 
-react-native-otp-verify@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-otp-verify/-/react-native-otp-verify-1.1.4.tgz#0be6170034298cbcba77747c63bf5eb30f07cb3f"
-  integrity sha512-bgfEinDSnjlKEHwp7mB4ejU9hV3ObQvn5ML670OKPhdMn8iuOouPHrlcnrNf/VSSE/74QCTSiqGMZfca165jrw==
+react-native-otp-autocomplete@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-otp-autocomplete/-/react-native-otp-autocomplete-1.0.7.tgz#e7e7bb1545a7d27e1f37771d3b669560b5681164"
+  integrity sha512-GUQ3qMWea6FgMowjnmVZ13eUtR5TH4wMjzhfgZSE4/0gRFr80GgXPC94vlSy5leEuDBeNbm7bsMN/g4VsOrLxg==
 
 react-native-reanimated@^2.13.0:
   version "2.13.0"

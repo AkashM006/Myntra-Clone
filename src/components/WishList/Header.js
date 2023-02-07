@@ -10,6 +10,7 @@ import axios from 'axios'
 import Config from 'react-native-config'
 import { showToast } from '../../utils/utils'
 import { closeLoading, setLoading } from '../../redux/uiSlice'
+import Badge from '../Reusable/Badge'
 
 const Header = () => {
 
@@ -18,6 +19,7 @@ const Header = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const token = useSelector(state => state.user.token)
+    const bagItems = useSelector(state => state.bag.items)
 
     const backHandler = () => navigation.goBack()
 
@@ -74,12 +76,13 @@ const Header = () => {
                         tintColor={isEditing && selected.length === 1 ? colors['SHADELIGHT'] : colors['DARK']}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Bag')}>
                     <FastImage
                         source={{ uri: isEditing ? ICONS.ICON_SHARE : ICONS.ICON_BAG }}
                         style={[styles.icon, styles.right]}
                         tintColor={isEditing && selected.length === 1 ? colors['SHADELIGHT'] : colors['DARK']}
                     />
+                    {!isEditing && <Badge top={-5} right={5} count={bagItems.length} />}
                 </TouchableOpacity>
             </View>}
         </View>

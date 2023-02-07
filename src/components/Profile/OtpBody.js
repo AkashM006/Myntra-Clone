@@ -6,7 +6,8 @@ import { Config } from 'react-native-config'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, setField, setPhone, setProfile, setToken } from '../../redux/userSlice'
-import { removeListener, startOtpListener } from 'react-native-otp-verify'
+// import { removeListener, startOtpListener } from 'react-native-otp-verify'
+import OtpAutocomplete from 'react-native-otp-autocomplete'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
 
@@ -59,20 +60,38 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
         }, [time, cleared])
     )
 
+    const otpHandler = message => {
+        try {
+            const otp = /(\d{4})/g.exec(message)[1];
+            setOtp(otp)
+            OtpAutocomplete.removeListener();
+            Keyboard.dismiss();
+        } catch (error) {
+            console.log("Error in OtpBody.js: ", error)
+        }
+    }
+
+    const startListening = _ => {
+        OtpAutocomplete.getOtp()
+            .then(p => OtpAutocomplete.addListener(otpHandler))
+            .catch(err => console.log("Error in OtpBody.js: ", err))
+    }
+
     useFocusEffect(
         useCallback(() => {
-            startOtpListener(message => {
-                if (message !== null) {
-                    try {
-                        const otp = /(\d{4})/g.exec(message)[1];
-                        setOtp(otp);
-                    } catch (err) {
-                        console.log("react-native-verify-otp error: ", err)
-                    }
-                }
-            });
-            return () => removeListener()
-        }, [])
+            // startOtpListener(message => {
+            //     if (message !== null) {
+            //         try {
+            //             const otp = /(\d{4})/g.exec(message)[1];
+            //             setOtp(otp);
+            //         } catch (err) {
+            //             console.log("react-native-verify-otp error: ", err)
+            //         }
+            //     }
+            // });
+            startListening()
+            return () => OtpAutocomplete.removeListener()
+        }, [startListening])
     )
 
     useEffect(() => {

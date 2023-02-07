@@ -6,7 +6,7 @@ import Details from './Details'
 import COLORS from '../../constants/Colors'
 import Emi from './Emi'
 
-const Body = ({ item, setStickyFooter, selectedSize, setSelectedSize, addToBag }) => {
+const Body = ({ item, setStickyFooter, selectedSize, setSelectedSize, addToBag, setSizeContainer }) => {
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -31,6 +31,7 @@ const Body = ({ item, setStickyFooter, selectedSize, setSelectedSize, addToBag }
                         setSize={setSelectedSize}
                         size={selectedSize}
                         addToBag={addToBag}
+                        setSizeContainer={setSizeContainer}
                     />
                     <Details about={item.product.productDetails} specs={item.specification} />
                 </>

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import EmptyBody from '../components/WishList/EmptyBody'
 import WishlistBody from '../components/WishList/WishlistBody'
 import { useEffect } from 'react'
-import { reset, setIsEditing, setItems } from '../redux/wishlistSlice'
+import { setIsEditing, setItems } from '../redux/wishlistSlice'
 import Overlay from '../components/Reusable/Overlay'
 import { useState } from 'react'
 import { showToast, transformWishlistData } from '../utils/utils'
@@ -18,9 +18,6 @@ const WishListScreen = () => {
     const dispatch = useDispatch()
     const [loaded, setLoaded] = useState(false)
     const { colors } = useSelector(state => state.theme)
-
-
-    useEffect(() => { dispatch(reset()) }, [])
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', _ => {

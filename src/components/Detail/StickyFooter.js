@@ -1,14 +1,17 @@
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated'
 import COLORS from '../../constants/Colors'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import { useSelector } from 'react-redux'
 
-const StickyFooter = ({ scroll, footer, addToBag, addToWishlist, wishlisted }) => {
+const StickyFooter = ({ scroll, footer, addToBag, addToWishlist, wishlisted, sizeContainer }) => {
 
-    const topEdge = footer?.y + 50
+    const topEdge = footer?.y + sizeContainer?.height - 40
+    console.log(scroll.value, footer?.y)
+    const { colors } = useSelector(state => state.theme)
 
     const rStyle = useAnimatedStyle(() => {
         return {
@@ -36,7 +39,7 @@ const StickyFooter = ({ scroll, footer, addToBag, addToWishlist, wishlisted }) =
                             WISHLIST
                         </CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={addToBag} style={[styles.button, { backgroundColor: '#ff3e6c', width: '50%' }]}>
+                    <TouchableOpacity onPress={addToBag} style={[styles.button, { backgroundColor: colors['PRIMARY'], width: '50%' }]}>
                         <FastImage tintColor={'white'} source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
                         <CustomText weight={'light'} color={COLORS.WHITE} style={[styles.text,]}>
                             ADD TO BAG

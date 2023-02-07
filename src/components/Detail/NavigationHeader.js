@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image, StyleSheet, useWindowDimensions } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
@@ -6,12 +6,16 @@ import CustomText from '../Reusable/CustomText'
 import { substring } from '../../utils/utils'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import Badge from '../Reusable/Badge'
+import { useSelector } from 'react-redux'
 
 const NavigationHeader = ({ scroll, name }) => {
 
     const navigation = useNavigation()
     const height = useWindowDimensions().height
     const imageHeight = height / 1.35
+    const bagItems = useSelector(state => state.bag.items)
+    const wishlistItems = useSelector(state => state.wishlist.items)
 
     const rStyle = useAnimatedStyle(() => {
         return {
@@ -50,9 +54,11 @@ const NavigationHeader = ({ scroll, name }) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Wishlist')} >
                         <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
+                        <Badge top={5} dim={15} right={3} count={wishlistItems.length} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer}>
                         <FastImage source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
+                        <Badge top={5} dim={15} right={5} count={bagItems.length} />
                     </TouchableOpacity>
                 </View>
             </Animated.View>}
@@ -70,6 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         zIndex: 20,
         padding: 10,
+        paddingRight: '5%'
     },
     iconContainer: {
         padding: 10,

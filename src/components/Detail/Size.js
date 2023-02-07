@@ -2,11 +2,10 @@ import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
-import FastImage from 'react-native-fast-image'
-import ICONS from '../../icons/icons'
 import { useSelector } from 'react-redux'
+import { formatCurrency, getSizes } from '../../utils/utils'
 
-const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
+const Size = ({ sizes, setStickyFooter, size, setSize, setSizeContainer }) => {
     let clothSizes = { ...sizes }
 
     delete clothSizes.id
@@ -14,49 +13,13 @@ const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
 
     const { colors } = useSelector(state => state.theme)
 
-    const transform = sizes => {
-        return [
-            {
-                id: 1,
-                name: 'XS',
-                available: sizes.xsavailable > 0,
-                maxQty: sizes.xsavailable
-            },
-            {
-                id: 2,
-                name: 'S',
-                available: sizes.savailable > 0,
-                maxQty: sizes.savailable
-            },
-            {
-                id: 3,
-                name: 'M',
-                available: sizes.mavailable > 0,
-                maxQty: sizes.mavailable
-            },
-            {
-                id: 4,
-                name: 'L',
-                available: sizes.lavailable > 0,
-                maxQty: sizes.lavailable
-            },
-            {
-                id: 5,
-                name: 'XL',
-                available: sizes.xlavailable > 0,
-                maxQty: sizes.xlavailable
-            },
-            {
-                id: 6,
-                name: 'XXL',
-                available: sizes.xxlavailable > 0,
-                maxQty: sizes.xxlavailable
-            }
-        ]
+    const item = { size: clothSizes }
+
+    clothSizes = getSizes(item)
+
+    const getColor = item => {
+        return item.available ? item.name === size ? COLORS.PRIMARY : COLORS.BLACK : COLORS.SHADEDARK
     }
-
-    clothSizes = transform(clothSizes)
-
 
     return (
         <View onLayout={event => { setStickyFooter(event.nativeEvent.layout) }} style={styles.container}>
@@ -70,18 +33,23 @@ const Size = ({ sizes, setStickyFooter, size, setSize, addToBag }) => {
                     </CustomText>
                 </TouchableOpacity>
             </View>
-            <ScrollView horizontal style={styles.sizesContainer}>
+            <ScrollView onLayout={event => setSizeContainer(event.nativeEvent.layout)} showsHorizontalScrollIndicator={false} horizontal style={styles.sizesContainer}>
                 {clothSizes.map(item => (
-                    <View style={styles.sizeInnerContainer} key={item.id}>
+                    <View style={styles.sizeInnerContainer} key={item.name}>
                         <TouchableOpacity disabled={!item.available} onPress={() => setSize(item.name)} style={[styles.size, {
-                            borderColor: item.available ? item.name === size ? COLORS.PRIMARY : COLORS.BLACK : COLORS.SHADEDARK
+                            borderColor: getColor(item)
                         }]}>
                             <View>
-                                <CustomText color={item.available ? item.name === size ? COLORS.PRIMARY : COLORS.BLACK : COLORS.SHADEDARK}>
+                                <CustomText color={getColor(item)}>
                                     {item.name}
                                 </CustomText>
                             </View>
                             {!item.available && <View style={styles.strike} />}
+                            {
+                                !clothSizes.hasSameAmount && item.available && <CustomText color={getColor(item)}>
+                                    {formatCurrency(item.amount).split('.')[0]}
+                                </CustomText>
+                            }
                         </TouchableOpacity>
                         {item.available && item.maxQty <= 5 && <CustomText weight='bold' style={[{ borderColor: colors['DANGER'] }, styles.dangerText]} color={colors['DANGER']}>
                             {item.maxQty} left
@@ -123,17 +91,15 @@ const styles = StyleSheet.create({
     },
     sizesContainer: {
         flexDirection: 'row',
-        marginBottom: 10,
-        height: 90
     },
     size: {
         borderRadius: 100,
         borderWidth: 1,
-        height: 40,
-        width: 40,
+        height: 50,
+        paddingHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 10,
+        marginRight: 5,
         marginVertical: 10
     },
     strike: {
@@ -143,8 +109,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: '50%',
-        top: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     button: {
         flexDirection: 'row',

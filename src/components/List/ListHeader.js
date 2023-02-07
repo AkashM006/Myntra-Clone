@@ -1,17 +1,20 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import firestore from '@react-native-firebase/firestore'
 import Skeleton from '../Reusable/Skeleton'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import Badge from '../Reusable/Badge'
+import { useSelector } from 'react-redux'
 
 const ListHeader = ({ itemCount }) => {
 
     const navigation = useNavigation()
     let title = useRoute().params.title?.toUpperCase()
     title = title.length > 20 ? title.substring(0, 18) + '...' : title
+    const wishlistItems = useSelector(state => state.wishlist.items)
+    const bagItems = useSelector(state => state.bag.items)
 
     const pressHandler = () => navigation.goBack()
 
@@ -32,8 +35,14 @@ const ListHeader = ({ itemCount }) => {
             </View>
             <View style={styles.rightContainer}>
                 <FastImage source={{ uri: ICONS.ICON_SEARCH }} style={styles.icon} />
-                <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
-                <FastImage source={{ uri: ICONS.ICON_BAG }} style={[styles.icon, { marginRight: 10 }]} />
+                <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
+                    <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
+                    <Badge top={-5} right={10} count={wishlistItems.length} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navgiate('Bag')}>
+                    <FastImage source={{ uri: ICONS.ICON_BAG }} style={[styles.icon, { marginRight: 10 }]} />
+                    <Badge top={-5} right={0} count={bagItems.length} />
+                </TouchableOpacity>
             </View>
         </View>
     )

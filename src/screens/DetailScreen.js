@@ -49,6 +49,7 @@ const DetailScreen = () => {
     useEffect(() => { getData() }, [])
 
     const [stickyFooter, setStickyFooter] = useState(null)
+    const [sizeContainer, setSizeContainer] = useState(null)
     const scrollY = useSharedValue(0)
     const [selectedSize, setSelectedSize] = useState('')
 
@@ -116,9 +117,23 @@ const DetailScreen = () => {
                     <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
                     <Animated.ScrollView alwaysBounceHorizontal={false} bounces={false} contentContainerStyle={{ paddingBottom: 150 }} onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
                         <Carousel images={cloth.images} ratedCount={cloth.ratedCount ?? null} rating={cloth.product.star ?? null} />
-                        <Body addToBag={onAddToBagHandler} selectedSize={selectedSize} setSelectedSize={setSelectedSize} setStickyFooter={setStickyFooter} item={cloth} />
+                        <Body
+                            addToBag={onAddToBagHandler}
+                            selectedSize={selectedSize}
+                            setSelectedSize={setSelectedSize}
+                            setStickyFooter={setStickyFooter}
+                            item={cloth}
+                            setSizeContainer={setSizeContainer}
+                        />
                     </Animated.ScrollView>
-                    <StickyFooter wishlisted={wishlisted} addToWishlist={addToWishlistHandler} addToBag={onAddToBagHandler} scroll={scrollY} footer={stickyFooter} />
+                    <StickyFooter
+                        wishlisted={wishlisted}
+                        addToWishlist={addToWishlistHandler}
+                        addToBag={onAddToBagHandler}
+                        scroll={scrollY}
+                        footer={stickyFooter}
+                        sizeContainer={sizeContainer}
+                    />
                 </>
                 : <Overlay hideShadow render={true} />}
         </>

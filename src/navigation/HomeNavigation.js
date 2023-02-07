@@ -1,5 +1,4 @@
 import React from 'react'
-import FilterScreen from '../screens/FilterScreen'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import HomeStack from './HomeStack'
 import ProfileStack from './ProfileStack'

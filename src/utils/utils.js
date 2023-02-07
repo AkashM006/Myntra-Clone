@@ -87,7 +87,8 @@ const transform = bagItems => {
 }
 
 const getSizes = item => {
-    return [
+
+    let result = [
         {
             name: 'XS',
             available: item.size.xsavailable > 0,
@@ -125,6 +126,16 @@ const getSizes = item => {
             amount: item.size.xxlamount
         }
     ]
+    let oneAmount = result[0].amount
+    for (let i = 1; i < result.length; i++) {
+        if (oneAmount === result[i].amount)
+            result.hasSameAmount = true
+        else {
+            result.hasSameAmount = false
+            return result
+        }
+    }
+    return result
 }
 
 const transformWishlistData = data => {
@@ -142,4 +153,4 @@ const transformWishlistData = data => {
     }))
 }
 
-export { substring, calculateDiscount, formatCurrency, months, kFormatter, showToast, calculateDiscountedPrice, transform, transformWishlistData }
+export { substring, calculateDiscount, formatCurrency, months, kFormatter, showToast, calculateDiscountedPrice, transform, transformWishlistData, getSizes }

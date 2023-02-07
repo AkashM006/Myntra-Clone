@@ -7,12 +7,15 @@ import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
+import Badge from '../Reusable/Badge'
 
 const HomeHeader = () => {
 
     const navigation = useNavigation()
     const { colors } = useSelector(state => state.theme)
     const token = useSelector(state => state.user.token)
+    const bagItems = useSelector(state => state.bag.items)
+    const wishlistItems = useSelector(state => state.wishlist.items)
     const dispatch = useDispatch()
 
     const bagNavigationHandler = _ => {
@@ -25,9 +28,7 @@ const HomeHeader = () => {
         }
     }
 
-    const menuNavigationHandler = _ => {
-        navigation.openDrawer()
-    }
+    const menuNavigationHandler = _ => navigation.openDrawer()
 
     const wishlistNavigationHandler = _ => {
         if (token.length !== 0) navigation.navigate('Wishlist')
@@ -59,12 +60,15 @@ const HomeHeader = () => {
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BELL }} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <Badge top={-5} right={10} count={190} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={wishlistNavigationHandler}>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_HEART }} style={[styles.icon, { marginRight: 17.5 }]} />
+                    <Badge top={-5} right={5} count={wishlistItems.length} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={bagNavigationHandler}>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_BAG }} style={styles.icon} />
+                    <Badge top={-5} right={0} count={bagItems.length} />
                 </TouchableOpacity>
             </View>
         </View>
