@@ -5,6 +5,7 @@ import bagReducer from './bagSlice'
 import themeReducer from './ThemeSlice'
 import wishlistReducer from './wishlistSlice'
 import addressReducer from './addressSlice'
+import notificationReducer from './notificationSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist'
 
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     bag: bagReducer,
     theme: themeReducer,
     wishlist: wishlistReducer,
-    address: addressReducer
+    address: addressReducer,
+    notification: notificationReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

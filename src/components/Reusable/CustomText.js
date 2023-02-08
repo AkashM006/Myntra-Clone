@@ -3,7 +3,7 @@ import React from 'react'
 import Animated from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 
-const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, color, top, bottom, left, right, vertical, horizontal, align, strike }) => {
+const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, color, top, bottom, left, right, vertical, horizontal, align, strike, ...props }) => {
 
     const { colors } = useSelector(state => state.theme)
 
@@ -31,9 +31,9 @@ const CustomText = ({ children, fontFamily, style, weight, isAnimated, size, col
     if (horizontal) styles['marginHorizontal'] = horizontal
 
     if (isAnimated && isAnimated === true)
-        return (<Animated.Text style={[styles, style]}>{children}</Animated.Text>)
+        return (<Animated.Text {...props} style={[styles, style]}>{children}</Animated.Text>)
 
-    return (<Text style={[styles, style]}>{children}</Text>)
+    return (<Text {...props} style={[styles, style]}>{children}</Text>)
 }
 
 export default CustomText

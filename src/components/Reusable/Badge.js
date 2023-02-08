@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import CustomText from './CustomText'
+import Animated, { BounceIn, BounceOut } from 'react-native-reanimated'
 
 const Badge = ({ count, top, bottom, left, right, dim, style }) => {
 
@@ -21,11 +22,11 @@ const Badge = ({ count, top, bottom, left, right, dim, style }) => {
 
     return (
         <>
-            {count > 0 && <View style={[styles.container, style, customStyle,]}>
+            {count > 0 && <Animated.View entering={BounceIn} exiting={BounceOut} style={[styles.container, style, customStyle,]}>
                 <CustomText size={9} color={colors['WHITE']} weight='bold'>
                     {count > 99 ? '99+' : count}
                 </CustomText>
-            </View>}
+            </Animated.View>}
         </>
     )
 }

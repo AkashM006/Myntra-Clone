@@ -40,7 +40,8 @@ const ICONS = {
     ICON_SPLASH: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/launch_image.png?alt=media&token=52cad1ac-460b-4114-a867-92b8e417a122',
     ICON_DRAWER_BG: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/bg.jpeg?alt=media&token=98ef11d6-5856-4fe0-b502-5c73751861fa',
     ICON_MAP: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/map.png?alt=media&token=62adb09c-8b9e-4763-aeb2-fedd4119d0a0',
-    ICON_MAP_LARGE: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/map-large.jpg?alt=media&token=1830a179-3c97-431c-96ae-6eee1f66acbc'
+    ICON_MAP_LARGE: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/map-large.jpg?alt=media&token=1830a179-3c97-431c-96ae-6eee1f66acbc',
+    ICON_NO_NOTIFICATION: 'https://firebasestorage.googleapis.com/v0/b/myntra-clone-b6cd8.appspot.com/o/no-notification.png?alt=media&token=f48701d8-038b-423e-b59e-379313e66bca'
 }
 
 export default ICONS

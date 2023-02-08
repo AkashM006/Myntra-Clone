@@ -10,7 +10,7 @@ export const ThemeSlice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        toggle: (state, action) => {
+        toggle: state => {
             if (state.theme === 'light') state.colors = { ...DARKCOLORS }
             else state.colors = { ...COLORS }
             state.theme = state.theme == 'light' ? 'dark' : 'light'

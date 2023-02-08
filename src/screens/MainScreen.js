@@ -1,4 +1,4 @@
-import { AppState, StatusBar, View } from 'react-native'
+import { AppState, Platform, StatusBar, View } from 'react-native'
 import React, { useEffect } from 'react'
 import HomeNavigation from '../navigation/HomeNavigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,7 @@ import { useCallback } from 'react'
 import { useRef } from 'react'
 import SplashScreen from 'react-native-splash-screen'
 import Overlay from '../components/Reusable/Overlay'
+import { addData } from '../redux/notificationSlice'
 
 const MainScreen = () => {
 
@@ -53,17 +54,34 @@ const MainScreen = () => {
     useEffect(_ => { // to handle foreground and background notifications
         const unsubscribe = messaging().onMessage(async msg => {
             showToast(msg.notification.body)
+            const { notification } = msg
+            dispatch(addData({
+                body: notification.body,
+                title: notification.title,
+                image: Platform.OS === 'android' ? notification.android?.imageUrl : null,
+                read: false,
+                id: msg.messageId
+            }))
         })
 
         messaging().onNotificationOpenedApp(msg => {
             showToast(msg.notification.body)
+            console.log(msg.notification)
         })
 
         messaging().getInitialNotification()
             .then(msg => {
                 console.log("Quit Message: ", msg)
                 if (msg === null) return
+                const { notification } = msg
                 showToast(msg.notification.body)
+                dispatch(addData({
+                    body: notification.body,
+                    title: notification.title,
+                    image: Platform.OS === 'android' ? notification.android?.imageUrl : null,
+                    read: false,
+                    id: msg.messageId
+                }))
             })
             .catch(err => {
                 console.log("Err: ", err)
@@ -111,8 +129,7 @@ const MainScreen = () => {
 
     axios.interceptors.request.use(
         config => {
-            if (token)
-                config.headers['Authorization'] = 'Bearer ' + token
+            config.headers['Authorization'] = token === null ? token : 'Bearer ' + token
             config.headers['Content-Type'] = 'application/json'
             return config
         },

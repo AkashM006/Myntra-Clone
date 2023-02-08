@@ -6,6 +6,7 @@ import BagScreen from '../screens/BagScreen'
 import DetailScreen from '../screens/DetailScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ListScreen from '../screens/ListScreen'
+import NotificationScreen from '../screens/NotificationScreen'
 import WishListScreen from '../screens/WishListScreen'
 
 // const Stack = createNativeStackNavigator()
@@ -20,7 +21,7 @@ const HomeStack = () => {
             <Stack.Screen
                 name='MainHome'
                 component={HomeScreen}
-                options={{ header: HomeHeader, }}
+                options={options}
 
             />
             <Stack.Screen
@@ -48,6 +49,11 @@ const HomeStack = () => {
             <Stack.Screen
                 name='Wishlist'
                 component={WishListScreen}
+                options={options}
+            />
+            <Stack.Screen
+                name='Notification'
+                component={NotificationScreen}
                 options={options}
             />
         </Stack.Navigator>

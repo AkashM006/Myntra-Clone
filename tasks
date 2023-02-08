@@ -3,3 +3,4 @@ todo:
 2) Integration of bag page. In WishlistBody.js, u need to also add items to bag slice
 3) Feb second week implement locality selection feature
 4) Need to change the sticky footer UI in details page
+5) Handle the case where the server is not reachable
