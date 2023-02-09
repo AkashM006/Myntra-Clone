@@ -20,7 +20,8 @@ const icons = [
         name: 'Categories',
         active: { uri: ICONS.ICON_CATEGORIES },
         inactive: { uri: ICONS.ICON_CATEGORIES_INACTIVE },
-        routes: ['Categories']
+        routes: ['Categories', 'CategoriesHome'],
+        redirectTo: 'Categories'
     },
     {
         id: 3,

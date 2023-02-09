@@ -25,14 +25,13 @@ const Body = () => {
             // let result = await (await firestore().collection('categories').orderBy('position').get()).docs
             // let headerSection = result.map(categ => { return categ._data })
             let temp = await axios.get(`${Config.PRODUCTS_API_KEY}/data/getcategoriesm`)
-            let data = temp
+            let data = temp.data
             let headerSection
             if (data.data) {
                 headerSection = data.data.map(item => ({ id: item.categoryId, name: item.categoryName, photoURL: item.image }))
 
             }
             let result = (await firestore().collection('gallery').orderBy('position').get()).docs
-            console.log("Data: ", result.status)
             let contents
             if (result) contents = result.map(el => el._data)
 

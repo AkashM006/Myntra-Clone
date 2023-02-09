@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import HomeStack from './HomeStack'
 import ProfileStack from './ProfileStack'
 import Drawer from '../components/Home/DrawerHeader'
+import CategoriesStack from './CategoriesStack'
 
 const DrawerNavigator = createDrawerNavigator()
 
@@ -23,6 +24,14 @@ const HomeNavigation = () => {
             <DrawerNavigator.Screen
                 name='Profile'
                 component={ProfileStack}
+                options={{
+                    unmountOnBlur: true,
+                    header: () => { }
+                }}
+            />
+            <DrawerNavigator.Screen
+                name='Categories'
+                component={CategoriesStack}
                 options={options}
             />
         </DrawerNavigator.Navigator>

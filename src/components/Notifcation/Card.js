@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomText from '../Reusable/CustomText'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
-import Animated, { FadeIn, FadeOut, Transition, useAnimatedStyle, useSharedValue, withSpring, ZoomOut } from 'react-native-reanimated'
+import Animated, { FadeIn, FadeOut, Transition, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 import { useEffect } from 'react'
 import { setRead, setSelected } from '../../redux/notificationSlice'
 
@@ -71,7 +71,7 @@ const Card = ({ item }) => {
             </View>
             {selected === item.id && item.image &&
                 <Animated.Image
-                    exiting={ZoomOut}
+                    exiting={FadeOut}
                     source={{ uri: item.image }}
                     style={{ width: '100%', height: 200, marginTop: 10 }}
                 />
