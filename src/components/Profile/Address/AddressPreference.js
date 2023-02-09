@@ -3,6 +3,7 @@ import React from 'react'
 import CustomText from '../../Reusable/CustomText'
 import { useSelector } from 'react-redux'
 import CheckBox from '../../Reusable/CheckBox'
+import Animated, { FadeIn, FadeOut, } from 'react-native-reanimated'
 
 const AddressPreference = ({ open, setFieldValue }) => {
 
@@ -12,13 +13,12 @@ const AddressPreference = ({ open, setFieldValue }) => {
         if (open.includes(day)) {
             let temp = [...open].filter(value => value !== day)
             setFieldValue('open', temp)
-        } else {
-            setFieldValue('open', [...open, day])
-        }
+        } else setFieldValue('open', [...open, day])
+
     }
 
     return (
-        <View style={styles.container}>
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.container}>
             <CustomText color={colors['SHADEDARK']}>
                 Is your office open on weekends?
             </CustomText>
@@ -42,7 +42,7 @@ const AddressPreference = ({ open, setFieldValue }) => {
                     Open on Sunday
                 </CustomText>
             </View>
-        </View>
+        </Animated.View>
     )
 }
 

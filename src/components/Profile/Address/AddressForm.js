@@ -227,7 +227,7 @@ const AddressForm = ({ hideForm, visible }) => {
                                     editable={false}
                                 />
                                 <AddressType error={errors.typeOfAddress} touched={touched.typeOfAddress} values={values} setFieldValue={setFieldValue} />
-                                {!values.typeOfAddress && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
+                                {values.typeOfAddress !== 'Home' && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
                                 <View style={[styles.default, { borderColor: colors['SHADELIGHT'] }]}>
                                     <CheckBox
                                         value={values.defaultAddr}

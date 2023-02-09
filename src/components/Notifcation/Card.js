@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomText from '../Reusable/CustomText'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
-import Animated, { FadeIn, FadeInUp, FadeOut, FadeOutDown, StretchOutY, useAnimatedStyle, useSharedValue, withSpring, ZoomIn, ZoomOut } from 'react-native-reanimated'
+import Animated, { FadeIn, FadeOut, Transition, useAnimatedStyle, useSharedValue, withSpring, ZoomOut } from 'react-native-reanimated'
 import { useEffect } from 'react'
 import { setRead, setSelected } from '../../redux/notificationSlice'
 
@@ -37,7 +37,7 @@ const Card = ({ item }) => {
 
     return (
         <Pressable onPress={pressHandler} style={[styles.container, { backgroundColor: colors['WHITE'], opacity: item.read ? 0.5 : 1, borderColor: colors['SHADELIGHT'] }]}>
-            <View style={styles.headerContainer}>
+            <Animated.View layout={Transition} style={styles.headerContainer}>
                 <View style={styles.titleContainer}>
                     <CustomText size={14} weight='bold' color={colors['DARK']}>
                         {item.title}
@@ -55,7 +55,7 @@ const Card = ({ item }) => {
                         tintColor={colors['DARK']}
                     />
                 </Animated.View>
-            </View>
+            </Animated.View>
             <View>
                 {
                     selected !== item.id &&
@@ -69,12 +69,13 @@ const Card = ({ item }) => {
                     </CustomText>
                 }
             </View>
-            {selected === item.id && item.image && <Animated.View entering={ZoomIn}>
-                <Image
+            {selected === item.id && item.image &&
+                <Animated.Image
+                    exiting={ZoomOut}
                     source={{ uri: item.image }}
                     style={{ width: '100%', height: 200, marginTop: 10 }}
                 />
-            </Animated.View>}
+            }
         </Pressable>
     )
 }
