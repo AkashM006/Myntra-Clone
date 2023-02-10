@@ -1,7 +1,8 @@
-import { FlatList, View } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from './Card'
+import Animated, { FadeIn, FadeOut, Layout } from 'react-native-reanimated'
 
 const Body = () => {
 
@@ -17,7 +18,10 @@ const Body = () => {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors['LIGHT'], }}>
-            <FlatList
+            <Animated.FlatList
+                layout={Layout}
+                entering={FadeIn}
+                exiting={FadeOut}
                 data={items}
                 keyExtractor={(item, index) => item.id ?? index}
                 renderItem={renderItem}

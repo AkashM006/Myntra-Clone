@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CustomText from '../Reusable/CustomText'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
-import Animated, { FadeIn, FadeOut, Transition, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
+import Animated, { FadeIn, FadeOut, interpolate, Layout, StretchOutY, Transition, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import { useEffect } from 'react'
 import { setRead, setSelected } from '../../redux/notificationSlice'
 
@@ -15,11 +15,17 @@ const Card = ({ item }) => {
     const { selected } = useSelector(state => state.notification)
 
     const rotationValue = useSharedValue(90)
+    // const heightValue = useSharedValue(0)
+    // const opacity = useSharedValue(0)
+    const display = useSharedValue(0)
 
     useEffect(() => {
         const dest = selected === item.id ? -90 : 90
         rotationValue.value = withSpring(dest, {
             damping: 40
+        })
+        display.value = withTiming(selected === item.id && item.image ? 1 : 0, {
+            duration: 500
         })
     }, [selected])
 
@@ -35,9 +41,16 @@ const Card = ({ item }) => {
         }
     }, [])
 
+    const heightRStyle = useAnimatedStyle(() => {
+        return {
+            height: interpolate(display.value, [0, 1], [0, 200]),
+            opacity: interpolate(display.value, [0, 1], [0, 1])
+        }
+    }, [])
+
     return (
         <Pressable onPress={pressHandler} style={[styles.container, { backgroundColor: colors['WHITE'], opacity: item.read ? 0.5 : 1, borderColor: colors['SHADELIGHT'] }]}>
-            <Animated.View layout={Transition} style={styles.headerContainer}>
+            <View style={styles.headerContainer}>
                 <View style={styles.titleContainer}>
                     <CustomText size={14} weight='bold' color={colors['DARK']}>
                         {item.title}
@@ -48,34 +61,30 @@ const Card = ({ item }) => {
                         </CustomText>
                     </Animated.View>}
                 </View>
-                <Animated.View style={rStyle}>
+                {item.image && <Animated.View style={rStyle}>
                     <FastImage
                         source={{ uri: ICONS.ICON_RIGHT }}
-                        style={{ height: 10, width: 10, }}
+                        style={styles.icon}
                         tintColor={colors['DARK']}
                     />
-                </Animated.View>
-            </Animated.View>
-            <View>
-                {
-                    selected !== item.id &&
-                    <CustomText isAnimated={true} exiting={FadeOut} top={5} color={colors['SHADEDARK']}>
-                        {item.body.slice(0, 40) + '...'}
-                    </CustomText>}
-                {
-                    selected === item.id &&
-                    <CustomText isAnimated={true} entering={FadeIn} top={5} color={colors['SHADEDARK']}>
-                        {item.body}
-                    </CustomText>
-                }
+                </Animated.View>}
             </View>
-            {selected === item.id && item.image &&
-                <Animated.Image
-                    exiting={FadeOut}
+            <View>
+                <CustomText isAnimated={true} entering={FadeIn} top={5} color={colors['SHADEDARK']}>
+                    {item.body}
+                </CustomText>
+            </View>
+            <Animated.View
+                entering={FadeIn}
+                exiting={FadeOut}
+                layout={Layout}
+                style={heightRStyle}
+            >
+                <Image
                     source={{ uri: item.image }}
-                    style={{ width: '100%', height: 200, marginTop: 10 }}
+                    style={styles.image}
                 />
-            }
+            </Animated.View>
         </Pressable>
     )
 }
@@ -97,7 +106,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 5
-    }
+    },
+    image: { width: '100%', height: '100%', marginTop: 10 },
+    icon: { height: 10, width: 10, }
 })
 
 export default Card
