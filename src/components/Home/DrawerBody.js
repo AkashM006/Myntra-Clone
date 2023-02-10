@@ -39,7 +39,7 @@ const DrawerBody = () => {
                     FAQs
                 </CustomText>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('Contact')}>
                 <CustomText left={55} vertical={15} color={colors['DARK']}>
                     CONTACT US
                 </CustomText>

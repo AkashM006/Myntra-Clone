@@ -15,6 +15,7 @@ const QtyList = ({ item, qty, setQty }) => {
                 horizontal
                 style={styles.scroll}
                 contentContainerStyle={{ height: 50 }}
+                showsHorizontalScrollIndicator={false}
             >
                 {Array(maxQty).fill(0).map((_, index) => {
                     const getColor = _ => {

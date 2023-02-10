@@ -85,6 +85,7 @@ const WishlistBody = () => {
                 renderItem={({ item, index }) => <Card disabled={show} setSelected={openPopUp} item={item} index={index} />}
                 keyExtractor={item => item.clothId}
                 numColumns={2}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 200, paddingTop: 20 }}
                 ListFooterComponent={
                     <View style={{ paddingTop: 50 }}>

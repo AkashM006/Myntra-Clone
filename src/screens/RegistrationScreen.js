@@ -20,7 +20,7 @@ const RegistrationScreen = () => {
         }
     }
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
             <View style={styles.haederContainer}>
                 <TouchableOpacity style={styles.back} onPress={backHandler}>
                     <FastImage source={{ uri: ICONS.ICON_BACK }} />

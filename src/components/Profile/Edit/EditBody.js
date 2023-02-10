@@ -140,7 +140,7 @@ const Body = ({ user }) => {
         <Formik innerRef={form} validationSchema={validationSchema} initialValues={user} onSubmit={submitHandler}>
             {
                 ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => <>
-                    <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }}>
+                    <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white', paddingTop: 10 }}>
                         <Form
                             setType={setType}
                             touched={touched}

@@ -157,7 +157,7 @@ const AddressForm = ({ hideForm, visible }) => {
                     ADD NEW ADDRESS
                 </CustomText>
             </View>
-            <ScrollView contentContainerStyle={{ paddingHorizontal: '5%', paddingTop: 30, paddingBottom: 100 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: '5%', paddingTop: 30, paddingBottom: 100 }}>
                 <Formik validateOnChange={false} validationSchema={addressValidationSchema} innerRef={ref} onSubmit={submitHandler} initialValues={initialValues}>
                     {
                         ({ values, errors, touched, handleChange, handleBlur, isSubmitting, setFieldValue }) => {

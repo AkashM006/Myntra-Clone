@@ -23,6 +23,7 @@ const Body = () => {
                 entering={FadeIn}
                 exiting={FadeOut}
                 data={items}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.id ?? index}
                 renderItem={renderItem}
                 contentContainerStyle={{ paddingTop: 20, paddingHorizontal: 10 }}

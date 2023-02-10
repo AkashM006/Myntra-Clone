@@ -115,7 +115,13 @@ const DetailScreen = () => {
             {isLoading === false ?
                 <>
                     <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
-                    <Animated.ScrollView alwaysBounceHorizontal={false} bounces={false} contentContainerStyle={{ paddingBottom: 150 }} onScroll={scrollHandler} showsVerticalScrollIndicator={false} >
+                    <Animated.ScrollView
+                        alwaysBounceHorizontal={false}
+                        bounces={false}
+                        contentContainerStyle={{ paddingBottom: 150 }}
+                        onScroll={scrollHandler}
+                        showsVerticalScrollIndicator={false}
+                    >
                         <Carousel images={cloth.images} ratedCount={cloth.ratedCount ?? null} rating={cloth.product.star ?? null} />
                         <Body
                             addToBag={onAddToBagHandler}

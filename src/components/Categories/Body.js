@@ -42,7 +42,7 @@ const Body = () => {
                 loading.isLoading ?
                     <Overlay render hideShadow={theme === 'light'} />
                     :
-                    <ScrollView contentContainerStyle={{ padding: '5%' }}>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: '5%' }}>
                         {categories.map((category, index) => {
                             return <Card
                                 key={category.categoryName}
