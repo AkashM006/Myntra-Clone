@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList, useWindowDimensions, Animated, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Image, useWindowDimensions, Animated, TouchableOpacity } from 'react-native'
 import React, { useRef } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useNavigation } from '@react-navigation/native'

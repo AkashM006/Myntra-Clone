@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import showToast from '../../utils/utils'
 import Config from 'react-native-config'
+import HighlightCarousel from './HighlightCarousel'
 
 const Body = () => {
 
@@ -55,7 +56,8 @@ const Body = () => {
 
         else if (item.type === 'slider') return <Slider card={item} />
 
-        else if (item.type === 'grid') return <Grid item={item} />
+        // else if (item.type === 'grid') return <Grid item={item} />
+        else if (item.type === 'grid') return <HighlightCarousel item={item} />
 
         else if (item.type === 'carousel') return <Carousel item={item} />
 
