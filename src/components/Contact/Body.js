@@ -20,7 +20,7 @@ const Body = () => {
                     </CustomText>
                 </View>
                 <FastImage
-                    source={{ uri: ICONS.ICON_CUSTOMER_CARE }}
+                    source={{ uri: ICONS.ICON_CUSTOMER_CARE_BIG }}
                     style={{ height: 150, width: '50%', }}
                     resizeMode='contain'
                 />

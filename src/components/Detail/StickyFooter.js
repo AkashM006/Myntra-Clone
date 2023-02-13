@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux'
 const StickyFooter = ({ scroll, footer, addToBag, addToWishlist, wishlisted, sizeContainer }) => {
 
     const topEdge = footer?.y + sizeContainer?.height - 40
-    console.log(scroll.value, footer?.y)
     const { colors } = useSelector(state => state.theme)
 
     const rStyle = useAnimatedStyle(() => {

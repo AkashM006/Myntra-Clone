@@ -62,7 +62,7 @@ const List = () => {
     const scrollToTop = () => { scrollRef?.current.scrollToOffset({ offset: 0, animated: true }) }
 
     const viewabilityConfig = useRef({
-        itemVisiblePercentThreshold: 50,
+        itemVisiblePercentThreshold: 40,
         waitForInteraction: false
     })
 
@@ -108,7 +108,11 @@ const List = () => {
 
 const styles = StyleSheet.create({
     container: { flex: 1, },
-    list: { marginTop: 5 }
+    list: { marginTop: 5 },
+    fallback: {
+        backgroundColor: '#ffcccb',
+        width: '50%'
+    }
 })
 
 export default List
