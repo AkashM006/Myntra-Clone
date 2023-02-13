@@ -4,7 +4,9 @@ const initialState = {
     isLoginPopUpVisible: false,
     loading: false,
     hideLoader: false,
-    hideShadow: false
+    hideShadow: false,
+    isConnected: true,
+    unreachable: false,
 }
 
 export const uiSlice = createSlice({
@@ -28,10 +30,16 @@ export const uiSlice = createSlice({
             state.loading = false
             state.hideLoader = false
             state.hideShadow = false
+        },
+        setIsConnected: (state, action) => {
+            state.isConnected = action.payload
+        },
+        setUnreachable: (state, action) => {
+            state.unreachable = action.payload
         }
     }
 })
 
-export const { setLoginPopUpStatus, toggleLoginPopUpStatus, setLoading, closeLoading } = uiSlice.actions
+export const { setLoginPopUpStatus, toggleLoginPopUpStatus, setLoading, closeLoading, setIsConnected, setUnreachable } = uiSlice.actions
 
 export default uiSlice.reducer

@@ -1,5 +1,5 @@
 import { AppState, Platform, StatusBar, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback, useRef } from 'react'
 import HomeNavigation from '../navigation/HomeNavigation'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -9,11 +9,12 @@ import { setFcmToken, setProfile } from '../redux/userSlice'
 import { NavigationContainer } from '@react-navigation/native'
 import messaging from '@react-native-firebase/messaging'
 import { showToast } from '../utils/utils'
-import { useCallback } from 'react'
-import { useRef } from 'react'
 import SplashScreen from 'react-native-splash-screen'
 import Overlay from '../components/Reusable/Overlay'
 import { addData } from '../redux/notificationSlice'
+import NetInfo from '@react-native-community/netinfo'
+import { setIsConnected, setUnreachable } from '../redux/uiSlice'
+import ConnectionProblemScreen from './ConnectionProblemScreen'
 
 const MainScreen = () => {
 
@@ -24,6 +25,8 @@ const MainScreen = () => {
     const { loading, hideLoader, hideShadow } = useSelector(state => state.ui)
 
     const { colors, theme } = useSelector(state => state.theme)
+    const connected = useSelector(state => state.ui.isConnected)
+    const unreachable = useSelector(state => state.ui.unreachable)
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
@@ -50,6 +53,13 @@ const MainScreen = () => {
             })
 
     }, [token])
+
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+            dispatch(setIsConnected(state.isConnected))
+        })
+        return unsubscribe
+    }, [])
 
     useEffect(_ => { // to handle foreground and background notifications
         const unsubscribe = messaging().onMessage(async msg => {
@@ -127,17 +137,36 @@ const MainScreen = () => {
 
     useEffect(() => { SplashScreen.hide() }, [])
 
-    axios.interceptors.request.use(
-        config => {
-            config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
-            config.headers['Content-Type'] = 'application/json'
-            return config
-        },
-        error => {
-            console.log("Error in request inerceptor: ", error),
-                showToast('Something went wrong while sending request')
+    useEffect(() => {
+        const requestInterceptor = axios.interceptors.request.use(
+            config => {
+                config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
+                config.headers['Content-Type'] = 'application/json'
+                return config
+            },
+            error => {
+                console.log("Error in request interceptor: ", error),
+                    showToast('Something went wrong while sending request')
+            }
+        )
+
+        const responseInterceptor = axios.interceptors.response.use(
+            response => {
+                return response
+            }, err => {
+                if (err.response) {
+                    // console.log("Response: ", err.response.status)
+                } else if (err.request) {
+                    if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
+                } else console.log("Error: ", err.message)
+            }
+        )
+
+        return () => {
+            axios.interceptors.request.eject(requestInterceptor)
+            axios.interceptors.response.eject(responseInterceptor)
         }
-    )
+    }, [])
 
     return (
         <>
@@ -145,7 +174,7 @@ const MainScreen = () => {
                 barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
                 backgroundColor={colors['LIGHT']}
             />
-            <NavigationContainer>
+            {connected && !unreachable ? <NavigationContainer>
                 <View style={{ flex: 1 }}>
                     <HomeNavigation />
                     <Overlay
@@ -154,7 +183,7 @@ const MainScreen = () => {
                         hideShadow={hideShadow}
                     />
                 </View>
-            </NavigationContainer>
+            </NavigationContainer> : <ConnectionProblemScreen />}
         </>
     )
 }
