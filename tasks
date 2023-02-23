@@ -4,3 +4,6 @@ todo:
 3) Feb second week implement locality selection feature
 4) Need to change the sticky footer UI in details page
 5) Handle the case where the server is not reachable
+6) Edit address change according to back end format satOpen, sunOpen
+7) on logout clear all items in wishlist and bag
+8) Address form checkboxes not working

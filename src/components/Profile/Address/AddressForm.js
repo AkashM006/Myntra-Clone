@@ -27,7 +27,6 @@ const AddressForm = ({ hideForm, visible }) => {
 
     const { editing, addresses } = useSelector(state => state.address)
 
-
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', _ => {
             if (showSelection) {
@@ -62,7 +61,9 @@ const AddressForm = ({ hideForm, visible }) => {
         state: '',
         locality: '',
         typeOfAddress: null,
-        open: [],
+        // open: [],
+        sunOpen: false,
+        satOpen: false,
         defaultAddr: false,
         city: ''
     } : addresses.find(address => address.id === editing)
@@ -227,7 +228,10 @@ const AddressForm = ({ hideForm, visible }) => {
                                     editable={false}
                                 />
                                 <AddressType error={errors.typeOfAddress} touched={touched.typeOfAddress} values={values} setFieldValue={setFieldValue} />
-                                {values.typeOfAddress !== 'Home' && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
+                                {values.typeOfAddress !== 'Home' && <AddressPreference open={{
+                                    sun: values.sunOpen,
+                                    sat: values.satOpen
+                                }} setFieldValue={setFieldValue} />}
                                 <View style={[styles.default, { borderColor: colors['SHADELIGHT'] }]}>
                                     <CheckBox
                                         value={values.defaultAddr}

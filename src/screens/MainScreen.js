@@ -30,19 +30,25 @@ const MainScreen = () => {
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
-        axios.get(`${Config.API_KEY}/profile/getuserdetails`)
+        console.log('Here: ',token)
+        axios.get(`${Config.API_KEY}/profile/getuserdetails`, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
             .then(res => {
-                const data = res.data
-                console.log("Dat: ", data)
-                if (!data.status) {
-                    Toast.show(data.message, {
-                        duration: Toast.durations.LONG,
-                        position: Toast.positions.BOTTOM,
-                    })
-                }
+                if (res) {
+                    const data = res.data
+                    if (!data.status) {
+                        Toast.show(data.message, {
+                            duration: Toast.durations.LONG,
+                            position: Toast.positions.BOTTOM,
+                        })
+                    }
 
-                const user = data.data
-                dispatch(setProfile(user))
+                    const user = data.data
+                    dispatch(setProfile(user))
+                }
 
             })
             .catch(err => {
@@ -54,6 +60,10 @@ const MainScreen = () => {
             })
 
     }, [token])
+
+    useEffect(() => {
+        axios.defaults.headers.common['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
+    },[token])
 
     useEffect(() => {
         const unsubscribe = NetInfo.addEventListener(state => {
@@ -138,33 +148,39 @@ const MainScreen = () => {
 
     useEffect(() => { SplashScreen.hide() }, [])
 
-    // useEffect(() => {
-    const requestInterceptor = axios.interceptors.request.use(
-        config => {
-            config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
-            config.headers['Content-Type'] = 'application/json'
-            return config
-        },
-        error => {
-            console.log("Error in request interceptor: ", error),
-                showToast('Something went wrong while sending request')
-        }
-    )
+    // const interceptor = config => {
+    //     console.log('Request intercepted: ', token)
+    //     config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
+    //     config.headers['Content-Type'] = 'application/json'
+    //     return config
+    // }
 
-    const responseInterceptor = axios.interceptors.response.use(
-        response => {
-            return response
-        }, err => {
-            if (err.response) {
-                // console.log("Response: ", err.response.status)
-            } else if (err.request) {
-                if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
-            } else console.log("Error: ", err.message)
+    useEffect(() => {
+        const requestInterceptor = axios.interceptors.request.use(null,
+            error => {
+                console.log("Error in request interceptor: ", error),
+                    showToast('Something went wrong while sending request')
+            }
+        )
+        const responseInterceptor = axios.interceptors.response.use(
+            response => {
+                return response
+            }, err => {
+                if (err.response) {
+                    // console.log("Response: ", err.response.status)
+                } else if (err.request) {
+                    if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
+                } else console.log("Error: ", err.message)
+            }
+        )
+        return () => {
+            axios.interceptors.request.eject(requestInterceptor)
+            axios.interceptors.response.eject(responseInterceptor)
         }
-    )
+    }, [])
 
     //     return () => {
-    //         axios.interceptors.request.eject(requestInterceptor)
+    // axios.interceptors.request.eject(requestInterceptor)
     //         axios.interceptors.response.eject(responseInterceptor)
     //     }
     // }, [])
@@ -194,7 +210,7 @@ const MainScreen = () => {
                         hideShadow={hideShadow}
                     />
                 </View>
-            </NavigationContainer> 
+            </NavigationContainer>
         </>
     )
 }

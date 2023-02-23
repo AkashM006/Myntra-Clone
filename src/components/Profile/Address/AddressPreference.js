@@ -5,16 +5,15 @@ import { useSelector } from 'react-redux'
 import CheckBox from '../../Reusable/CheckBox'
 import Animated, { FadeIn, FadeOut, } from 'react-native-reanimated'
 
-const AddressPreference = ({ open, setFieldValue }) => {
+const AddressPreference = ({ setFieldValue, open }) => {
+
+    const {sat, sun} = open
 
     const { colors } = useSelector(state => state.theme)
 
     const changeHandler = day => {
-        if (open.includes(day)) {
-            let temp = [...open].filter(value => value !== day)
-            setFieldValue('open', temp)
-        } else setFieldValue('open', [...open, day])
-
+        let temp = day === 'sat' ? sat : sun
+        setFieldValue(temp+'Open',!temp)
     }
 
     return (
@@ -24,9 +23,9 @@ const AddressPreference = ({ open, setFieldValue }) => {
             </CustomText>
             <View style={styles.checkBoxContainer}>
                 <CheckBox
-                    value={open.includes('Saturday')}
+                    value={sat}
                     dimension={15}
-                    changeHandler={() => changeHandler('Saturday')}
+                    changeHandler={() => changeHandler('sat')}
                 />
                 <CustomText left={10} color={colors['DARK']}>
                     Open on Saturday
@@ -34,9 +33,9 @@ const AddressPreference = ({ open, setFieldValue }) => {
             </View>
             <View style={styles.checkBoxContainer}>
                 <CheckBox
-                    value={open.includes('Sunday')}
+                    value={sun}
                     dimension={15}
-                    changeHandler={() => changeHandler('Sunday')}
+                    changeHandler={() => changeHandler('sun')}
                 />
                 <CustomText left={10} color={colors['DARK']}>
                     Open on Sunday
