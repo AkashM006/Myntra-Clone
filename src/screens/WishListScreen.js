@@ -33,7 +33,7 @@ const WishListScreen = () => {
 
     const getData = async () => {
         try {
-            const result = await axios.get(`${Config.PRODUCTS_API_KEY}/data/wishlist`)
+            const result = await axios.get(`${Config.API_KEY}/wishlist`)
             data = result.data.data.items
             data = transformWishlistData(data)
             dispatch(setItems(data))

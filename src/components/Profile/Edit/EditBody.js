@@ -24,7 +24,7 @@ const EditBody = () => {
 
 
     useEffect(() => {
-        axios.get(`${Config.REGISTER_API_KEY}/authenticate/getuserdetails`)
+        axios.get(`${Config.API_KEY}/profile/getuserdetails`)
             .then(res => {
                 const data = res.data
                 if (data.status === false) {
@@ -102,7 +102,7 @@ const Body = ({ user }) => {
 
         setSubmitted(true)
 
-        axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
+        axios.post(`${Config.API_KEY}/loginorsignup/sendotp`, {
             phoneNumber: selectedPhone
         })
             .then(res => {

@@ -26,7 +26,7 @@ const DetailScreen = () => {
         // result = await result.docs
         // result = result[0].data()
         // setCloth(result)
-        axios.get(`${Config.PRODUCTS_API_KEY}/data/getproduct/${id}`)
+        axios.get(`${Config.API_KEY}/product/${id}`)
             .then(res => {
                 let data = res.data
                 if (data.status === false) {
@@ -70,7 +70,7 @@ const DetailScreen = () => {
                 return
             }
 
-            axios.post(`${Config.PRODUCTS_API_KEY}/data/addtobag`, {
+            axios.post(`${Config.API_KEY}/bag/add`, {
                 jwt: token,
                 productId: cloth.product.id,
                 size: selectedSize
@@ -92,7 +92,7 @@ const DetailScreen = () => {
             navigation.navigate('Wishlist')
         }
 
-        axios.post(`${Config.PRODUCTS_API_KEY}/data/addtowish`, {
+        axios.post(`${Config.API_KEY}/wishlist/add`, {
             productId: id,
             jwt: token.token // remove this later
         })

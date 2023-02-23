@@ -23,7 +23,7 @@ const AddressScreen = () => {
         dispatch(clearAddresses())
         if (loaded) setLoaded(false)
         try {
-            const result = await axios.get(`${Config.REGISTER_API_KEY}/authenticate/address`)
+            const result = await axios.get(`${Config.API_KEY}/address`)
             const data = result.data.data
             dispatch(addAddress(data))
         } catch (error) {

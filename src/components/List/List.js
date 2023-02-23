@@ -21,7 +21,7 @@ const List = () => {
 
     const getData = async () => {
         if (count !== null && clothes.length >= count) return
-        axios.get(`${Config.PRODUCTS_API_KEY}/data/getproductsm/${id}`)
+        axios.get(`${Config.API_KEY}/product/allm/${id}`)
             .then(res => {
                 let data = res.data
                 if (data.status === false) {

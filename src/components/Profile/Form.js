@@ -119,7 +119,7 @@ const Form = ({ setSubmitted, submitted }) => {
             hintName: hint
         }
 
-        axios.post(`${Config.REGISTER_API_KEY}/authenticate/register`, obj)
+        axios.post(`${Config.API_KEY}/profile/register`, obj)
             .then(res => {
                 const data = res.data
                 if (data.status === true) {

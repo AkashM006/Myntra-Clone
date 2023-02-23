@@ -85,7 +85,7 @@ const AddressForm = ({ hideForm, visible }) => {
         setLoading(true)
         if (editing === null) {
             try {
-                const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/address`, {
+                const result = await axios.post(`${Config.API_KEY}/address/save`, {
                     ...values
                 })
                 const data = result.data
@@ -99,7 +99,7 @@ const AddressForm = ({ hideForm, visible }) => {
             }
         } else {
             try {
-                const result = await axios.put(`${Config.REGISTER_API_KEY}/authenticate/address`, {
+                const result = await axios.put(`${Config.API_KEY}/address/edit`, {
                     ...values,
                     id: editing
                 })

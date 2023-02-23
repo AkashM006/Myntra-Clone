@@ -40,7 +40,7 @@ const EditMobile = () => {
         }
         setSubmitted(true)
         try {
-            const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/checknumber`, { phoneNumber: "+91 " + phone })
+            const result = await axios.post(`${Config.API_KEY}/profile/checknumber`, { phoneNumber: "+91 " + phone })
             const { data } = result
             if (!data.status) {
                 setErr('This mobile number is already linked to another account')
@@ -54,7 +54,7 @@ const EditMobile = () => {
         }
 
         try {
-            const result = await axios.post(`${Config.OTP_API_KEY}/authenticate/sendotp`, {
+            const result = await axios.post(`${Config.API_KEY}/update/sendotp`, {
                 phoneNumber: "+91 " + phone
             })
             const data = result.data

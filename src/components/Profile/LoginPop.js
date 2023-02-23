@@ -126,7 +126,7 @@ const LoginPop = () => {
             Keyboard.dismiss()
             setSubmitted(true)
 
-            axios.post(`${Config.OTP_API_KEY}/authenticate/loginorsignup`, {
+            axios.post(`${Config.API_KEY}/loginorsignup/sendotp`, {
                 phoneNumber: '+91 ' + phone
             })
                 .then(res => {

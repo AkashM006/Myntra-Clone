@@ -25,7 +25,7 @@ const BagBody = () => {
         // then setLoaded true
         // todo: After fetching call transfrom function
         // if (token) {
-        //     axios.get(`${Config.PRODUCTS_API_KEY}/data/bag`, {
+        //     axios.get(`${Config.API_KEY}/bag`, {
         //         jwt: token
         //     })
         //         .then(res => {

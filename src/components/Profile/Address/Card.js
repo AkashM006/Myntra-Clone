@@ -41,7 +41,7 @@ const Card = ({ address, index, selected, rerender, showForm }) => {
             loading: true
         }))
         try {
-            const result = await axios.delete(`${Config.REGISTER_API_KEY}/authenticate/address/${address.id}`)
+            const result = await axios.delete(`${Config.API_KEY}/address/remove/${address.id}`)
             const data = result.data
             if (!data.status) showToast(data.message)
             else rerender()

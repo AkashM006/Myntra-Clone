@@ -23,7 +23,7 @@ const EditPasswordBody = () => {
     const submitHandler = (values, formikActions) => {
         Keyboard.dismiss()
 
-        axios.post(`${Config.REGISTER_API_KEY}/authenticate/changePassword`, {
+        axios.post(`${Config.API_KEY}/profile/changePassword`, {
             mobileNumber,
             oldPassword: values.old,
             newPassword: values.current

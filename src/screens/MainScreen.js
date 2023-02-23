@@ -30,9 +30,10 @@ const MainScreen = () => {
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
-        axios.get(`${Config.REGISTER_API_KEY}/authenticate/getuserdetails`)
+        axios.get(`${Config.API_KEY}/profile/getuserdetails`)
             .then(res => {
                 const data = res.data
+                console.log("Dat: ", data)
                 if (!data.status) {
                     Toast.show(data.message, {
                         duration: Toast.durations.LONG,
@@ -137,36 +138,36 @@ const MainScreen = () => {
 
     useEffect(() => { SplashScreen.hide() }, [])
 
-    useEffect(() => {
-        const requestInterceptor = axios.interceptors.request.use(
-            config => {
-                config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
-                config.headers['Content-Type'] = 'application/json'
-                return config
-            },
-            error => {
-                console.log("Error in request interceptor: ", error),
-                    showToast('Something went wrong while sending request')
-            }
-        )
-
-        const responseInterceptor = axios.interceptors.response.use(
-            response => {
-                return response
-            }, err => {
-                if (err.response) {
-                    // console.log("Response: ", err.response.status)
-                } else if (err.request) {
-                    if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
-                } else console.log("Error: ", err.message)
-            }
-        )
-
-        return () => {
-            axios.interceptors.request.eject(requestInterceptor)
-            axios.interceptors.response.eject(responseInterceptor)
+    // useEffect(() => {
+    const requestInterceptor = axios.interceptors.request.use(
+        config => {
+            config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
+            config.headers['Content-Type'] = 'application/json'
+            return config
+        },
+        error => {
+            console.log("Error in request interceptor: ", error),
+                showToast('Something went wrong while sending request')
         }
-    }, [])
+    )
+
+    const responseInterceptor = axios.interceptors.response.use(
+        response => {
+            return response
+        }, err => {
+            if (err.response) {
+                // console.log("Response: ", err.response.status)
+            } else if (err.request) {
+                if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
+            } else console.log("Error: ", err.message)
+        }
+    )
+
+    //     return () => {
+    //         axios.interceptors.request.eject(requestInterceptor)
+    //         axios.interceptors.response.eject(responseInterceptor)
+    //     }
+    // }, [])
 
     return (
         <>
@@ -174,7 +175,7 @@ const MainScreen = () => {
                 barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
                 backgroundColor={colors['LIGHT']}
             />
-            {connected && !unreachable ? <NavigationContainer>
+            {/* {connected && !unreachable ? <NavigationContainer>
                 <View style={{ flex: 1 }}>
                     <HomeNavigation />
                     <Overlay
@@ -183,7 +184,17 @@ const MainScreen = () => {
                         hideShadow={hideShadow}
                     />
                 </View>
-            </NavigationContainer> : <ConnectionProblemScreen />}
+            </NavigationContainer> : <ConnectionProblemScreen />} */}
+            <NavigationContainer>
+                <View style={{ flex: 1 }}>
+                    <HomeNavigation />
+                    <Overlay
+                        render={loading}
+                        hideLoader={hideLoader}
+                        hideShadow={hideShadow}
+                    />
+                </View>
+            </NavigationContainer> 
         </>
     )
 }

@@ -20,7 +20,7 @@ const Body = () => {
 
     useEffect(() => {
         setLoading({ type: 'loading' })
-        axios.get(`${Config.PRODUCTS_API_KEY}/data/shopbycategoriesm`)
+        axios.get(`${Config.API_KEY}/home/shopbycategoriesm`)
             .then(res => {
                 let data = res.data
                 if (data.status) {

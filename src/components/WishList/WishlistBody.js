@@ -51,7 +51,7 @@ const WishlistBody = () => {
     const handlePress = async _ => {
         setLoading(true)
         try {
-            let result = await axios.post(`${Config.PRODUCTS_API_KEY}/data/movetobag`, {
+            let result = await axios.post(`${Config.API_KEY}/bag/move`, {
                 productId: selected.clothId,
                 size: currentSize
             })

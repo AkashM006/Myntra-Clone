@@ -23,7 +23,7 @@ const Card = ({ item, index, setSelected, disabled }) => {
         }))
 
         try {
-            const result = await axios.delete(`${Config.PRODUCTS_API_KEY}/data/wishlist`, {
+            const result = await axios.delete(`${Config.API_KEY}/wishlist`, {
                 data: {
                     productIds: [item.clothId],
                     jwt: token

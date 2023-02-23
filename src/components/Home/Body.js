@@ -27,13 +27,11 @@ const Body = () => {
             // let headerSection = result.map(categ => { return categ._data })
             let temp = {}
             let data = []
-            temp = await axios.get(`${Config.PRODUCTS_API_KEY}/data/getcategoriesm`)
+            temp = await axios.get(`${Config.API_KEY}/home/categoriesm`)
             if (temp) data = temp.data
             let headerSection = []
-            if (data.data) {
-                console.log("Here")
+            if (data.data)
                 headerSection = data.data.map(item => ({ id: item.categoryId, name: item.categoryName, photoURL: item.image }))
-            }
             let result = (await firestore().collection('gallery').orderBy('position').get()).docs
             let contents
             if (result) contents = result.map(el => el._data)

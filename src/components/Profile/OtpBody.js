@@ -100,7 +100,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
             setSubmitted(true)
             Keyboard.dismiss()
 
-            axios.post(`${Config.OTP_API_KEY}/authenticate/verifyupdateotp`, {
+            axios.post(`${Config.API_KEY}/profile/update/verifyotp`, {
                 phoneNumber: phone.charAt(0) === '+' ? phone : '+91 ' + phone,
                 otp
             })
@@ -119,7 +119,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                     else if (type === 'newMobile') {
                         // todo : send request to change mobile number and then navigate away
                         try {
-                            const result = await axios.put(`${Config.REGISTER_API_KEY}/authenticate/updatenumber`, {
+                            const result = await axios.put(`${Config.API_KEY}/profile/updatenumber`, {
                                 oldNumber: user.mobileNumber,
                                 newNumber: phone.charAt(0) === '+' ? phone : '+91 ' + phone
                             })
@@ -141,7 +141,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                     }
                     else if (type === 'save') {
                         try {
-                            const result = await axios.post(`${Config.REGISTER_API_KEY}/authenticate/updateUser`, {
+                            const result = await axios.post(`${Config.API_KEY}/profile/update`, {
                                 ...newUser
                             })
                             if (!result.status) {
@@ -167,7 +167,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
         } else {
             setSubmitted(true)
             Keyboard.dismiss()
-            axios.post(`${Config.OTP_API_KEY}/authenticate/verifyotp`, {
+            axios.post(`${Config.API_KEY}/loginorsignup/verifyotp`, {
                 phoneNumber: '+91 ' + phone,
                 otp
             })
@@ -204,7 +204,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
     }
 
     const resendOtp = () => {
-        axios.post(`${Config.OTP_API_KEY}/authenticate/loginorsignup`, {
+        axios.post(`${Config.API_KEY}/loginorsignup/sendotp`, {
             phoneNumber: '+91 ' + phone
         })
             .then(res => {

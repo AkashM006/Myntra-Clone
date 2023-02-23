@@ -20,18 +20,12 @@ const ConnectionProblemScreen = () => {
     const [disabled, setDisabled] = useState(false)
     const [time, setTime] = useState(0)
 
-    let timer
-
     const pressHandler = async _ => {
         setTime(30)
         setDisabled(true)
 
-        timer = setInterval(() => {
-            setTime(prev => prev - 1)
-        }, 1000)
-
         try {
-            const result = await axios.get(`${Config.REGISTER_API_KEY}/loginorsignup/test`, { timeout: 30 * 1000 })
+            const result = await axios.get(`${Config.API_KEY}/loginorsignup/test`, { timeout: 30 * 1000 })
             if (result) dispatch(setUnreachable(false))
         } catch (err) {
             console.log('Error in Connection problem screen.js: ', err)
@@ -40,23 +34,9 @@ const ConnectionProblemScreen = () => {
     }
 
     useEffect(() => {
-        if (time === 0) {
-            if (timer) clearInterval(timer)
-            setDisabled(false)
-        }
+        if (time === 0) setDisabled(false)
+        else setTimeout(() => setTime(prev => prev - 1), 1000)
     }, [time])
-
-    useEffect(() => {
-        // if (!isConnected && timer) {
-        //     clearInterval(timer)
-        //     setDisabled(false)
-        //     setTime(0)
-        // }
-        return () => {
-            if (timer) clearInterval(timer)
-        }
-    }, [])
-    // }, [isConnected])
 
     return (
         <Animated.View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>

@@ -57,7 +57,7 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
             if (!isNaN(+id)) {
                 id = '+91 ' + id
             }
-            axios.post(`${Config.OTP_API_KEY}/authenticate/loginPass`, {
+            axios.post(`${Config.API_KEY}/loginorsignup/password`, {
                 userId: id,
                 password
             })

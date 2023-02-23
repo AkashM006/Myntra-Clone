@@ -30,7 +30,7 @@ const Header = () => {
                 loading: true
             }))
             try {
-                const result = await axios.delete(`${Config.PRODUCTS_API_KEY}/data/wishlist`, {
+                const result = await axios.delete(`${Config.API_KEY}/wishlist`, {
                     data: {
                         jwt: token,
                         productIds: selected.filter(id => id !== -1)

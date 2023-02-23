@@ -42,7 +42,7 @@ const ForgotPasswordBody = ({ submitted, setSubmitted }) => {
             // send request for reset
 
             // todo: send request for password reset
-            axios.post(`${Config.MAIL_API_KEY}/email/sendMail`, {
+            axios.post(`${Config.API_KEY}/email/sendMail`, {
                 recipient: userId
             })
                 .then(res => {
