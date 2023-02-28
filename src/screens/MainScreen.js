@@ -30,7 +30,6 @@ const MainScreen = () => {
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
-        console.log('Here: ',token)
         axios.get(`${Config.API_KEY}/profile/getuserdetails`, {
             headers: {
                 Authorization: 'Bearer ' + token

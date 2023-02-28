@@ -57,8 +57,7 @@ const Size = ({ sizes, setStickyFooter, size, setSize, setSizeContainer }) => {
                     </View>
                 ))}
             </ScrollView>
-            <View
-                style={styles.buttonContainer}>
+            {/* <View style={styles.buttonContainer} /> */}
                 {/* <TouchableOpacity style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>
                     <FastImage source={{ uri: ICONS.ICON_HEART }} style={styles.icon} />
                     <CustomText weight={'light'} style={[styles.text]}>
@@ -71,7 +70,6 @@ const Size = ({ sizes, setStickyFooter, size, setSize, setSizeContainer }) => {
                         ADD TO BAG
                     </CustomText>
                 </TouchableOpacity> */}
-            </View>
         </View>
     )
 }

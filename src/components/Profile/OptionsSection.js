@@ -46,7 +46,7 @@ const SECONDLIST = [
         id: 1,
         title: 'Scan for coupon',
         icon: { uri: ICONS.ICON_QR_CODE },
-    }
+    },
 ]
 
 const THIRDLIST = [
@@ -56,6 +56,12 @@ const THIRDLIST = [
         subtitle: 'Password, Email ID and Phone number',
         icon: { uri: ICONS.ICON_EDIT },
         to: 'EditProfile'
+    },
+    {
+        id: 4,
+        title: 'Coupons',
+        icon: { uri: ICONS.ICON_COUPONS },
+        to: 'Coupons'
     },
     {
         id: 2,

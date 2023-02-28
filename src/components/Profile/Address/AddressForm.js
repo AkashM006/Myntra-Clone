@@ -89,6 +89,7 @@ const AddressForm = ({ hideForm, visible }) => {
                 const result = await axios.post(`${Config.API_KEY}/address/save`, {
                     ...values
                 })
+                console.log('Result: ', result)
                 const data = result.data
                 successHandler(data, formikActions)
                 formikActions.setSubmitting(false)

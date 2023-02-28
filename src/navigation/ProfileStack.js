@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { setLoginPopUpStatus } from '../redux/uiSlice'
 import { createStackNavigator } from '@react-navigation/stack'
 import AddressScreen from '../screens/AddressScreen'
+import CouponsScreen from '../screens/CouponsScreen'
 
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator()
@@ -80,6 +81,11 @@ const ProfileStack = () => {
             <Stack.Screen
                 name='Address'
                 component={AddressScreen}
+                options={options}
+            />
+            <Stack.Screen
+                name='Coupons'
+                component={CouponsScreen}
                 options={options}
             />
         </Stack.Navigator>

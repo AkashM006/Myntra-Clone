@@ -12,24 +12,24 @@ const StickyFooter = ({ scroll, footer, addToBag, addToWishlist, wishlisted, siz
     const topEdge = footer?.y + sizeContainer?.height - 40
     const { colors } = useSelector(state => state.theme)
 
-    const rStyle = useAnimatedStyle(() => {
-        return {
-            transform: [
-                {
-                    translateY: interpolate(
-                        scroll.value,
-                        [-1, 0, topEdge - 1, topEdge, topEdge + 1],
-                        [0, 0, 0, 0, -1]
-                    )
-                }
-            ]
-        }
-    })
+    // const rStyle = useAnimatedStyle(() => {
+    //     return {
+    //         transform: [
+    //             {
+    //                 translateY: interpolate(
+    //                     scroll.value,
+    //                     [-1, 0, topEdge - 1, topEdge, topEdge + 1],
+    //                     [0, 0, 0, 0, -1]
+    //                 )
+    //             }
+    //         ]
+    //     }
+    // })
 
     return (
         <>
             {footer && <Animated.View
-                style={[styles.container, rStyle]}
+                style={[styles.container]}
             >
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={addToWishlist} style={[styles.button, { borderColor: 'lightgray', borderWidth: 1, width: '40%' }]}>

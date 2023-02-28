@@ -13,7 +13,7 @@ const AddressPreference = ({ setFieldValue, open }) => {
 
     const changeHandler = day => {
         let temp = day === 'sat' ? sat : sun
-        setFieldValue(temp+'Open',!temp)
+        setFieldValue(day+'Open',!temp)
     }
 
     return (
