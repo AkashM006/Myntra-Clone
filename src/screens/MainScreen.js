@@ -15,6 +15,7 @@ import { addData } from '../redux/notificationSlice'
 import NetInfo from '@react-native-community/netinfo'
 import { setIsConnected, setUnreachable } from '../redux/uiSlice'
 import ConnectionProblemScreen from './ConnectionProblemScreen'
+import MainStack from '../navigation/MainStack'
 
 const MainScreen = () => {
 
@@ -202,7 +203,8 @@ const MainScreen = () => {
             </NavigationContainer> : <ConnectionProblemScreen />} */}
             <NavigationContainer>
                 <View style={{ flex: 1 }}>
-                    <HomeNavigation />
+                    {/* <HomeNavigation /> */}
+                    <MainStack />
                     <Overlay
                         render={loading}
                         hideLoader={hideLoader}
