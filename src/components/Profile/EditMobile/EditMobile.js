@@ -39,10 +39,10 @@ const EditMobile = () => {
             return
         }
         setSubmitted(true)
-        try {
+        try { // this request is to check if the mobile number already exists
             const result = await axios.post(`${Config.API_KEY}/profile/checknumber`, { phoneNumber: "+91 " + phone })
-            const { data } = result
-            if (!data.status) {
+            const response = result.data
+            if (!(response.status)) {
                 setErr('This mobile number is already linked to another account')
                 setSubmitted(false)
                 return
@@ -53,8 +53,8 @@ const EditMobile = () => {
             showToast('Something went wrong. Please try again later.')
         }
 
-        try {
-            const result = await axios.post(`${Config.API_KEY}/update/sendotp`, {
+        try { // this request is to send otp
+            const result = await axios.post(`${Config.API_KEY}/profile/update/sendotp`, {
                 phoneNumber: "+91 " + phone
             })
             const data = result.data

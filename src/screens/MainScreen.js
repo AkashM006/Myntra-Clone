@@ -61,8 +61,8 @@ const MainScreen = () => {
     }, [token])
 
     useEffect(() => {
-        axios.defaults.headers.common['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
-    },[token])
+        axios.defaults.headers.common['Authorization'] = token === null || token?.length === 0 ? token : 'Bearer ' + token
+    }, [token])
 
     useEffect(() => {
         const unsubscribe = NetInfo.addEventListener(state => {

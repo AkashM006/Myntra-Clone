@@ -6,11 +6,15 @@ import ICONS from '../../icons/icons'
 import CustomText from '../Reusable/CustomText'
 import CheckBox from '../Reusable/CheckBox'
 import { addSelection, removeFromBag, removeSelection } from '../../redux/bagSlice'
-import { formatCurrency, substring } from '../../utils/utils'
+import { formatCurrency, showToast, substring } from '../../utils/utils'
 import Size from './Size'
 import Qty from './Qty'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+import { useContext } from 'react'
+import LoaderContext from '../../context/loaderContext'
+import Config from 'react-native-config'
 
 const Card = ({ item, showPopUpHandler }) => {
 
@@ -24,6 +28,8 @@ const Card = ({ item, showPopUpHandler }) => {
     const [maxQty, setMaxQty] = useState(null)
 
     const [isQtyLess, setIsQtyLess] = useState(false)
+
+    const { setLoaded, refresh } = useContext(LoaderContext)
 
     useEffect(() => {
         const sizes = item.size
@@ -47,14 +53,44 @@ const Card = ({ item, showPopUpHandler }) => {
     }, [currentItem])
 
 
-    const onPressHandler = () => {
-        if (selected.includes(item.id))
-            dispatch(removeSelection(item.id))
-        else
-            dispatch(addSelection(item.id))
+    const onPressHandler = async _ => {
+
+        setLoaded(false)
+        const target = !item.selected
+        axios.put(`${Config.API_KEY}/bag`, {
+            productId: item.clothId,
+            size: item.currentSize,
+            selected: target,
+            quantity: null,
+            newSize: null
+        })
+            .then(res => refresh())
+            .catch(err => {
+                console.log("Error in Bag/Card.js: ", err)
+                showToast('Something went wrong. Please try again later!')
+            })
     }
 
-    const removeHandler = () => { dispatch(removeFromBag(item.id)) }
+    const removeHandler = async _ => {
+        setLoaded(false)
+        try {
+            const result = await axios.delete(`${Config.API_KEY}/bag`, {
+                data: {
+                    list: [
+                        {
+                            productId: item.id,
+                            size: item.currentSize
+                        }
+                    ]
+                }
+            })
+            dispatch(removeFromBag(item.id))
+        } catch (err) {
+            console.log("Error in Bag/Card.js: ", err)
+            showToast('Unable to remove item from bag. Please try again later')
+        }
+        setLoaded(true)
+    }
     const hasNoError = isAvailable && isQtyAvailable
 
     return (
@@ -71,9 +107,9 @@ const Card = ({ item, showPopUpHandler }) => {
                     <CustomText color={colors['SHADEDARK']} >
                         {substring(item.name, 25)}
                     </CustomText>
-                    <CustomText color={colors['SHADELIGHT']}>
+                    {item.soldBy && <CustomText color={colors['SHADELIGHT']}>
                         Sold by: {substring(item.soldBy, 15)}
-                    </CustomText>
+                    </CustomText>}
                     <View style={{ marginVertical: 10 }}>
                         {isAvailable && <View style={[styles.dropDownContainer, { backgroundColor: isQtyAvailable ? colors['LIGHT'] : colors['DANGERBG'] }]}>
                             <Size id={item.id} showPopUpHandler={showPopUpHandler} currentSize={item.currentSize} />
@@ -113,7 +149,8 @@ const Card = ({ item, showPopUpHandler }) => {
             </View>
             <View style={styles.checkboxContainer}>
                 <CheckBox
-                    value={selected.includes(item.id)}
+                    // value={selected.includes(item.id)}
+                    value={item.selected}
                     changeHandler={onPressHandler}
                 />
             </View>
@@ -131,7 +168,7 @@ const styles = StyleSheet.create({
     image: {
         width: '35%',
         height: 150,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     rightContainer: {
         flexDirection: 'row',

@@ -77,7 +77,8 @@ const DetailScreen = () => {
             })
                 .then(res => {
                     const data = res.data
-                    console.log("data: ", data)
+                    // console.log("data: ", data)
+                    showToast('Product added to bag successfully!')
                 })
                 .catch(err => {
                     console.log("Error: ", err)

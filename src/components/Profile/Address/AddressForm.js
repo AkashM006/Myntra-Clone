@@ -53,7 +53,7 @@ const AddressForm = ({ hideForm, visible }) => {
         }
     }, [visible])
 
-    let initialValues = editing === null ? {
+    let initialValues = editing === null || !editing ? {
         name: '',
         mobileNumber: '',
         pincode: '',
@@ -61,9 +61,9 @@ const AddressForm = ({ hideForm, visible }) => {
         state: '',
         locality: '',
         typeOfAddress: null,
-        // open: [],
-        sunOpen: false,
-        satOpen: false,
+        open: [],
+        // sunOpen: false,
+        // satOpen: false,
         defaultAddr: false,
         city: ''
     } : addresses.find(address => address.id === editing)
@@ -89,7 +89,6 @@ const AddressForm = ({ hideForm, visible }) => {
                 const result = await axios.post(`${Config.API_KEY}/address/save`, {
                     ...values
                 })
-                console.log('Result: ', result)
                 const data = result.data
                 successHandler(data, formikActions)
                 formikActions.setSubmitting(false)
@@ -229,10 +228,7 @@ const AddressForm = ({ hideForm, visible }) => {
                                     editable={false}
                                 />
                                 <AddressType error={errors.typeOfAddress} touched={touched.typeOfAddress} values={values} setFieldValue={setFieldValue} />
-                                {values.typeOfAddress !== 'Home' && <AddressPreference open={{
-                                    sun: values.sunOpen,
-                                    sat: values.satOpen
-                                }} setFieldValue={setFieldValue} />}
+                                {values.typeOfAddress !== 'Home' && <AddressPreference open={values.open} setFieldValue={setFieldValue} />}
                                 <View style={[styles.default, { borderColor: colors['SHADELIGHT'] }]}>
                                     <CheckBox
                                         value={values.defaultAddr}

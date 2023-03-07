@@ -127,8 +127,10 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                             if (data.status) {
                                 setSubmitted(false)
                                 navigation.dispatch(StackActions.pop(3))
-                                showToast('Phone number updated. Please login again!')
-                                dispatch(logout())
+                                const token = data.data.jwt
+                                console.log('Submitted: ', data)
+                                dispatch(setToken(token))
+                                showToast('Phone number updated successfully!')
                             } else {
                                 setSubmitted(false)
                                 showToast(data.message)

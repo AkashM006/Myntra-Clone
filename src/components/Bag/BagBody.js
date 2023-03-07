@@ -9,7 +9,7 @@ import { setBag } from '../../redux/bagSlice'
 import { showToast, transform } from '../../utils/utils'
 import axios from 'axios'
 import Config from 'react-native-config'
-import { useNavigation } from '@react-navigation/native'
+import LoaderContext from '../../context/loaderContext'
 
 const BagBody = () => {
 
@@ -19,44 +19,54 @@ const BagBody = () => {
     const token = useSelector(state => state.user.token)
     const dispatch = useDispatch()
 
+    const [isLoading, setIsLoading] = useState(false)
+
+    const refresh = _ => {
+        if (!loaded) setLoaded(false)
+
+        axios.get(`${Config.API_KEY}/bag`)
+            .then(res => {
+                const data = res.data
+                if (data.status) {
+                    let result = transform(data.data.items)
+                    let others = { ...data.data }
+                    delete others.items
+                    result = { ...result, others }
+                    dispatch(setBag(result))
+                    setIsLoading(true)
+                } else
+                    showToast(data.message)
+                setLoaded(true)
+            })
+            .catch(err => {
+                console.log("Error: ", err)
+                showToast('Something went wrong while fetching your bag. Please try again later')
+                setLoaded(true)
+            })
+    }
+
     useEffect(() => {
         // in this useEffect
         // load items from server
         // then setLoaded true
         // todo: After fetching call transfrom function
-        // if (token) {
-        //     axios.get(`${Config.API_KEY}/bag`, {
-        //         jwt: token
-        //     })
-        //         .then(res => {
-        //             const data = res.data
-        //             if (data.status) {
-        //                 console.log("Data: ", data)
-        //             } else
-        //                 showToast(data.message)
-
-        //             let result = transform(DATA)
-        //             dispatch(setBag(result))
-        //         })
-        //         .catch(err => {
-        //             console.log("Error: ", err)
-        //             showToast('Something went wrong. Please try again later')
-        //         })
-        // }
-        setTimeout(() => {
-            let result = transform(DATA)
-            dispatch(setBag(result))
-            setLoaded(true)
-        }, 1000)
+        if (token) refresh()
+        // setTimeout(() => {
+        //     let result = transform(DATA)
+        //     dispatch(setBag(result))
+        //     setLoaded(true)
+        // }, 1000)
     }, [])
 
 
     return (
-        <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
-            {
-                loaded === true ? !token || items.length === 0 ? <BagEmpty /> : <BagList /> : <Overlay render={true} hideShadow />
-            }
-        </View>
+        <LoaderContext.Provider value={{ loaded: isLoading, setLoaded: setIsLoading, refresh }}>
+            <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
+                {
+                    loaded === true ? !token || items.length === 0 ? <BagEmpty /> : <BagList /> : <Overlay render={true} hideShadow />
+                }
+            </View>
+        </LoaderContext.Provider>
     )
 }
 

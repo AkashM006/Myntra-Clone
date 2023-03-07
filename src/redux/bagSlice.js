@@ -16,6 +16,23 @@ const initialState = {
     //     image: 'https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/11846942/2020/9/25/1dc647b4-d7c5-43ae-bb74-c1d215b1f7811601029474498-HRX-by-Hrithik-Roshan-Men-Jackets-5831601029472673-1.jpg',
     //     currentSize: 'S',
     //     hasError: false,
+    //     others: {
+    //         selectedItemsCount: 1,
+    //         itemsCount: 1,
+    //         coupon: {
+    //             couponId: 2,
+    //             couponCode: "EXTRA25OFF",
+    //             minimumPurchase: 599,
+    //             discountPercentage: 25,
+    //             expiryDate: "2023-02-28",
+    //             expiryTime: "23:59:00"
+    //         },
+    //         totalMrp: 1399,
+    //         bagDiscount: 1007,
+    //         couponDiscount: 98,
+    //         convenienceFee: 99,
+    //         total: 393
+    //     }
     //     size: [
     //         {
     //             name: 'X',
@@ -93,12 +110,12 @@ export const bagSlice = createSlice({
                 idx = state.itemIds.indexOf(id)
                 state.itemIds[idx] = item.id
             }
-
         },
         setBag: (state, action) => {
             state.selected = action.payload.selected
             state.items = action.payload.items
             state.itemIds = action.payload.itemIds
+            state.others = action.payload.others
         }
     }
 })

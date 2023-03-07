@@ -9,6 +9,9 @@ const Footer = () => {
 
     const { colors } = useSelector(state => state.theme)
     const { selected, items } = useSelector(state => state.bag)
+    const selectedCount = items.reduce((total, item) => {
+        return item.selected ? total + 1 : total
+    }, 0)
 
     const onPressHandler = _ => {
         // check if all items exist and then let user know
@@ -36,9 +39,9 @@ const Footer = () => {
             <View style={styles.textContainer}>
                 <CustomText size={11} align='center' weight='light' color={colors['BLACK']}>
                     {
-                        selected.length === 0 ?
+                        selectedCount === 0 ?
                             'No Item selected, select at least one item to place order.' :
-                            `${selected.length} ${selected.length === 1 ? 'Item' : 'Items'} selected for order`
+                            `${selectedCount} ${selectedCount === 1 ? 'Item' : 'Items'} selected for order`
                     }
                 </CustomText>
             </View>

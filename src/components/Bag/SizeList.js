@@ -54,7 +54,7 @@ const SizeList = ({ item, size, setSize }) => {
                     {' '}( {item.discount}% OFF )
                 </CustomText>}
             </View>
-            {item.soldBy && <View>
+            {item?.soldBy && <View>
                 <CustomText color={colors['SHADELIGHT']}>
                     Seller:
                     <CustomText weight='light' color={colors['DARK']}>

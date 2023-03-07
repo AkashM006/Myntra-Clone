@@ -7,3 +7,4 @@ todo:
 6) Edit address change according to back end format satOpen, sunOpen
 7) on logout clear all items in wishlist and bag
 8) Address form checkboxes not working
+9) Change Address form to use like open: []

@@ -6,7 +6,7 @@ import { formatCurrency } from '../../utils/utils'
 
 const Price = () => {
     const { colors } = useSelector(state => state.theme)
-    const { selected, items } = useSelector(state => state.bag)
+    const { selected, items, others } = useSelector(state => state.bag)
 
     const calculateTotalMrp = () => {
         return items.reduce((total, item) => {
@@ -38,23 +38,43 @@ const Price = () => {
                     Total MRP
                 </CustomText>
                 <CustomText color={colors['DARK']} size={13}>
-                    {formatCurrency(calculateTotalMrp()).split('.')[0]}
+                    {formatCurrency(others.totalMrp).split('.')[0]}
                 </CustomText>
             </View>
-            {calculateDiscount() > 0 && <View style={styles.row}>
+            {others?.bagDiscount > 0 && <View style={styles.row}>
                 <CustomText color={colors['DARK']} size={13}>
                     Discount on MRP
                 </CustomText>
                 <CustomText color={'green'} size={13}>
-                    - {formatCurrency(calculateDiscount()).split('.')[0]}
+                    - {formatCurrency(others.bagDiscount).split('.')[0]}
                 </CustomText>
             </View>}
+            {others?.couponDiscount > 0 && <View style={styles.row}>
+                <CustomText color={colors['DARK']} size={13}>
+                    Coupon Discount
+                </CustomText>
+                <CustomText color={'green'} size={13}>
+                    - {formatCurrency(others.couponDiscount).split('.')[0]}
+                </CustomText>
+            </View>}
+            <View style={styles.row}>
+                <CustomText color={colors['DARK']} size={13}>
+                    Convenience Fee
+                </CustomText>
+                {others.convenienceFee > 0 ? <CustomText color={colors['DARK']} size={13}>
+                    {formatCurrency(others.convenienceFee).split('.')[0]}
+                </CustomText> : 
+                    <CustomText color={'green'} size={13}>
+                        FREE
+                    </CustomText>
+                }
+            </View>
             <View style={[styles.row, { borderTopColor: colors['SHADELIGHT'], borderTopWidth: 1, paddingTop: 10 }]}>
                 <CustomText color={colors['DARK']} size={14} weight='bold'>
                     Total Amount
                 </CustomText>
                 <CustomText color={colors['DARK']} size={14} weight='bold'>
-                    {formatCurrency(calculateTotal()).split('.')[0]}
+                    {formatCurrency(others.total).split('.')[0]}
                 </CustomText>
             </View>
         </View>

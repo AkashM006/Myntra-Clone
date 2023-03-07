@@ -7,13 +7,26 @@ import Animated, { FadeIn, FadeOut, } from 'react-native-reanimated'
 
 const AddressPreference = ({ setFieldValue, open }) => {
 
-    const {sat, sun} = open
+    // const {sat, sun} = open
 
     const { colors } = useSelector(state => state.theme)
 
     const changeHandler = day => {
-        let temp = day === 'sat' ? sat : sun
-        setFieldValue(day+'Open',!temp)
+        // let temp = day === 'sat' ? sat : sun
+        // setFieldValue(day+'Open',!temp)
+        if (day === 'sat') {
+            let temp = []
+            if (open.includes('Saturday'))
+                temp = open.filter(value => value !== 'Saturday')
+            else
+                temp = [...open, 'Saturday']
+        } else {
+            let temp = []
+            if (open.includes('Sunday'))
+                temp = open.filter(value => value !== 'Sunday')
+            else
+                temp = [...open, 'Sunday']
+        }
     }
 
     return (
@@ -23,7 +36,7 @@ const AddressPreference = ({ setFieldValue, open }) => {
             </CustomText>
             <View style={styles.checkBoxContainer}>
                 <CheckBox
-                    value={sat}
+                    value={open.includes('Saturday')}
                     dimension={15}
                     changeHandler={() => changeHandler('sat')}
                 />
@@ -33,7 +46,7 @@ const AddressPreference = ({ setFieldValue, open }) => {
             </View>
             <View style={styles.checkBoxContainer}>
                 <CheckBox
-                    value={sun}
+                    value={open.include('Sunday')}
                     dimension={15}
                     changeHandler={() => changeHandler('sun')}
                 />

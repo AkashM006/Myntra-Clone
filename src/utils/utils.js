@@ -2,7 +2,7 @@ import Toast from "react-native-root-toast"
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
-const substring = (text, maxLength) => text.length > maxLength ? text.substring(0, maxLength - 2) + '...' : text
+const substring = (text, maxLength) => text && text.length > maxLength ? text.substring(0, maxLength - 2) + '...' : text
 
 const calculateDiscount = (price, percentage) => (((100 - percentage) * +price) / 100).toFixed()
 
@@ -33,6 +33,7 @@ const transform = bagItems => {
             discount: item.discount,
             image: item.image,
             currentSize: item.selectedSize,
+            selected: item.selected,
             size: [
                 {
                     name: 'XS',
@@ -132,7 +133,7 @@ const getSizes = item => {
             result.hasSameAmount = true
         else {
             result.hasSameAmount = false
-            return result
+            // return result
         }
     }
     return result

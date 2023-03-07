@@ -9,6 +9,8 @@ import { useState } from 'react'
 import Progressor from './Progressor'
 import Price from './Price'
 import Footer from './Footer'
+import { useContext } from 'react'
+import LoaderContext from '../../context/loaderContext'
 
 const List = () => {
     const { items, } = useSelector(state => state.bag)
@@ -16,6 +18,8 @@ const List = () => {
     const [showPopUp, setShowPopUp] = useState(false)
     const [popUpInfo, setPopUpInfo] = useState('')
     const [selectedId, setSelectedId] = useState(null)
+
+    const {loaded} = useContext(LoaderContext)
 
     const showPopUpHandler = (selectedInfo, id) => {
         setShowPopUp(true)
@@ -45,7 +49,7 @@ const List = () => {
             />
             <Footer />
             <PopUp setShowPopUp={setShowPopUp} info={popUpInfo} id={selectedId} render={showPopUp} />
-            <Overlay render={showPopUp} hideLoader onPressHandler={() => setShowPopUp(false)} />
+            <Overlay render={!loaded} onPressHandler={() => setShowPopUp(false)} />
         </View>
     )
 }
