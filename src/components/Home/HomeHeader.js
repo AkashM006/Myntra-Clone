@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import CustomText from '../Reusable/CustomText'
 import COLORS from '../../constants/Colors'
 import { useNavigation } from '@react-navigation/native'
@@ -8,7 +8,7 @@ import ICONS from '../../icons/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoginPopUpStatus } from '../../redux/uiSlice'
 import Badge from '../Reusable/Badge'
-import { useState } from 'react'
+import DeferredActionContext from '../../context/deferredActionContext'
 
 const HomeHeader = () => {
 
@@ -18,18 +18,23 @@ const HomeHeader = () => {
     const bagItems = useSelector(state => state.bag.items)
     const wishlistItems = useSelector(state => state.wishlist.items)
     const notificationData = useSelector(state => state.notification.data)
+    const {state, contextDispatch} = useContext(DeferredActionContext)
 
     const total = notificationData.reduce((total, item) => item.read ? total : total + 1, 0)
 
     const dispatch = useDispatch()
 
+    const navigateToBag = _ => { navigation.navigate('Bag') }
+    const navigateToWishlist = _ => navigation.navigate('Wishlist')
+
     const bagNavigationHandler = _ => {
-        if (token.length !== 0) navigation.navigate('Bag')
+        if (token.length !== 0)navigateToBag()
         else {
-            dispatch(setLoginPopUpStatus(true))
-            navigation.navigate('Profile', {
-                openLogin: true
+            contextDispatch({
+                type: 'add',
+                callback: navigateToBag
             })
+            dispatch(setLoginPopUpStatus(true))
         }
     }
 
@@ -38,12 +43,13 @@ const HomeHeader = () => {
     const notificationsNavigationHandler = _ => navigation.navigate('Notification')
 
     const wishlistNavigationHandler = _ => {
-        if (token.length !== 0) navigation.navigate('Wishlist')
+        if (token.length !== 0)navigateToWishlist()
         else {
-            dispatch(setLoginPopUpStatus(true))
-            navigation.navigate('Profile', {
-                openLogin: true
+            contextDispatch({
+                type: 'add',
+                callback: navigateToWishlist
             })
+            dispatch(setLoginPopUpStatus(true))
         }
     }
 

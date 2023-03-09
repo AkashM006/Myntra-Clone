@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import { useDispatch, useSelector } from 'react-redux'
 import PasswordField from './PasswordField'
@@ -14,6 +14,7 @@ import CustomButton from '../Reusable/CustomButton'
 import Toast from 'react-native-root-toast'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
+import DeferredActionContext from '../../context/deferredActionContext'
 
 const Form = ({ setSubmitted, submitted }) => {
 
@@ -39,6 +40,8 @@ const Form = ({ setSubmitted, submitted }) => {
     const [hint, setHint] = useState('')
 
     const [validated, setValidated] = useState(false)
+
+    const {state, contextDispatch} = useContext(DeferredActionContext)
 
     const validatePass = () => {
         if (isPasswordValid) {
@@ -127,6 +130,10 @@ const Form = ({ setSubmitted, submitted }) => {
                     dispatch(setToken(data.data.jwt))
                     setSubmitted(false)
                     navigation.dispatch(StackActions.popToTop())
+                    state.callback()
+                    contextDispatch({
+                        action: 'done'
+                    })
                 } else {
                     Toast.show(data.message, {
                         duration: Toast.durations.LONG,

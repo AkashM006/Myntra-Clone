@@ -1,5 +1,5 @@
 import { View, StyleSheet, Pressable, Keyboard, TextInput } from 'react-native'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
@@ -10,6 +10,7 @@ import { logout, setField, setPhone, setProfile, setToken } from '../../redux/us
 import OtpAutocomplete from 'react-native-otp-autocomplete'
 import COLORS from '../../constants/Colors'
 import { showToast } from '../../utils/utils'
+import DeferredActionContext from '../../context/deferredActionContext'
 
 const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
 
@@ -29,6 +30,8 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
 
     const navigation = useNavigation()
     const user = useSelector(state => state.user.user)
+
+    const {state, contextDispatch} = useContext(DeferredActionContext)
 
     let timer;
 
@@ -79,16 +82,6 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
 
     useFocusEffect(
         useCallback(() => {
-            // startOtpListener(message => {
-            //     if (message !== null) {
-            //         try {
-            //             const otp = /(\d{4})/g.exec(message)[1];
-            //             setOtp(otp);
-            //         } catch (err) {
-            //             console.log("react-native-verify-otp error: ", err)
-            //         }
-            //     }
-            // });
             startListening()
             return () => OtpAutocomplete.removeListener()
         }, [startListening])
@@ -111,7 +104,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                         setSubmitted(false)
                         return
                     }
-                    if (type === 'mobile') {
+                    if (type === 'mobile') { // for editing mobile number
                         setSubmitted(false)
                         navigation.dispatch(StackActions.pop(1))
                         navigation.navigate('EditMobile')
@@ -141,7 +134,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                             setSubmitted(false)
                         }
                     }
-                    else if (type === 'save') {
+                    else if (type === 'save') { // for saving user
                         try {
                             const result = await axios.post(`${Config.API_KEY}/profile/update`, {
                                 ...newUser
@@ -166,7 +159,7 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                     showToast('Something went wrong. Please try again later!')
                 })
 
-        } else {
+        } else { // for login
             setSubmitted(true)
             Keyboard.dismiss()
             axios.post(`${Config.API_KEY}/loginorsignup/verifyotp`, {
@@ -182,7 +175,12 @@ const OtpBody = ({ phone, setSubmitted, isVerify, type, newUser }) => {
                         else {
                             const jwt = data.data.jwt
                             dispatch(setToken(jwt))
-                            navigation.dispatch(StackActions.popToTop())
+                            navigation.dispatch(StackActions.pop(1))
+                            console.log('Callback: ', state.callback)
+                            state.callback()
+                            contextDispatch({
+                                type: 'done'
+                            })
                         }
 
                     } else setErr(data.message)

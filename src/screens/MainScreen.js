@@ -1,6 +1,5 @@
 import { AppState, Platform, StatusBar, View } from 'react-native'
-import React, { useEffect, useCallback, useRef } from 'react'
-import HomeNavigation from '../navigation/HomeNavigation'
+import React, { useEffect, useCallback, useRef, useReducer } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import Config from 'react-native-config'
@@ -16,6 +15,10 @@ import NetInfo from '@react-native-community/netinfo'
 import { setIsConnected, setUnreachable } from '../redux/uiSlice'
 import ConnectionProblemScreen from './ConnectionProblemScreen'
 import MainStack from '../navigation/MainStack'
+import linking from '../linking.js'
+import DeferredActionContext from '../context/deferredActionContext'
+import deferredActionReducer, { initialState } from '../reducer/deferredActionReducer'
+import LoginPop from '../components/Profile/LoginPop'
 
 const MainScreen = () => {
 
@@ -28,6 +31,8 @@ const MainScreen = () => {
     const { colors, theme } = useSelector(state => state.theme)
     const connected = useSelector(state => state.ui.isConnected)
     const unreachable = useSelector(state => state.ui.unreachable)
+
+    const [state, contextDispatch] = useReducer(deferredActionReducer, initialState)
 
     useEffect(() => { // for getting user details each time the token changes and on mount
         if (!token || token?.length === 0) return
@@ -148,13 +153,6 @@ const MainScreen = () => {
 
     useEffect(() => { SplashScreen.hide() }, [])
 
-    // const interceptor = config => {
-    //     console.log('Request intercepted: ', token)
-    //     config.headers['Authorization'] = token === null || token.length === 0 ? token : 'Bearer ' + token
-    //     config.headers['Content-Type'] = 'application/json'
-    //     return config
-    // }
-
     useEffect(() => {
         const requestInterceptor = axios.interceptors.request.use(null,
             error => {
@@ -167,7 +165,6 @@ const MainScreen = () => {
                 return response
             }, err => {
                 if (err.response) {
-                    // console.log("Response: ", err.response.status)
                 } else if (err.request) {
                     if (err.request.status === 0 && connected) dispatch(setUnreachable(true))
                 } else console.log("Error: ", err.message)
@@ -178,12 +175,6 @@ const MainScreen = () => {
             axios.interceptors.response.eject(responseInterceptor)
         }
     }, [])
-
-    //     return () => {
-    // axios.interceptors.request.eject(requestInterceptor)
-    //         axios.interceptors.response.eject(responseInterceptor)
-    //     }
-    // }, [])
 
     return (
         <>
@@ -201,17 +192,20 @@ const MainScreen = () => {
                     />
                 </View>
             </NavigationContainer> : <ConnectionProblemScreen />} */}
-            <NavigationContainer>
-                <View style={{ flex: 1 }}>
-                    {/* <HomeNavigation /> */}
-                    <MainStack />
-                    <Overlay
-                        render={loading}
-                        hideLoader={hideLoader}
-                        hideShadow={hideShadow}
-                    />
-                </View>
-            </NavigationContainer>
+            <DeferredActionContext.Provider value={{state, contextDispatch}}>
+                <NavigationContainer linking={linking} >
+                    <View style={{ flex: 1 }}>
+                        {/* <HomeNavigation /> */}
+                        <MainStack />
+                        <Overlay
+                            render={loading}
+                            hideLoader={hideLoader}
+                            hideShadow={hideShadow}
+                        />
+                        <LoginPop />
+                    </View>
+                </NavigationContainer>
+            </DeferredActionContext.Provider>
         </>
     )
 }

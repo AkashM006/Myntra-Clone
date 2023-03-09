@@ -10,6 +10,8 @@ import Config from 'react-native-config'
 import { useDispatch } from 'react-redux'
 import { login } from '../../redux/userSlice'
 import Toast from 'react-native-root-toast'
+import { useContext } from 'react'
+import DeferredActionContext from '../../context/deferredActionContext'
 
 const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
@@ -21,6 +23,8 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
 
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
+    const {state, contextDispatch} = useContext(DeferredActionContext)
 
     const validateUserId = () => {
         if (!isNaN(+userId)) {
@@ -72,6 +76,10 @@ const PasswordBody = ({ phone, submitted, setSubmitted }) => {
                         dispatch(login(obj))
                         setSubmitted(false)
                         navigation.dispatch(StackActions.popToTop())
+                        state.callback()
+                        contextDispatch({
+                            type: 'done'
+                        })
 
                     } else {
                         setSubmitted(false)

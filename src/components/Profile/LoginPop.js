@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, BackHand
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { setLoginPopUpStatus } from '../../redux/uiSlice'
+import { setLoading, setLoginPopUpStatus } from '../../redux/uiSlice'
 import CustomText from '../Reusable/CustomText'
 import axios from 'axios'
 import { Config } from 'react-native-config'
@@ -64,7 +64,21 @@ const LoginPop = () => {
 
         visibility.value = withTiming(target, { duration: 300 })
 
-        if (visible === false) Keyboard.dismiss()
+        if (visible === false) {
+            Keyboard.dismiss()
+            dispatch(setLoading({
+                loading: false,
+                hideLoader: false,
+                hideShadow: false
+            }))
+        } else {
+            dispatch(setLoading({
+                loading: true,
+                hideLoader: true,
+                hideShadow: true
+            }))
+            
+        }
     }, [visible])
 
     const closeHandler = () => {
@@ -168,7 +182,6 @@ const LoginPop = () => {
 
     return (
         <Animated.View style={[styles.container, rStyle]}>
-            <Overlay render={submitted} />
             <View style={styles.iconContainer}>
                 <FastImage source={{ uri: ICONS.ICON_LOGO }} resizeMode='contain' style={{ width: 50, height: 50 }} />
                 <TouchableOpacity onPress={closeHandler}>
