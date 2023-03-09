@@ -1,6 +1,6 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import HomeStack from './HomeStack'
+import HomeScreen from '../screens/HomeScreen'
 import Drawer from '../components/Home/DrawerHeader'
 
 const DrawerNavigator = createDrawerNavigator()
@@ -19,7 +19,7 @@ const HomeNavigation = () => {
         >
             <DrawerNavigator.Screen
                 name='Home'
-                component={HomeStack}
+                component={HomeScreen}
                 options={{
                     unmountOnBlur: true,
                     header: () => { }
