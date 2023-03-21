@@ -13,7 +13,11 @@ const initialState = {
         location: '',
     },
     token: '',
-    fcmToken: ''
+    fcmToken: '',
+    update: {
+        show: null,
+        update: null
+    }
 }
 
 export const userSlice = createSlice({
@@ -42,15 +46,16 @@ export const userSlice = createSlice({
             const { field, value } = action.payload
             state.user[field] = value
         },
+        setUpdate: (state, action) => {
+            state.update = action.payload
+        },
         logout: state => {
-            let fcmToken = state.fcmToken
-            let result = { ...initialState }
-            result.fcmToken = fcmToken
+            let result = { ...initialState, update: state.update, fcmToken: state.fcmToken }
             return result
         }
     }
 })
 
-export const { login, setPhone, setToken, setProfile, setFcmToken, logout, setField } = userSlice.actions
+export const { login, setPhone, setToken, setProfile, setFcmToken, logout, setField, setUpdate } = userSlice.actions
 
 export default userSlice.reducer

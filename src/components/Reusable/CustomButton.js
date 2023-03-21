@@ -15,7 +15,7 @@ const CustomButton = ({ text, onPressHandler, disabled, top, border, color, bgCo
     }
 
     return (
-        <TouchableOpacity style={[styles.button, , style]} onPress={onPressHandler} disabled={disabled}>
+        <TouchableOpacity style={[styles.button, style]} onPress={onPressHandler} disabled={disabled}>
             <CustomText weight={'light'} color={color ?? 'white'}>
                 {text}
             </CustomText>

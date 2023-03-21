@@ -18,7 +18,7 @@ const HomeHeader = () => {
     const bagItems = useSelector(state => state.bag.items)
     const wishlistItems = useSelector(state => state.wishlist.items)
     const notificationData = useSelector(state => state.notification.data)
-    const {state, contextDispatch} = useContext(DeferredActionContext)
+    const { state, contextDispatch } = useContext(DeferredActionContext)
 
     const total = notificationData.reduce((total, item) => item.read ? total : total + 1, 0)
 
@@ -28,7 +28,7 @@ const HomeHeader = () => {
     const navigateToWishlist = _ => navigation.navigate('Wishlist')
 
     const bagNavigationHandler = _ => {
-        if (token.length !== 0)navigateToBag()
+        if (token.length !== 0) navigateToBag()
         else {
             contextDispatch({
                 type: 'add',
@@ -43,7 +43,7 @@ const HomeHeader = () => {
     const notificationsNavigationHandler = _ => navigation.navigate('Notification')
 
     const wishlistNavigationHandler = _ => {
-        if (token.length !== 0)navigateToWishlist()
+        if (token.length !== 0) navigateToWishlist()
         else {
             contextDispatch({
                 type: 'add',
@@ -56,9 +56,9 @@ const HomeHeader = () => {
     return (
         <View style={[styles.container, { backgroundColor: colors['LIGHT'] }]}>
             <View style={styles.leftContainer}>
-                <TouchableOpacity onPress={menuNavigationHandler} style={styles.menuContainer}>
+                {/* <TouchableOpacity onPress={menuNavigationHandler} style={styles.menuContainer}>
                     <FastImage tintColor={colors['DARK']} source={{ uri: ICONS.ICON_MENU }} style={styles.menu} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity style={styles.premium}>
                     <FastImage resizeMode='contain' source={{ uri: ICONS.ICON_LOGO }} style={[styles.logo, { backgroundColor: colors['LIGHT'] }]} />
                     <View style={{ justifyContent: 'flex-start' }}>

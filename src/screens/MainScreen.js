@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import Config from 'react-native-config'
 import Toast from 'react-native-root-toast'
-import { setFcmToken, setProfile } from '../redux/userSlice'
+import { setFcmToken, setProfile, setUpdate } from '../redux/userSlice'
 import { NavigationContainer } from '@react-navigation/native'
 import messaging from '@react-native-firebase/messaging'
 import { showToast } from '../utils/utils'
@@ -19,6 +19,7 @@ import linking from '../linking.js'
 import DeferredActionContext from '../context/deferredActionContext'
 import deferredActionReducer, { initialState } from '../reducer/deferredActionReducer'
 import LoginPop from '../components/Profile/LoginPop'
+import codePush from 'react-native-code-push'
 
 const MainScreen = () => {
 
@@ -65,6 +66,29 @@ const MainScreen = () => {
             })
 
     }, [token])
+
+    // useEffect(() => { // for manually checking code push updates
+    //     codePush.checkForUpdate()
+    //         .then(result => {
+    //             if (result === null) {
+    //                 dispatch(setUpdate({
+    //                     show: false,
+    //                     update: null
+    //                 }))
+    //                 return
+    //             }
+    //             console.log("Result: ", result)
+    //             // setShowUpdate(true)
+    //             // setUpdate(result)
+    //             dispatch(setUpdate({
+    //                 update: result,
+    //                 show: true
+    //             }))
+    //         })
+    //         .catch(err => {
+    //             console.log("Error: ", err)
+    //         })
+    // }, [])
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = token === null || token?.length === 0 ? token : 'Bearer ' + token
@@ -192,7 +216,7 @@ const MainScreen = () => {
                     />
                 </View>
             </NavigationContainer> : <ConnectionProblemScreen />} */}
-            <DeferredActionContext.Provider value={{state, contextDispatch}}>
+            <DeferredActionContext.Provider value={{ state, contextDispatch }}>
                 <NavigationContainer linking={linking} >
                     <View style={{ flex: 1 }}>
                         {/* <HomeNavigation /> */}
