@@ -1,15 +1,16 @@
-import { View, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, useWindowDimensions, Share } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from 'react-native-reanimated'
 import CustomText from '../Reusable/CustomText'
-import { substring } from '../../utils/utils'
+import { showToast, substring } from '../../utils/utils'
 import FastImage from 'react-native-fast-image'
 import ICONS from '../../icons/icons'
 import Badge from '../Reusable/Badge'
 import { useSelector } from 'react-redux'
+import { getFirebaseDynamicLink } from '../../utils/sharing'
 
-const NavigationHeader = ({ scroll, name }) => {
+const NavigationHeader = ({ scroll, name, id }) => {
 
     const navigation = useNavigation()
     const height = useWindowDimensions().height
@@ -26,6 +27,25 @@ const NavigationHeader = ({ scroll, name }) => {
             )
         }
     }, [])
+
+    const handlerShare = async _ => {
+        try {
+            const link = await getFirebaseDynamicLink(`/detail/params?id=${id}`)
+            if (!link) {
+                showToast('Something went wrong while building a dynamic link. Please try again later!')
+                return
+            }
+            // Share.share(`Hey checkout this cloth in myntra! ${link}`)
+            Share.share({
+                message: `Hey checkout this cloth in myntra! ${link}`,
+                url: link,
+                title: 'Cloth in mytra'
+            })
+        } catch (err) {
+            console.log("Error while sharing the link: ", err)
+            showToast('Something went wrong while sharing the link')
+        }
+    }
 
     const textStyle = useAnimatedStyle(() => {
         return {
@@ -49,7 +69,7 @@ const NavigationHeader = ({ scroll, name }) => {
                     </CustomText>
                 </View>
                 <View style={styles.rightContainer}>
-                    <TouchableOpacity style={styles.iconContainer}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={handlerShare}>
                         <FastImage source={{ uri: ICONS.ICON_SHARE }} style={styles.icon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Wishlist')} >

@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { useEffect } from 'react'
 import Header from '../components/Reusable/Header'
 import AddressScreen from '../screens/AddressScreen'
 import BagScreen from '../screens/BagScreen'
@@ -21,11 +22,37 @@ import ProfileScreen from '../screens/ProfileScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'
 import WishListScreen from '../screens/WishListScreen'
 import HomeNavigation from './HomeNavigation'
+import dynamicLinks from '@react-native-firebase/dynamic-links'
+import { useNavigation } from '@react-navigation/native'
+import { handleLinking } from '../utils/sharing'
+import { showToast } from '../utils/utils'
 
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator()
 
 const MainStack = () => {
+
+    const navigation = useNavigation()
+
+    useEffect(() => { // for handling linking in foreground
+        const unsubscribe = dynamicLinks().onLink((link) => {
+            if (link) handleLinking(link, navigation)
+        })
+        return unsubscribe
+    }, [navigation])
+
+    useEffect(() => {
+        dynamicLinks()
+            .getInitialLink()
+            .then(link => {
+                if (link) handleLinking(link, navigation)
+            })
+            .catch(err => {
+                console.log("Error when trying to get the link in background: ", err)
+                showToast('Something went wrong when dynamic link was opened in background')
+            })
+    }, [navigation])
+
     const options = { header: () => { } }
     return (
         <Stack.Navigator initialRouteName='MainHome' screenOptions={{

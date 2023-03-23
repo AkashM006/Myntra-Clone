@@ -115,7 +115,7 @@ const DetailScreen = () => {
         <>
             {isLoading === false ?
                 <>
-                    <NavigationHeader name={cloth.product.brand} scroll={scrollY} />
+                    <NavigationHeader id={cloth.product.id} name={cloth.product.brand} scroll={scrollY} />
                     <Animated.ScrollView
                         alwaysBounceHorizontal={false}
                         bounces={false}
